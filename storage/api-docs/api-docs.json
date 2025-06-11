@@ -1,0 +1,960 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Reservas Travelamedida",
+        "description": "Documentación de la API para el sistema de reservas Travelamedida",
+        "contact": {
+            "name": "Equipo de Desarrollo",
+            "email": "alexvazu@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://pruebas.travelamedida.com/api/auth",
+            "description": "Servidor API Principal"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Registro de nuevo usuario",
+                "description": "Crea una nueva cuenta de usuario y devuelve un token JWT para autenticación inmediata.",
+                "operationId": "5d4fa5d5607ed675ba93907e1fc94534",
+                "requestBody": {
+                    "description": "Datos de registro",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Juan Pérez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 255,
+                                        "example": "usuario@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Mínimo 8 caracteres, debe contener letras y números",
+                                        "type": "string",
+                                        "format": "password",
+                                        "minLength": 8,
+                                        "example": "Password123!"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Debe coincidir con el campo password",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Password123!"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registro exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuario registrado correctamente"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Los datos proporcionados no son válidos"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "email": [
+                                                    "El correo ya está registrado"
+                                                ],
+                                                "password": [
+                                                    "La contraseña debe tener al menos 8 caracteres"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Autenticación de usuario",
+                "description": "Inicia sesión con credenciales de email y contraseña. Devuelve un token JWT.",
+                "operationId": "67d6d0fdd54fba132e1b6f55ca254183",
+                "requestBody": {
+                    "description": "Credenciales de acceso",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "usuario@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "minLength": 8,
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login exitoso"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales inválidas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Credenciales incorrectas"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Los datos proporcionados no son válidos"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "email": [
+                                                    "El campo email es obligatorio"
+                                                ],
+                                                "password": [
+                                                    "El campo contraseña es obligatorio"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/google": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Autenticación con Google",
+                "description": "Autentica un usuario usando un token de acceso de Google OAuth. Crea el usuario si no existe.",
+                "operationId": "95b18f4b3fdc0b461e1d4be1f60b9d81",
+                "requestBody": {
+                    "description": "Token de acceso de Google",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "access_token"
+                                ],
+                                "properties": {
+                                    "access_token": {
+                                        "description": "Token de acceso OAuth 2.0 obtenido del cliente de Google",
+                                        "type": "string",
+                                        "example": "ya29.a0AfB_by..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Autenticación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Autenticación con Google exitosa"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido o error de autenticación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error en autenticación con Google"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid token"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Los datos proporcionados no son válidos"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "access_token": [
+                                                    "El campo access_token es obligatorio"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Cerrar sesión",
+                "description": "Invalida el token JWT actual del usuario, terminando la sesión activa.",
+                "operationId": "28d48c13fca984400ac8de99f54ee13a",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sesión cerrada correctamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas/confirmar": {
+            "post": {
+                "tags": [
+                    "Reservas"
+                ],
+                "summary": "Confirmar una nueva reserva",
+                "description": "Crea una nueva reserva con los datos proporcionados y asigna un localizador único.",
+                "operationId": "ae359d8c1cea87259d0253434d94ed92",
+                "parameters": [
+                    {
+                        "name": "X-Reserva-Segura",
+                        "in": "header",
+                        "description": "Cabecera de seguridad privada para uso interno",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "clave-super-secreta-123"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos de la reserva",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "guid",
+                                    "Localizador",
+                                    "Importe_Reserva",
+                                    "Nombre_Cliente",
+                                    "Telefono_Cliente",
+                                    "Email_contacto_reserva"
+                                ],
+                                "properties": {
+                                    "guid": {
+                                        "description": "Identificador unico GUID",
+                                        "type": "string",
+                                        "maxLength": 36,
+                                        "example": "88277835-350a-11f0-9c17-14cb19858a69"
+                                    },
+                                    "Localizador": {
+                                        "description": "Código único de localización",
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "example": "ABC123"
+                                    },
+                                    "Importe_Reserva": {
+                                        "description": "Importe total de la reserva",
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 150.75
+                                    },
+                                    "Nombre_Cliente": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Juan"
+                                    },
+                                    "Apellido_Cliente": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "example": "Perez"
+                                    },
+                                    "Telefono_Cliente": {
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "pattern": "^[\\+\\-0-9\\s]+$",
+                                        "example": "+34 600 123 456"
+                                    },
+                                    "Email_contacto_reserva": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 100,
+                                        "example": "cliente@example.com"
+                                    },
+                                    "Comentarios": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "Necesita habitación adaptada",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Reserva confirmada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Reserva confirmada exitosamente"
+                                        },
+                                        "new_token": {
+                                            "type": "string",
+                                            "example": "26|LVf1ouNSJvBNlz5p8g9EtzGAhxGyW98JeEnJ6smda135d21e"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "localizador": {
+                                                    "type": "string",
+                                                    "example": "ABC123"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error de validación"
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "Localizador": [
+                                                    "Este localizador ya está en uso"
+                                                ],
+                                                "Importe_Reserva": [
+                                                    "El importe no puede ser negativo"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al crear la reserva"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Mensaje de error detallado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reserva/{loc}": {
+            "get": {
+                "tags": [
+                    "Reservas"
+                ],
+                "summary": "Obtener detalles de una reserva por localizador",
+                "description": "Muestra los detalles completos de una reserva específica identificada por su localizador. Solo accesible por el usuario dueño de la reserva.",
+                "operationId": "a57a2d83520f50935528812029924e46",
+                "parameters": [
+                    {
+                        "name": "loc",
+                        "in": "path",
+                        "description": "Localizador único de la reserva",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "X5XDZ"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reserva obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Reserva obtenida exitosamente"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "reserva": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 16
+                                                        },
+                                                        "Localizador": {
+                                                            "type": "string",
+                                                            "example": "X5XDZ"
+                                                        },
+                                                        "Importe_Reserva": {
+                                                            "type": "number",
+                                                            "format": "float",
+                                                            "example": 44.39999999999999857891452847979962825775146484375
+                                                        },
+                                                        "Nombre_Cliente": {
+                                                            "type": "string",
+                                                            "example": "Alejandro"
+                                                        },
+                                                        "Apellido_Cliente": {
+                                                            "type": "string",
+                                                            "example": "Rodriguez",
+                                                            "nullable": true
+                                                        },
+                                                        "Telefono_Cliente": {
+                                                            "type": "string",
+                                                            "nullable": true
+                                                        },
+                                                        "Email_contacto_reserva": {
+                                                            "type": "string",
+                                                            "format": "email",
+                                                            "example": "alexvazu@gmail.com"
+                                                        },
+                                                        "Comentarios": {
+                                                            "type": "string",
+                                                            "nullable": true
+                                                        },
+                                                        "Usuario_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-04-22T21:17:02.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-04-22T21:17:02.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "No autorizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No tienes permiso para ver esta reserva"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 403
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/listaReservas/{pagina}": {
+            "get": {
+                "tags": [
+                    "Reservas"
+                ],
+                "summary": "Lista de reservas paginadas",
+                "description": "Obtiene un listado paginado de las reservas del usuario autenticado, ordenadas por fecha de creación descendente.",
+                "operationId": "3bcb907a784ff56c3cf4e3efc16740c3",
+                "parameters": [
+                    {
+                        "name": "pagina",
+                        "in": "path",
+                        "description": "Número de página a consultar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Listado de reservas obtenido exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Reservas obtenidas exitosamente"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 16
+                                                            },
+                                                            "Localizador": {
+                                                                "type": "string",
+                                                                "example": "X5XDZ"
+                                                            },
+                                                            "Importe_Reserva": {
+                                                                "type": "number",
+                                                                "format": "float",
+                                                                "example": 44.39999999999999857891452847979962825775146484375
+                                                            },
+                                                            "Nombre_Cliente": {
+                                                                "type": "string",
+                                                                "example": "Alejandro"
+                                                            },
+                                                            "Apellido_Cliente": {
+                                                                "type": "string",
+                                                                "example": "Rodriguez",
+                                                                "nullable": true
+                                                            },
+                                                            "Telefono_Cliente": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "Email_contacto_reserva": {
+                                                                "type": "string",
+                                                                "format": "email",
+                                                                "example": "alexvazu@gmail.com"
+                                                            },
+                                                            "Comentarios": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "Usuario_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-04-22T21:17:02.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-04-22T21:17:02.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "first_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://127.0.0.1:8000/api/auth/listaReservas/1?page=1"
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://127.0.0.1:8000/api/auth/listaReservas/1?page=1"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "next_page_url": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://127.0.0.1:8000/api/auth/listaReservas/1"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "prev_page_url": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 9
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 9
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "No autorizado o sin resultados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No tienes permiso para ver estas reservas o no hay resultados"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 403
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autenticado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "JWT token, formato: Bearer {token}",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Autenticación",
+            "description": "Autenticación"
+        },
+        {
+            "name": "Reservas",
+            "description": "Reservas"
+        }
+    ]
+}
