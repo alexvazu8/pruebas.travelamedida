@@ -90,7 +90,7 @@
 
                                         {{-- Monto Total y Enviar --}}
                                         <div class="card-footer text-end bg-light d-flex justify-content-between align-items-center">
-                                            <h5 class="mb-0 me-3"><strong>Total:</strong> $<span id="totalAcumulado">0.00</span></h5>
+                                            <h5 class="mb-0 me-3"><strong>Total:</strong> $<span id="totalAcumulado{{ $hotel['Id_Hotel'] }}">0.00</span></h5>
                                             <button type="submit" class="btn btn-primary px-4">Enviar al Carrito</button>
                                         </div>
                                     </div>
@@ -132,23 +132,37 @@
 {{-- Script --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const actualizarTotalAcumulado = () => {
-            let totalAcumulado = 0;
-            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
-                totalAcumulado += parseFloat(radio.getAttribute('data-total'));
-            });
-            document.getElementById('totalAcumulado').innerText = totalAcumulado.toFixed(2);
-        };
+                // 🔹 1. Script para totales por hotel
+        document.querySelectorAll('form').forEach(form => {
+            const hotelId = form.querySelector('input[name="Id_Hotel"]').value;
+            const radios = form.querySelectorAll('input[type="radio"][name^="habitaciones"]');
+            const totalSpan = form.querySelector(`#totalAcumulado${hotelId}`);
 
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                const grupoIndex = e.target.name.match(/\d+/)[0];
-                document.getElementById('totalMonto' + grupoIndex).innerText = parseFloat(e.target.getAttribute('data-total')).toFixed(2);
-                actualizarTotalAcumulado();
-            });
+            const actualizarTotal = () => {
+                let total = 0;
+                radios.forEach(radio => {
+                    if (radio.checked) {
+                        total += parseFloat(radio.getAttribute('data-total') || 0);
+                    }
+                });
+                if (totalSpan) {
+                    totalSpan.textContent = total.toFixed(2);
+                }
+            };
+
+            radios.forEach(r => r.addEventListener('change', () => {
+                const grupoIndex = r.name.match(/\d+/)[0];
+                const montoGrupo = form.querySelector(`#totalMonto${grupoIndex}`);
+                if (montoGrupo) {
+                    montoGrupo.textContent = parseFloat(r.dataset.total).toFixed(2);
+                }
+                actualizarTotal();
+            }));
+
+            actualizarTotal(); // Inicializa
         });
 
-        actualizarTotalAcumulado();
+        // 🔹 2. Script para los modales e info del hotel
 
         // Evento para manejar el clic en el enlace "Info"
         document.querySelectorAll('a[data-bs-toggle="modal"]').forEach(function(link) {
