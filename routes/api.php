@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Api\PagoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -23,18 +24,20 @@ use App\Http\Controllers\Pagos\StereumPayController;
 });*/
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/webhooks/stereum', [StereumPayController::class, 'webhook']);
-// Grupo de autenticaci¨®n
+// Grupo de autenticaciï¿½ï¿½n
 Route::prefix('auth')->group(function () {
-    // Autenticaci¨®n tradicional
-    Route::post('/register', [AuthController::class, 'register']);
+    // Autenticaciï¿½ï¿½n tradicional
+    Route::post('/register', [AuthController::class, 'register']);   
     
-    
-    // Autenticaci¨®n con Google
+    // Autenticaciï¿½ï¿½n con Google
     Route::post('/login/google', [AuthController::class, 'loginWithGoogle']);
     
     // Logout (protegido)
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-
+    //Generar GUID para pagos
+    Route::get('/pagos/generar-guid', [PagoController::class, 'generateUniqueGuid'])->middleware(['auth:sanctum', 'cabecera.reserva']);
+    //Pagos pendientes
+    Route::post('/pagos/crear-pendiente', [PagoController::class, 'crear_pago_pendiente'])->middleware(['auth:sanctum', 'cabecera.reserva']);
     // Confirmar Reserva (protegido)
     Route::post('/reserva/confirmar', [ReservaController::class, 'confirmar'])->middleware(['auth:sanctum', 'cabecera.reserva']);
     Route::get('/reserva/{loc}', [ReservaController::class, 'showReserva'])->middleware('auth:sanctum');
