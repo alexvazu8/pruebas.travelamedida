@@ -581,7 +581,7 @@
                 "tags": [
                     "Pagos"
                 ],
-                "summary": "Verificar el estado de un pago",
+                "summary": "Verificar el estado de un pago en PAGADO",
                 "operationId": "f7b683cc3c6648ee955d22a40a0ee4b6",
                 "parameters": [
                     {

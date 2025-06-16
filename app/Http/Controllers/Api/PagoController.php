@@ -210,7 +210,7 @@ class PagoController extends Controller
     /**
  * @OA\Get(
  *     path="/pagos/verificar-estado",
- *     summary="Verificar el estado de un pago",
+ *     summary="Verificar el estado de un pago en PAGADO",
  *     tags={"Pagos"},
  *     security={{"bearerAuth": {}}},
  *     @OA\Parameter(
