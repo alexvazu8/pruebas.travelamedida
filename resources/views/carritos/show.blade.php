@@ -14,7 +14,12 @@
     {{-- Verificar si hay respuestas --}}
     @if(isset($respuestas) && is_array($respuestas))
         <!-- Muesta el contador de en cuanto exprira el carrito-->
-        <div id="countdown"></div>
+        <div class="countdown-container">
+            <div class="countdown-text" id="countdown-text"></div>
+            <div class="progress-bar">
+                <div id="countdown-progress" class="progress"></div>
+            </div>
+        </div>
 
         {{-- Mostrar el precio total del carrito si está disponible --}}
         @if(isset($respuestas['Precio_total_carrito']))
@@ -24,13 +29,23 @@
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
                 const expTimestamp = {{ $exp }};
+                const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
+                const totalDuration = expTimestamp - startTime;
 
                 function updateCountdown() {
                     const now = Math.floor(Date.now() / 1000); // Timestamp actual en segundos
                     const remainingTime = expTimestamp - now;
+                    const elapsedTime = now - startTime;
+                    const progressPercentage = (elapsedTime / totalDuration) * 100;
+
+                    // Seleccionar elementos
+                    const progressBar = document.getElementById('countdown-progress');
+                    const countdownText = document.getElementById('countdown-text');
 
                     if (remainingTime <= 0) {
-                        document.getElementById('countdown').innerHTML = "Token expirado";
+                        countdownText.innerHTML = "¡Tiempo agotado!";
+                        progressBar.style.width = '100%';
+                        progressBar.className = 'progress critical';
                         return;
                     }
 
@@ -39,8 +54,20 @@
                     const minutes = Math.floor((remainingTime % 3600) / 60);
                     const seconds = remainingTime % 60;
 
-                    document.getElementById('countdown').innerHTML = 
-                        `Tiempo restante: ${hours}h ${minutes}m ${seconds}s`;
+                    // Actualizar texto
+                    countdownText.innerHTML = `Tiempo restante: ${hours}h ${minutes}m ${seconds}s`;
+
+                    // Actualizar barra de progreso
+                    progressBar.style.width = `${100 - progressPercentage}%`;
+                    
+                    // Cambiar colores según el tiempo restante
+                    if (remainingTime < totalDuration * 0.3) { // Menos del 30% del tiempo
+                        progressBar.className = 'progress critical';
+                    } else if (remainingTime < totalDuration * 0.6) { // Menos del 60% del tiempo
+                        progressBar.className = 'progress warning';
+                    } else {
+                        progressBar.className = 'progress';
+                    }
 
                     // Actualizar cada segundo
                     setTimeout(updateCountdown, 1000);
