@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PagoResource;
 use App\Models\Reserva;
+use Illuminate\Support\Carbon;
 use Ramsey\Uuid\Uuid;
 
 
@@ -203,6 +204,80 @@ class PagoController extends Controller
 
         return response()->json([
         'guid' => $guid
+        ]);
+    }
+
+    /**
+ * @OA\Get(
+ *     path="/pagos/verificar-estado",
+ *     summary="Verificar el estado de un pago",
+ *     tags={"Pagos"},
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(
+ *         name="X-Reserva-Segura",
+ *         in="header",
+ *         required=true,
+ *         description="Cabecera de seguridad privada para uso interno",
+ *         @OA\Schema(
+ *             type="string",
+ *             example="clave-super-secreta-123"
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="usuario_id",
+ *         in="query",
+ *         required=true,
+ *         description="ID del usuario",
+ *         @OA\Schema(type="integer", example=15)
+ *     ),
+ *     @OA\Parameter(
+ *         name="transaction_id",
+ *         in="query",
+ *         required=true,
+ *         description="ID de la transacción de pago Stereum",
+ *         @OA\Schema(type="string", example="TRX123456789")
+ *     ),
+ *     @OA\Parameter(
+ *         name="token",
+ *         in="query",
+ *         required=true,
+ *         description="Token de Vision Mundo",
+ *         @OA\Schema(type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUz...")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Estado del pago encontrado",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="estado", type="string", example="pagado")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Pago no encontrado"
+ *     )
+ * )
+ */
+    public function verificarEstadoPago(Request $request)
+    {
+        $usuarioId = $request->query('usuario_id');
+        $transactionId = $request->query('transaction_id');
+        $tokenVM = $request->query('token');
+        $now = Carbon::now()->timestamp;
+
+        $pago = Pago::where('usuario_id', $usuarioId)
+                    ->where('transaction_id_metodo_pago', $transactionId)
+                    ->where('estado', 'PAGADO')
+                    ->where('expiration_token', '>', $now)
+                    ->where('token', $tokenVM)
+                    ->latest()
+                    ->first();
+
+        if (!$pago) {
+            return response()->json(['error' => 'Pago no encontrado'], 404);
+        }
+
+        return response()->json([
+            'estado' => strtolower($pago->estado)
         ]);
     }
 }

@@ -576,6 +576,83 @@
                 ]
             }
         },
+        "/pagos/verificar-estado": {
+            "get": {
+                "tags": [
+                    "Pagos"
+                ],
+                "summary": "Verificar el estado de un pago",
+                "operationId": "f7b683cc3c6648ee955d22a40a0ee4b6",
+                "parameters": [
+                    {
+                        "name": "X-Reserva-Segura",
+                        "in": "header",
+                        "description": "Cabecera de seguridad privada para uso interno",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "clave-super-secreta-123"
+                        }
+                    },
+                    {
+                        "name": "usuario_id",
+                        "in": "query",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 15
+                        }
+                    },
+                    {
+                        "name": "transaction_id",
+                        "in": "query",
+                        "description": "ID de la transacción de pago Stereum",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "TRX123456789"
+                        }
+                    },
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Token de Vision Mundo",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUz..."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estado del pago encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "estado": {
+                                            "type": "string",
+                                            "example": "pagado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pago no encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/reservas/confirmar": {
             "post": {
                 "tags": [

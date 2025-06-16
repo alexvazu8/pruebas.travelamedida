@@ -38,8 +38,11 @@ Route::prefix('auth')->group(function () {
     Route::get('/pagos/generar-guid', [PagoController::class, 'generateUniqueGuid'])->middleware(['auth:sanctum', 'cabecera.reserva']);
     //Pagos pendientes
     Route::post('/pagos/crear-pendiente', [PagoController::class, 'crear_pago_pendiente'])->middleware(['auth:sanctum', 'cabecera.reserva']);
+    // Verificar estado pagos
+    Route::get('/pagos/verificar-estado', [PagoController::class, 'verificarEstadoPago'])->middleware(['auth:sanctum', 'cabecera.reserva']);
     // Confirmar Reserva (protegido)
     Route::post('/reserva/confirmar', [ReservaController::class, 'confirmar'])->middleware(['auth:sanctum', 'cabecera.reserva']);
+
     Route::get('/reserva/{loc}', [ReservaController::class, 'showReserva'])->middleware('auth:sanctum');
     Route::get('/listaReservas/{pagina}', [ReservaController::class, 'listaReservas'])->middleware('auth:sanctum');
 });
