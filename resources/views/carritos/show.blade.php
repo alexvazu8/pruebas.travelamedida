@@ -46,6 +46,11 @@
                         countdownText.innerHTML = "¡Tiempo agotado!";
                         progressBar.style.width = '100%';
                         progressBar.className = 'progress critical';
+                        // Recargar la página
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000); // Espera 1 segundo antes de recargar
+                        
                         return;
                     }
 
