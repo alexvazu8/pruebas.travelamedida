@@ -82,7 +82,7 @@
                 updateCountdown();
             </script>
             <div class="alert alert-info">
-                <strong>Precio Total del Carrito:</strong> {{ number_format($respuestas['Precio_total_carrito'], 2) }}
+                <strong>Precio Total del Carrito:</strong> {{ number_format($respuestas['Precio_total_carrito'], 2) }} USD
             </div>
             {{-- Botón para eliminar el carrito --}}
             <div class="container">
@@ -124,23 +124,74 @@
                         
                     </div>
                 </form>
-                    <!-- Modal QR-->
-                    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="qrModalLabel">Escanea el código QR USDT Crypto para pagar, Red POLYGON</h5>
+                <!-- Modal QR -->
+                <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <!-- Header -->
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="qrModalLabel">
+                                <span class="d-flex align-items-center justify-content-center flex-wrap mt-2">
+                                    Escanea el código QR USDT
+                                    <img src="{{ asset('images/USDT.png') }}" alt="USDT" style="height: 30px;" class="me-2">
+                                    para pagar, Red POLYGON
+                                    <img src="{{ asset('images/POLYGON.png') }}" alt="Red Polygon" style="height: 30px;" class="ms-2 me-2">
+                                    <small class="text-danger w-100 text-center mt-1">(el uso de otra red causará pérdida de fondos)</small>
+                                </span>
+                                </h5>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <!-- Primera fila: Monto y QR -->
+                                    <div class="row align-items-center">
+                                        <div class="col-md-5 text-center mb-3 mb-md-0"> 
+                                            <!-- Cuenta regresiva -->
+                                            <div class="cuenta-regresiva-electronica mt-3 mx-auto" style="width: 140px; height: 140px; position: relative;">
+                                                <svg id="progresoCircular" width="140" height="140">
+                                                <circle cx="70" cy="70" r="60" stroke="#2c2c2c" stroke-width="12" fill="none" />
+                                                <circle id="progreso" cx="70" cy="70" r="60" stroke="#00ffcc" stroke-width="8" fill="none"
+                                                    stroke-linecap="round"
+                                                    stroke-dasharray="377" stroke-dashoffset="377"
+                                                    transform="rotate(-90 70 70)" />
+                                                </svg>
+                                                <div id="tiempoRestanteTexto"  class="position-absolute top-50 start-50 translate-middle text-light fw-bold fs-5 px-2 py-1 rounded" style="background-color: rgba(0, 0, 0, 0.6); z-index: 2;">
+                                                --:--
+                                                </div>
+                                            </div>
+                                            <!-- Monto -->
+                                            <div id="montoSobreQR" class="bg-dark bg-opacity-75 text-white px-3 py-2 rounded" style="font-size: 1.1rem;">
+                                                <!-- Se actualizará con JS -->
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- QR -->
+                                        <div class="col-md-7 text-center">
+                                        <img id="qrImagen" src="" alt="Código QR" style="max-width: 280px; width: 100%;" class="img-fluid rounded shadow mb-3">
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Segunda fila: Mensaje -->
+                                    <div class="row mt-3">
+                                        <div class="col-12 text-center">
+                                            <!-- Wallet + copiar -->
+                                            <div class="input-group" style="max-width: 100%;">
+                                                <input type="text" id="walletDestino" class="form-control text-center fw-bold" readonly>
+                                                <button class="btn btn-outline-secondary" type="button" id="btnCopiarWallet">Copiar</button>
+                                            </div>
+                                            <!-- Boton de Descarga -->
+                                            <button id="btnDescargarQR" class="btn btn-success mt-3">Descargar QR</button>
+                                            <p class="mb-0">Esperando pago Crypto USDT... No cierres esta ventana.</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="modal-body text-center">
-                                    <img id="qrImagen" src="" alt="Código QR" style="width:300px;">
-                                    <p class="mt-3">Esperando pago Crypto USDT... No cierres esta ventana.</p>
-                                    <button id="btnDescargarQR" class="btn btn-success">Descargar QR</button>
-                                </div>
-                               
                             </div>
                         </div>
                     </div>
-                    <!-- Fin Modal QR-->
+                </div>
+                <!-- Fin Modal QR -->
+
             </div>
         @endif
 
@@ -359,6 +410,16 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
+        //vamos a hacer el codigo para copiar la direccion de la wallet
+        const btnCopiar = document.getElementById('btnCopiarWallet');
+            
+            btnCopiar.addEventListener('click', () => {
+                copiarAlPortapapeles('walletDestino', btnCopiar);
+            });
+
+        //cargar datos al formulario
+         cargarDatosFormulario();
+
         const form = document.getElementById('formReserva');
         qrBase64 = ''; // Variable para almacenar el QR
         // Agrega verificacion y QR
@@ -411,14 +472,59 @@
                 }
                 qrBase64 = data.data.qr_base64;
                 const transactionId = data.data.id;
+                const billetera = data.data.collecting_account;
+                const tiempoExpira=data.data.expiration_time;
                 console.log('transactionId',transactionId);
 
                 document.getElementById('qrImagen').src = 'data:image/png;base64,' + qrBase64;
-
+                document.getElementById('montoSobreQR').innerText = `USDT ${monto}`;
+                document.getElementById('walletDestino').value = `${billetera}`;
+                guardarDatosFormulario(); // Guarda info del formulario
                 const qrModal = new bootstrap.Modal(document.getElementById('qrModal'), {
                     backdrop: 'static',
                     keyboard: false
                 });
+                const circle = document.getElementById('progreso');
+                const radius = circle.r.baseVal.value;
+                const circumference = 2 * Math.PI * radius;
+                circle.style.strokeDasharray = `${circumference}`;
+                circle.style.strokeDashoffset = `${circumference}`;
+
+                const ahoraInicial = Date.now();
+                const duracionTotal = tiempoExpira - ahoraInicial;
+
+                function actualizarCuentaRegresiva() {
+                    const ahora = Date.now();
+                    const tiempoRestante = tiempoExpira - ahora;
+                    const segundosRestantes = Math.max(0, Math.floor(tiempoRestante / 1000));
+
+                    const minutos = Math.floor(segundosRestantes / 60).toString().padStart(2, '0');
+                    const segundos = (segundosRestantes % 60).toString().padStart(2, '0');
+                    document.getElementById('tiempoRestanteTexto').textContent = `${minutos}:${segundos}`;
+
+                    const progreso = Math.min(1, 1 - tiempoRestante / duracionTotal);
+                    const offset = circumference * (1 - progreso);
+                    circle.style.strokeDashoffset = offset;
+
+                    // Cambio de color dinámico (verde → amarillo → rojo)
+                    if (progreso > 0.75) {
+                        circle.style.stroke = "#ff4d4d"; // rojo
+                    } else if (progreso > 0.5) {
+                        circle.style.stroke = "#ffc107"; // amarillo
+                    } else {
+                        circle.style.stroke = "#00ffcc"; // verde
+                    }
+
+                    if (segundosRestantes <= 0) {
+                        clearInterval(intervaloTemporizador);
+                        document.getElementById('tiempoRestanteTexto').textContent = "⛔ Expirado";
+                        setTimeout(() => location.reload(), 1000);
+                    }
+                }
+
+                const intervaloTemporizador = setInterval(actualizarCuentaRegresiva, 1000);
+                actualizarCuentaRegresiva();
+
                 qrModal.show();
 
                 const checkInterval = setInterval(() => {
@@ -447,6 +553,67 @@
             });
         }
     });
+
+    //funcion para guardar datos del formulario.
+    const guardarDatosFormulario = () => {
+        const nombre = document.getElementById('Nombre_titular_reserva').value;
+        const apellido = document.getElementById('Apellido_titular_reserva').value;
+        const telefono = document.getElementById('Telefono_titular_reserva').value;
+        const email = document.getElementById('Email_contacto_reserva').value;
+        const comentarios = document.getElementById('Comentarios').value;
+        localStorage.setItem('Nombre_titular_reserva', nombre);
+        localStorage.setItem('Apellido_titular_reserva', apellido);
+        localStorage.setItem('Telefono_titular_reserva', telefono);
+        localStorage.setItem('Email_contacto_reserva', email);
+        localStorage.setItem('Comentarios', comentarios);
+    };
+    function copiarAlPortapapeles(inputId, buttonElement) {
+        const input = document.getElementById(inputId);
+        const texto = input.value;
+       
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(texto).then(() => {
+                buttonElement.textContent = 'Copiado ✅';
+                setTimeout(() => {
+                    buttonElement.textContent = 'Copiar';
+                }, 2000);
+            }).catch(err => {
+                alert('Error al copiar: ' + err);
+            });
+        } else {
+            // Fallback para navegadores antiguos
+            input.select();
+            document.execCommand('copy');
+            buttonElement.textContent = 'Copiado ✅';
+            setTimeout(() => {
+                buttonElement.textContent = 'Copiar';
+            }, 2000);
+        }
+    }
+
+    function cargarDatosFormulario() {
+        const campos = [
+            'Nombre_titular_reserva',
+            'Apellido_titular_reserva',
+            'Telefono_titular_reserva',
+            'Email_contacto_reserva',
+            'Comentarios'
+        ];
+
+        campos.forEach(campo => {
+            const valorGuardado = localStorage.getItem(campo);
+            if (valorGuardado) {
+                const input = document.getElementById(campo);
+                if (input) {
+                    input.value = valorGuardado;
+                }
+                localStorage.removeItem(campo); // Opcional: limpia después de usar
+            }
+        });
+    }
+
+
 
     </script>
 @endsection

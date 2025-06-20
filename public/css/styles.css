@@ -536,3 +536,24 @@ body {
         50% { opacity: 0.7; }
         100% { opacity: 1; }
     }
+
+
+    .cuenta-regresiva-electronica {
+      display: inline-block;
+      position: relative;
+      font-family: 'Orbitron', monospace; /* Usa una fuente estilo digital si quieres */
+    }
+
+    #progresoCircular {
+      filter: drop-shadow(0 0 5px #00ffcc);
+    }
+
+    .texto-tiempo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      color: #00ffcc;
+      text-shadow: 0 0 5px #00ffcc;
+    }
