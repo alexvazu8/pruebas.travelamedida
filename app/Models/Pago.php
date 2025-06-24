@@ -14,6 +14,7 @@ class Pago extends Model
     'metodo_pago',
     'usuario_id',
     'estado',
+    'autorizacion',
     'transaction_id_metodo_pago',
     'fecha_pago',
 ];

@@ -557,3 +557,37 @@ body {
       color: #00ffcc;
       text-shadow: 0 0 5px #00ffcc;
     }
+
+    /* Botón Cripto (USDT) - Estilo "pill" */
+    .btn-crypto {
+      background-color: #26a17b;
+      border-color: #26a17b;
+      color: white;
+      border-radius: 50rem; /* Bordes completamente redondeados */
+      padding: 0.5rem 1.5rem; /* Ajuste de padding para mejor proporción */
+      transition: all 0.3s ease;
+    }
+
+    .btn-crypto:hover {
+      background-color: #1e8262;
+      border-color: #1e8262;
+      transform: translateY(-2px); /* Efecto hover opcional */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Botón Tarjeta (USD) - Estilo "pill" */
+    .btn-card {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      color: white;
+      border-radius: 50rem; /* Bordes completamente redondeados */
+      padding: 0.5rem 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-card:hover {
+      background-color: #5a6268;
+      border-color: #5a6268;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }

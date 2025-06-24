@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Pagos\BancardController;
 use App\Http\Controllers\Pagos\StereumPayController;
 use App\Http\Controllers\CarritosController;
 use App\Http\Controllers\HotelesController;
@@ -77,6 +78,21 @@ Route::get('lang/{locale}', [LocaleController::class, 'switch'])
 Route::get('/stereumpay/login', [StereumPayController::class, 'login'])->middleware('auth');
 Route::post('/pagos/charge', [StereumPayController::class, 'createCharge'])->name('pagos.charge')->middleware('auth');
 Route::post('/pagos/status/{transactionId}', [StereumPayController::class, 'checkPaymentStatus'])->name('pagos.status')->middleware('auth');
+
+
+// Iniciar pagos Bancard
+ Route::post('/pagos/iniciar', [BancardController::class, 'iniciarPago'])->name('pagos.iniciar')->middleware('auth');
+
+// Callback de Bancard (POST) - 3D Secure
+ Route::get('/pagos/callback/{pagoId}', [BancardController::class, 'handleCallback'])
+         ->name('pagos.callback')
+         ->withoutMiddleware('csrf'); // Excluye CSRF y autenticación para este endpoint
+
+//verificar estado pago
+Route::get('/pagos/verificar-estado/{pagoId}', [BancardController::class, 'verificarEstado'])->name('pagos.verificar-estado');
+
+//cancelado
+Route::post('/pagos/cancelar/{pago}', [BancardController::class, 'cancelar'])->name('pagos.cancelar');
 
 
 

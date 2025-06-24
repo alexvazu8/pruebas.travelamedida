@@ -120,7 +120,12 @@
                             <textarea name="Comentarios" id="Comentarios" class="form-control rounded-pill px-4 py-2" rows="3" pattern="[A-Za-zñÑ0-9\s\.,]+" oninput="this.value = this.value.replace(/[^A-Za-zñÑ0-9\s.,]/g, '')">{{ old('Comentarios') }}</textarea>
                         </div>
                         
-                         <button type="button" id="btnMostrarQR" class="btn btn-primary px-4">Pagar con USDT y Confirmar Reserva</button>
+                        <button type="button" id="btnMostrarQR" class=" btn-crypto text-white px-4">
+                            <i class="bi bi-qr-code me-2"></i> USDT (Cripto)
+                        </button>
+                        <button type="button" id="btnMostrarTarjeta" class=" btn-card text-white px-4">
+                            <i class="bi bi-credit-card me-2"></i> Tarjeta (USD)
+                        </button>
                         
                     </div>
                 </form>
@@ -191,6 +196,28 @@
                     </div>
                 </div>
                 <!-- Fin Modal QR -->
+
+                <!-- Modal Tarjeta -->
+                <div class="modal fade" id="tarjetaModal" tabindex="-1" aria-labelledby="tarjetaModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="tarjetaModalLabel">Pago con Tarjeta</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-0" style="height: 500px;">
+                                <div id="bancard-iframe-container"></div>
+                                <div id="loading-spinner" class="text-center py-5">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                    <p class="mt-2">Cargando pasarela de pago...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin Modal Tarjeta -->
 
             </div>
         @endif
@@ -410,6 +437,112 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
+
+        
+    // Configuración para Bancard
+        const bancardConfig = {
+            publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
+            checkoutScript: '{{ env("BANCARD_BASE_URL") }}/checkout/javascript/dist/bancard-checkout-4.0.0.js'
+           
+        };
+
+        // Cargar SDK Bancard dinámicamente
+        function loadBancardSDK() {
+            
+            return new Promise((resolve, reject) => {
+                if (window.Bancard) {
+                    resolve();
+                    return;
+                }
+
+                const script = document.createElement('script');
+                script.src = bancardConfig.checkoutScript;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        // Manejar clic en el botón de tarjeta
+        document.getElementById('btnMostrarTarjeta').addEventListener('click', async function() {
+            const form = document.getElementById('formReserva');
+            
+            // Validar formulario
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Guardar datos del formulario
+            guardarDatosFormulario();
+
+            // Mostrar modal de carga
+            const modal = new bootstrap.Modal(document.getElementById('tarjetaModal'));
+            modal.show();
+
+            try {
+                // 1. Cargar SDK Bancard
+               
+                await loadBancardSDK();
+                
+                // 2. Iniciar pago
+                const response = await fetch("{{ route('pagos.iniciar') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: document.getElementById('montoPago').value,
+                        description: "Pago de reserva"
+                    })
+                });
+            
+                const data = await response.json();
+                
+                if (data.status !== 'success') {
+                    throw new Error('Error al iniciar pago');
+                }
+
+                // 3. Configurar iframe de Bancard
+                document.getElementById('loading-spinner').style.display = 'none';
+                
+                const styles = {
+                    "form-background-color": "#f8f9fa",
+                    "button-background-color": "#4faed1",
+                    "button-text-color": "#ffffff",
+                    "input-background-color": "#ffffff"
+                };
+
+                Bancard.Checkout.createForm(
+                    'bancard-iframe-container', 
+                    data.process_id, 
+                    styles
+                );
+
+                // 4. Verificar estado del pago periódicamente
+                const checkInterval = setInterval(async () => {
+                    const statusResponse = await fetch(`/pagos/verificar-estado/${data.pago_id}`);
+                    const statusData = await statusResponse.json();
+
+                    if (statusData.status === 'PAGADO') {
+                        clearInterval(checkInterval);
+                        modal.hide();
+                        document.getElementById('formReserva').submit();
+                    } else if (statusData.status === 'fallido') {
+                        clearInterval(checkInterval);
+                        modal.hide();
+                        alert('Pago fallido: ' + (statusData.error || ''));
+                    }
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                modal.hide();
+                alert('Error al procesar el pago: ' + error.message);
+            }
+        });
+
         //vamos a hacer el codigo para copiar la direccion de la wallet
         const btnCopiar = document.getElementById('btnCopiarWallet');
             

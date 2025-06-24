@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
            VerifyCsrfToken::class,  
            LocaleMiddleware::class,
         ]);
-        // Configuraci¨®n est¨¢ndar para API
+        // Configuraciï¿½ï¿½n estï¿½ï¿½ndar para API
         $middleware->api([
           //  \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
