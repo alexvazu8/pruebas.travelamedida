@@ -86,6 +86,7 @@ Route::post('/pagos/status/{transactionId}', [StereumPayController::class, 'chec
 
 // Callback de Bancard (POST) - 3D Secure
 Route::match(['get', 'post'], '/pagos/callback', [BancardController::class, 'handleCallback'])
+    ->withoutMiddleware([VerifyCsrfToken::class]) // Desactiva CSRF
     ->name('pagos.callback');
 
 //verificar estado pago
