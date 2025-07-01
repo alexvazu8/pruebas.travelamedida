@@ -155,18 +155,27 @@ class BancardController extends Controller
     }
     public function handleCallback(Request $request) {
         $operation = $request->input('operation');
-        //print_r($request->all());
-         $data = $request->all(); // o $request->json()->all()
-         print_r($data);
-        
-        if (isset($data['status']) && $data['status'] === 'payment_fail') {
-            // 2. Registrar el error para depuración (opcional)
-            Log::error('Callback de Bancard - Error:', $data);
-            return response()->json([
-                'success' => false,
-                'error'   => $data['error'] ?? 'ID de proceso no proporcionado',
-            ], 400); // Código HTTP 400: Bad Request
-        }
+        // Opción 1: Si los datos llegan como texto plano (ej: "Array(...) {...}")
+            $rawContent = $request->getContent();
+            
+            // Extrae el JSON manualmente (si existe)
+            preg_match('/\{(.*?)\}/', $rawContent, $matches);
+            $jsonData = $matches[0] ?? '{}';
+            $decodedData = json_decode($jsonData, true); // Convierte JSON a array
+
+           /* // Opción 2: Si los datos llegan como form-data o JSON estándar
+            $requestData = $request->all(); // Usar esto si el request está bien formado
+
+            // Log para depuración (verifica qué llega realmente)
+            Log::debug('Raw Bancard Callback:', ['raw' => $rawContent, 'decoded' => $decodedData]);
+            */
+            // Procesa el estado de error
+            if (($decodedData['success'] ?? null) === false || str_contains($rawContent, 'payment_fail')) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => $decodedData['error'] ?? 'Error desconocido en el pago',
+                ], 400);
+            }
         $shopProcessId = $operation['shop_process_id'] ?? null;
 
         if (!$shopProcessId) {
