@@ -8,6 +8,6 @@ class VerifyCsrfToken extends Middleware
 {
     protected $except = [
         'api/auth/*',
-        
+        'pagos/callback', // 👈 Agrega esta línea exactamente como tu ruta
     ];
 }
