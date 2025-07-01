@@ -489,7 +489,7 @@
 
             try {
                 await loadBancardSDK();
-                alert("hola");
+                //alert("hola");
                 const response = await fetch("{{ route('pagos.iniciar') }}", {
                     method: 'POST',
                     headers: {
