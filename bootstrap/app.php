@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-           // 'guardaPost' => CapturePostData::class,
+            'guardaPost' => CapturePostData::class,
             'verifyPayment' => VerifyPayment::class,
             'cabecera.reserva' => VerificarCabeceraReserva::class
         ]);
