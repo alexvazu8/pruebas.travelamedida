@@ -156,7 +156,7 @@ class BancardController extends Controller
     public function handleCallback(Request $request) {
         $operation = $request->input('operation');
         //print_r($request->all());
-         $data = $request->all(); // o $request->json()->all()
+         $data = $request->json()->all(); // o $request->json()->all()
 
         
         if (isset($data['status']) && $data['status'] === 'payment_fail') {
