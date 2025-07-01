@@ -155,6 +155,7 @@ class BancardController extends Controller
     }
     public function handleCallback(Request $request) {
         $operation = $request->input('operation');
+        print_r($operation);
         $shopProcessId = $operation['shop_process_id'] ?? null;
 
         if (!$shopProcessId) {
