@@ -161,7 +161,7 @@ class BancardController extends Controller
             return response()->json(['error' => 'ID de proceso no proporcionado'], 400);
         }
 
-        $pago = Pago::where('transaction_id_metodo_pago', $shopProcessId)->first();
+        $pago = Pago::find($shopProcessId);
 
         if (!$pago) {
             return response()->json(['error' => 'Pago no encontrado'], 404);
