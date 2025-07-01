@@ -31,138 +31,145 @@ class BancardController extends Controller
     }
 
      // Paso 1: Iniciar el pago
-public function iniciarPago(Request $request)
-{
-    Log::info('Iniciando proceso de pago', ['request' => $request->all()]);
-    
-    $request->validate([
-        'amount' => 'required|numeric|min:0.01',
-    ]);
+    public function iniciarPago(Request $request)
+    {
+        Log::info('Iniciando proceso de pago', ['request' => $request->all()]);
+        
+        $request->validate([
+            'amount' => 'required|numeric|min:0.01',
+        ]);
 
-    return DB::transaction(function () use ($request) {
-        try {
-            Log::debug('Iniciando transacción de base de datos');
+        return DB::transaction(function () use ($request) {
+            try {
+                Log::debug('Iniciando transacción de base de datos');
 
-            // Generar GUID y obtener token de VM
-            $guid = $this->generateUniqueGuid();
-            $tokenVM = Cache::get('api_access_token');
-            $expiration_tokenVM = Cache::get('api_access_token_expire_at');
-            
-            Log::debug('Datos obtenidos de Cache', [
-                'tokenVM' => $tokenVM ? 'existe' : 'no existe',
-                'expiration_tokenVM' => $expiration_tokenVM
-            ]);
+                // Generar GUID y obtener token de VM
+                $guid = $this->generateUniqueGuid();
+                $tokenVM = Cache::get('api_access_token');
+                $expiration_tokenVM = Cache::get('api_access_token_expire_at');
+                
+                Log::debug('Datos obtenidos de Cache', [
+                    'tokenVM' => $tokenVM ? 'existe' : 'no existe',
+                    'expiration_tokenVM' => $expiration_tokenVM
+                ]);
 
-            // Crear registro de pago
-            $pago = Pago::create([
-                'monto' => $request->amount,
-                'guid'  => $guid,
-                'token' => $tokenVM,
-                'expiration_token' => $expiration_tokenVM ? $expiration_tokenVM->timestamp : null,
-                'metodo_pago' => 'BancarVPOS',
-                'usuario_id' => Auth::id(),
-                'estado' => 'pendiente',
-            ]);
+                // Crear registro de pago
+                $pago = Pago::create([
+                    'monto' => $request->amount,
+                    'guid'  => $guid,
+                    'token' => $tokenVM,
+                    'expiration_token' => $expiration_tokenVM ? $expiration_tokenVM->timestamp : null,
+                    'metodo_pago' => 'BancarVPOS',
+                    'usuario_id' => Auth::id(),
+                    'estado' => 'pendiente',
+                ]);
 
-            Log::info('Pago creado en DB', ['pago_id' => $pago->id]);
+                Log::info('Pago creado en DB', ['pago_id' => $pago->id]);
 
-            // Configuración Bancard
-            $privateKey = env('BANCARD_PRIVATE_KEY');
-            $publicKey = env('BANCARD_PUBLIC_KEY');
-            $apiUrl = env('BANCARD_BASE_URL');
+                // Configuración Bancard
+                $privateKey = env('BANCARD_PRIVATE_KEY');
+                $publicKey = env('BANCARD_PUBLIC_KEY');
+                $apiUrl = env('BANCARD_BASE_URL');
 
-            Log::debug('Variables de entorno Bancard', [
-                'privateKey' => $privateKey ? 'existe' : 'no existe',
-                'publicKey' => $publicKey ? 'existe' : 'no existe',
-                'apiUrl' => $apiUrl
-            ]);
+                Log::debug('Variables de entorno Bancard', [
+                    'privateKey' => $privateKey ? 'existe' : 'no existe',
+                    'publicKey' => $publicKey ? 'existe' : 'no existe',
+                    'apiUrl' => $apiUrl
+                ]);
 
-            // Generar token
-            $amount = number_format($request->amount, 2, '.', '');
-           // $amount=$amount*100;
-            
-            //$amount=intval($amount);
-            Log::debug('Formato Monto: ', ['amount' =>$amount]);
-            Log::debug('Token antes del MD5: ', ['token_antes' =>$privateKey.$pago->id.$amount.'USD']);
-            //$token = hash('sha256', $privateKey.$pago->id.$amount.'USD');
-            $token = md5($privateKey.$pago->id.$amount.'USD');
+                // Generar token
+                $amount = number_format($request->amount, 2, '.', '');
+            // $amount=$amount*100;
+                
+                //$amount=intval($amount);
+                Log::debug('Formato Monto: ', ['amount' =>$amount]);
+                Log::debug('Token antes del MD5: ', ['token_antes' =>$privateKey.$pago->id.$amount.'USD']);
+                //$token = hash('sha256', $privateKey.$pago->id.$amount.'USD');
+                $token = md5($privateKey.$pago->id.$amount.'USD');
 
-            Log::debug('Token generado para Bancard', ['token' => $token]);
+                Log::debug('Token generado para Bancard', ['token' => $token]);
 
-            $payload = [
-                'public_key' => $publicKey,
-                'operation' => [
-                    'token' => $token,
-                    'shop_process_id' => $pago->id,
-                    'currency' => 'USD',
-                    'amount' => $amount,
-                    'description' => "Pagos Bancard y Vision Mundo",
-                    'return_url' => route('pagos.callback', $pago->id),
-                    'cancel_url' => route('pagos.cancelar', $pago),
-                    'additional_data' => [
-                        '3ds' => [
-                            'enabled' => true,
-                            'challenge_indicator' => '02' // 02 = 3DS obligatorio
+                $payload = [
+                    'public_key' => $publicKey,
+                    'operation' => [
+                        'token' => $token,
+                        'shop_process_id' => $pago->id,
+                        'currency' => 'USD',
+                        'amount' => $amount,
+                        'description' => "Pagos Bancard y Vision Mundo",
+                        'return_url' => route('pagos.callback', $pago->id),
+                        'cancel_url' => route('pagos.cancelar', $pago),
+                        'additional_data' => [
+                            '3ds' => [
+                                'enabled' => true,
+                                'challenge_indicator' => '02' // 02 = 3DS obligatorio
+                            ]
                         ]
                     ]
-                ]
-            ];
+                ];
 
-            Log::debug('Payload para Bancard', $payload);
+                Log::debug('Payload para Bancard', $payload);
 
-            $response = Http::post($apiUrl."/vpos/api/0.3/single_buy", $payload);
-            $responseData = $response->json();
+                $response = Http::post($apiUrl."/vpos/api/0.3/single_buy", $payload);
+                $responseData = $response->json();
 
-            Log::debug('Respuesta de Bancard', [
-                'status_code' => $response->status(),
-                'response' => $responseData
-            ]);
-
-            if (!$response->successful() ) {
-                Log::error('Error en respuesta de Bancard', [
-                    'status' => $response->status(),
-                    'response' => $responseData,
-                    'successfull'=> $response->successful()
-
+                Log::debug('Respuesta de Bancard', [
+                    'status_code' => $response->status(),
+                    'response' => $responseData
                 ]);
-                throw new \Exception('Error al iniciar pago con Bancard');
+
+                if (!$response->successful() ) {
+                    Log::error('Error en respuesta de Bancard', [
+                        'status' => $response->status(),
+                        'response' => $responseData,
+                        'successfull'=> $response->successful()
+
+                    ]);
+                    throw new \Exception('Error al iniciar pago con Bancard');
+                }
+
+                // Actualizar pago con datos de respuesta
+                $pago->update([
+                    'transaction_id_metodo_pago' => $responseData['process_id'] ?? null,
+                ]);
+
+                Log::info('Pago actualizado con transaction_id', [
+                    'pago_id' => $pago->id,
+                    'transaction_id' => $responseData['process_id']
+                ]);
+
+                return response()->json([
+                    'status' => 'success',
+                    'process_id' => $responseData['process_id'],
+                    'pago_id' => $pago->id
+                ]);
+
+            } catch (\Exception $e) {
+                Log::error('Error en iniciarPago', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                throw $e; // Relanza la excepción para mantener el comportamiento original
             }
-
-            // Actualizar pago con datos de respuesta
-            $pago->update([
-                'transaction_id_metodo_pago' => $responseData['process_id'] ?? null,
-            ]);
-
-            Log::info('Pago actualizado con transaction_id', [
-                'pago_id' => $pago->id,
-                'transaction_id' => $responseData['process_id']
-            ]);
-
-            return response()->json([
-                'status' => 'success',
-                'process_id' => $responseData['process_id'],
-                'pago_id' => $pago->id
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error('Error en iniciarPago', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            throw $e; // Relanza la excepción para mantener el comportamiento original
-        }
-    });
-}
+        });
+    }
     public function handleCallback(Request $request) {
         $operation = $request->input('operation');
-         $pagoId = $request->input('operation.shop_process_id');
-        $pago = Pago::find($pagoId);
-         // dd($request->all()); // 👈 Esto detiene todo y te muestra lo que Bancard devolvió
+        $shopProcessId = $operation['shop_process_id'] ?? null;
+
+        if (!$shopProcessId) {
+            return response()->json(['error' => 'ID de proceso no proporcionado'], 400);
+        }
+
+        $pago = Pago::where('transaction_id_metodo_pago', $shopProcessId)->first();
+
+        if (!$pago) {
+            return response()->json(['error' => 'Pago no encontrado'], 404);
+        }
+
         // Verificar autenticación 3DS
         if (($operation['security_information']['3d_secure'] ?? null) !== 'authenticated') {
             $pago->update(['estado' => 'fallido_3ds']);
-             // Redirigir a la ruta 'carritos.show' con el ID correspondiente
-            // return redirect()->route('carritos.show')->with('error', '¡Falla de seguridad 3DS!');
             return response()->json(['error' => 'Falla en 3DS'], 400);
         }
 
@@ -170,12 +177,12 @@ public function iniciarPago(Request $request)
         $pago->update([
             'estado' => 'PAGADO',
             'fecha_pago' => now(),
-            'autorizacion' => $operation['authorization_number']
+            'autorizacion' => $operation['authorization_number'] ?? null
         ]);
+
         return redirect()->route('reservas.confirmar');
-        
-         //return response()->json(['success' => true],200);
     }
+
 
     // Nuevo método para verificar estado del pago
     public function verificarEstado($pagoId)
