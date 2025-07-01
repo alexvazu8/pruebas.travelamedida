@@ -3,11 +3,12 @@
 use App\Http\Middleware\CapturePostData;
 use App\Http\Middleware\LocaleMiddleware;
 use App\Http\Middleware\VerificarCabeceraReserva;
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\VerifyPayment;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+
 use Illuminate\Http\Request;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Limiter\Limit;
