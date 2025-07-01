@@ -79,6 +79,7 @@ class BancardController extends Controller
 
                 // Generar token
                 $amount = number_format($request->amount, 2, '.', '');
+                $amount = floatval($amount);
             // $amount=$amount*100;
                 
                 //$amount=intval($amount);
@@ -154,7 +155,7 @@ class BancardController extends Controller
         });
     }
     public function handleCallback(Request $request) {
-        $operation = $request->input('operation');
+         $operation = $request->input('operation');
         // Opción 1: Si los datos llegan como texto plano (ej: "Array(...) {...}")
             $rawContent = $request->getContent();
             
