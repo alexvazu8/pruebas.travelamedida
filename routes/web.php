@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\TrasladosController;
 use App\Http\Middleware\CapturePostData;
-use App\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 
 Route::get('/', function () {
     return view('welcome');
@@ -85,8 +85,10 @@ Route::post('/pagos/status/{transactionId}', [StereumPayController::class, 'chec
  Route::post('/pagos/iniciar', [BancardController::class, 'iniciarPago'])->name('pagos.iniciar')->middleware('auth');
 
 // Callback de Bancard (POST) - 3D Secure
-Route::match(['get', 'post'], '/pagos/callback', [BancardController::class, 'handleCallback'])
-    ->withoutMiddleware([VerifyCsrfToken::class]) // Desactiva CSRF
+ Route::post('/pagos/callback', [BancardController::class, 'handleCallback'])
+    ->withoutMiddleware([
+        ValidateCsrfToken::class, // 👈 Desactiva CSRF para esta ruta
+    ])
     ->name('pagos.callback');
 
 //verificar estado pago
