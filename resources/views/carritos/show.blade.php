@@ -438,23 +438,19 @@
         
     document.addEventListener('DOMContentLoaded', function() {
 
-        
-    // Configuración para Bancard
+       // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
             checkoutScript: '{{ env("BANCARD_BASE_URL") }}/checkout/javascript/dist/bancard-checkout-4.0.0.js'
-           
         };
 
-        // Cargar SDK Bancard dinámicamente
+        // Cargar SDK Bancard dinámicamente (sin cambios)
         function loadBancardSDK() {
-            
             return new Promise((resolve, reject) => {
                 if (window.Bancard) {
                     resolve();
                     return;
                 }
-
                 const script = document.createElement('script');
                 script.src = bancardConfig.checkoutScript;
                 script.onload = resolve;
@@ -463,29 +459,37 @@
             });
         }
 
-        // Manejar clic en el botón de tarjeta
+        // 👇 Nueva función para renderizar formulario 3DS
+        function render3DSForm(processId, modal) {
+            const styles = {
+                "button-background-color": "#4faed1",
+                "input-text-color": "#333"
+            };
+            
+            Bancard.Charge3DS.createForm(
+                'bancard-iframe-container',
+                processId,
+                styles
+            );
+        }
+
+        // 👇 Modificación principal en el evento de pago
         document.getElementById('btnMostrarTarjeta').addEventListener('click', async function() {
             const form = document.getElementById('formReserva');
             
-            // Validar formulario
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
 
-            // Guardar datos del formulario
             guardarDatosFormulario();
 
-            // Mostrar modal de carga
             const modal = new bootstrap.Modal(document.getElementById('tarjetaModal'));
             modal.show();
 
             try {
-                // 1. Cargar SDK Bancard
-               
                 await loadBancardSDK();
                 
-                // 2. Iniciar pago
                 const response = await fetch("{{ route('pagos.iniciar') }}", {
                     method: 'POST',
                     headers: {
@@ -494,33 +498,37 @@
                     },
                     body: JSON.stringify({
                         amount: document.getElementById('montoPago').value,
-                        description: "Pago de reserva"
+                        description: "Pago de reserva",
+                        // 👇 Asegúrate que tu backend use esto para habilitar 3DS
+                        force_3ds: true 
                     })
                 });
             
                 const data = await response.json();
+                //alert(data.process_id);
                 
                 if (data.status !== 'success') {
-                    throw new Error('Error al iniciar pago');
+                    throw new Error(data.message || 'Error al iniciar pago');
                 }
 
-                // 3. Configurar iframe de Bancard
                 document.getElementById('loading-spinner').style.display = 'none';
-                
-                const styles = {
-                    "form-background-color": "#f8f9fa",
-                    "button-background-color": "#4faed1",
-                    "button-text-color": "#ffffff",
-                    "input-background-color": "#ffffff"
-                };
 
-                Bancard.Checkout.createForm(
-                    'bancard-iframe-container', 
-                    data.process_id, 
-                    styles
-                );
+                // 👇 Decide qué formulario cargar basado en la respuesta
+                if (data.requires_3ds) {
+                    render3DSForm(data.process_id, modal);
+                } else {
+                    const styles = {
+                        "form-background-color": "#f8f9fa",
+                        "button-background-color": "#4faed1"
+                    };
+                    Bancard.Checkout.createForm(
+                        'bancard-iframe-container', 
+                        data.process_id, 
+                        styles
+                    );
+                }
 
-                // 4. Verificar estado del pago periódicamente
+                // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
                     const statusResponse = await fetch(`/pagos/verificar-estado/${data.pago_id}`);
                     const statusData = await statusResponse.json();
@@ -528,11 +536,15 @@
                     if (statusData.status === 'PAGADO') {
                         clearInterval(checkInterval);
                         modal.hide();
-                        document.getElementById('formReserva').submit();
+                        window.location.href = "{{ route('reservas.confirmar') }}";
+                    } else if (statusData.status === 'requires_3ds_action') {
+                        // Caso especial: Bancard requiere acción del usuario en 3DS
+                        clearInterval(checkInterval);
+                        // No ocultar el modal (el iframe 3DS ya está visible)
                     } else if (statusData.status === 'fallido') {
                         clearInterval(checkInterval);
                         modal.hide();
-                        alert('Pago fallido: ' + (statusData.error || ''));
+                        alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
                 }, 3000);
 
@@ -542,7 +554,6 @@
                 alert('Error al procesar el pago: ' + error.message);
             }
         });
-
         //vamos a hacer el codigo para copiar la direccion de la wallet
         const btnCopiar = document.getElementById('btnCopiarWallet');
             

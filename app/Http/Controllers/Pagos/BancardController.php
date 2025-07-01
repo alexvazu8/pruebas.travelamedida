@@ -79,6 +79,12 @@ public function iniciarPago(Request $request)
 
             // Generar token
             $amount = number_format($request->amount, 2, '.', '');
+           // $amount=$amount*100;
+            
+            //$amount=intval($amount);
+            Log::debug('Formato Monto: ', ['amount' =>$amount]);
+            Log::debug('Token antes del MD5: ', ['token_antes' =>$privateKey.$pago->id.$amount.'USD']);
+            //$token = hash('sha256', $privateKey.$pago->id.$amount.'USD');
             $token = md5($privateKey.$pago->id.$amount.'USD');
 
             Log::debug('Token generado para Bancard', ['token' => $token]);
@@ -92,7 +98,13 @@ public function iniciarPago(Request $request)
                     'amount' => $amount,
                     'description' => "Pagos Bancard y Vision Mundo",
                     'return_url' => route('pagos.callback', $pago->id),
-                    'cancel_url' => route('pagos.cancelar', $pago)
+                    'cancel_url' => route('pagos.cancelar', $pago),
+                    'additional_data' => [
+                        '3ds' => [
+                            'enabled' => true,
+                            'challenge_indicator' => '02' // 02 = 3DS obligatorio
+                        ]
+                    ]
                 ]
             ];
 
@@ -144,13 +156,13 @@ public function iniciarPago(Request $request)
     public function handleCallback(Request $request, $pagoId) {
         $operation = $request->input('operation');
         $pago = Pago::find($pagoId);
-
+         // dd($request->all()); // 👈 Esto detiene todo y te muestra lo que Bancard devolvió
         // Verificar autenticación 3DS
         if (($operation['security_information']['3d_secure'] ?? null) !== 'authenticated') {
             $pago->update(['estado' => 'fallido_3ds']);
              // Redirigir a la ruta 'carritos.show' con el ID correspondiente
-             return redirect()->route('carritos.show')->with('error', '¡Falla de seguridad 3DS!');
-           // return response()->json(['error' => 'Falla en 3DS'], 400);
+            // return redirect()->route('carritos.show')->with('error', '¡Falla de seguridad 3DS!');
+            return response()->json(['error' => 'Falla en 3DS'], 400);
         }
 
         // Pago exitoso
