@@ -489,7 +489,7 @@
 
             try {
                 await loadBancardSDK();
-                
+                alert("hola");
                 const response = await fetch("{{ route('pagos.iniciar') }}", {
                     method: 'POST',
                     headers: {
@@ -505,7 +505,7 @@
                 });
             
                 const data = await response.json();
-                alert(data.process_id);
+                //alert(data.process_id);
                 
                 if (data.status !== 'success') {
                     throw new Error(data.message || 'Error al iniciar pago');
