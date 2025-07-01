@@ -87,7 +87,7 @@ class BancardController extends Controller
                 Log::debug('Token antes del MD5: ', ['token_antes' =>$privateKey.$pago->id.$amount.'USD']);
                 //$token = hash('sha256', $privateKey.$pago->id.$amount.'USD');
                 $token = md5($privateKey.$pago->id.$amount.'USD');
-                $amount = floatval($amount);
+               
                 Log::debug('Token generado para Bancard', ['token' => $token]);
 
                 $payload = [
