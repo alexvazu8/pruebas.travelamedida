@@ -155,7 +155,18 @@ class BancardController extends Controller
     }
     public function handleCallback(Request $request) {
         $operation = $request->input('operation');
-        print_r($request->all());
+        //print_r($request->all());
+         $data = $request->all(); // o $request->json()->all()
+
+        
+        if (isset($data['status']) && $data['status'] === 'payment_fail') {
+            // 2. Registrar el error para depuración (opcional)
+            Log::error('Callback de Bancard - Error:', $data);
+            return response()->json([
+                'success' => false,
+                'error'   => $data['error'] ?? 'ID de proceso no proporcionado',
+            ], 400); // Código HTTP 400: Bad Request
+        }
         $shopProcessId = $operation['shop_process_id'] ?? null;
 
         if (!$shopProcessId) {
