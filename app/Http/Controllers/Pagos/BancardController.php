@@ -157,7 +157,7 @@ class BancardController extends Controller
         $operation = $request->input('operation');
         //print_r($request->all());
          $data = $request->all(); // o $request->json()->all()
-         //print_r($data);
+         print_r($data);
         
         if (isset($data['status']) && $data['status'] === 'payment_fail') {
             // 2. Registrar el error para depuración (opcional)
