@@ -153,8 +153,9 @@ public function iniciarPago(Request $request)
         }
     });
 }
-    public function handleCallback(Request $request, $pagoId) {
+    public function handleCallback(Request $request) {
         $operation = $request->input('operation');
+         $pagoId = $request->input('operation.shop_process_id');
         $pago = Pago::find($pagoId);
          // dd($request->all()); // 👈 Esto detiene todo y te muestra lo que Bancard devolvió
         // Verificar autenticación 3DS
