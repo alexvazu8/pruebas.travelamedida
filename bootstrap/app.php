@@ -29,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
          $middleware->web( [ 
            // \Illuminate\Cookie\Middleware\EncryptCookies::class,
            // StartSession::class,
-           VerifyCsrfToken::class,  
+          // VerifyCsrfToken::class,  
            LocaleMiddleware::class,
         ]);
         // Configuraci��n est��ndar para API
