@@ -505,7 +505,7 @@
                 });
             
                 const data = await response.json();
-                //alert(data.process_id);
+                alert(data.process_id);
                 
                 if (data.status !== 'success') {
                     throw new Error(data.message || 'Error al iniciar pago');
