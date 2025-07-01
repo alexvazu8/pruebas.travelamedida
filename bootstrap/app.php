@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'guardaPost' => CapturePostData::class,
+           // 'guardaPost' => CapturePostData::class,
             'verifyPayment' => VerifyPayment::class,
             'cabecera.reserva' => VerificarCabeceraReserva::class
         ]);
@@ -29,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
          $middleware->web( [ 
            // \Illuminate\Cookie\Middleware\EncryptCookies::class,
            // StartSession::class,
-          // VerifyCsrfToken::class,  
+           VerifyCsrfToken::class,  
            LocaleMiddleware::class,
         ]);
         // Configuraci��n est��ndar para API
