@@ -171,6 +171,11 @@ class BancardController extends Controller
     echo "<pre>";
     print_r($data);
     echo "</pre>";
+    if (isset($data['operation']['shop_process_id'])) {
+        echo "OK: shop_process_id es " . $data['operation']['shop_process_id'];
+    } else {
+        echo "No existe shop_process_id";
+    }
 
     return response()->json(['mensaje' => 'Datos procesados correctamente', 'datos' => $data], 200);
 
