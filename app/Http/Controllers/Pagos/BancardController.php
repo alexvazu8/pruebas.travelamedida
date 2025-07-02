@@ -156,6 +156,18 @@ class BancardController extends Controller
       echo gettype($data); 
       $datajson=response()->json($data,200);
       print_r($datajson);
+      // Obtener el contenido JSON como string
+        $jsonContent = $datajson->getContent();
+
+        // Convertir a array asociativo
+        $dataArray = json_decode($jsonContent, true);
+
+        // Verificar y mostrar shop_process_id
+        if (isset($dataArray['operation']['shop_process_id'])) {
+            echo "OK: shop_process_id es " . $dataArray['operation']['shop_process_id'];
+        } else {
+            echo "No existe shop_process_id en el JSON decodificado";
+        }
 
     return response()->json(['mensaje' => 'Datos procesados correctamente', 'datos' => $data], 200);
 
