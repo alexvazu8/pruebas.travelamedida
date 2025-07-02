@@ -151,7 +151,7 @@ class BancardController extends Controller
     public function handleCallback(Request $request) {
 
        $raw = $request->getContent();
-        $data = json_decode($raw, true);
+        $data = json_encode($raw, true);
 
         if ($data === null) {
             // No es JSON válido, quizás venga como form-urlencoded
