@@ -151,9 +151,11 @@ class BancardController extends Controller
     public function handleCallback(Request $request) {
 
       // Datos que Laravel interpreta (GET y POST form)
-    $data = $request->all();
+      $data = $request->all();
 
-    echo gettype($data); 
+      echo gettype($data); 
+      $datajson=response()->json($data,200);
+      print_r($datajson);
 
     return response()->json(['mensaje' => 'Datos procesados correctamente', 'datos' => $data], 200);
 
