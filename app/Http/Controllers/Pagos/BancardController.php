@@ -150,10 +150,20 @@ class BancardController extends Controller
     }
     public function handleCallback(Request $request) {
 
-       
+       $raw = $request->getContent();
+        $data = json_decode($raw, true);
+
+        if ($data === null) {
+            // No es JSON válido, quizás venga como form-urlencoded
+            $data = $request->all();
+        }
+
         echo "<pre>";
-        print_r($request->getContent());   // Muestra el contenido crudo del cuerpo (raw body)
+        print_r($data);
         echo "</pre>";
+
+        return response()->json(['mensaje' => 'Datos procesados'], 200);
+
            // echo "<pre>";
            // print_r($request->all());
            // echo "</pre>";
