@@ -153,7 +153,7 @@ class BancardController extends Controller
       // Datos que Laravel interpreta (GET y POST form)
       $data = $request->all();
       print_r($data);
-      if(isset($data['id_pago']))
+      if(isset($data['id_pago'])&& $data['status']=="payment_success")
       {
         echo $data['id_pago'];
       }
