@@ -151,31 +151,8 @@ class BancardController extends Controller
     public function handleCallback(Request $request) {
 
       // Datos que Laravel interpreta (GET y POST form)
-    $dataLaravel = $request->all();
+    $data = $request->all();
 
-    // Contenido crudo del cuerpo
-    $rawContent = $request->getContent();
-
-    // Intento decodificar JSON del cuerpo
-    $jsonBody = json_decode($rawContent, true);
-
-    // Si el cuerpo es JSON válido, combinar con datos Laravel
-    if (is_array($jsonBody)) {
-        // Mezclamos datos sin perder información
-        $data = array_merge($dataLaravel, $jsonBody);
-    } else {
-        // Si no hay JSON válido, usamos solo lo que Laravel interpreta
-        $data = $dataLaravel;
-    }
-
-    echo "<pre>";
-    print_r($data);
-    echo "</pre>";
-    if (isset($data['operation']['shop_process_id'])) {
-        echo "OK: shop_process_id es " . $data['operation']['shop_process_id'];
-    } else {
-        echo "No existe shop_process_id";
-    }
     echo gettype($data); 
 
     return response()->json(['mensaje' => 'Datos procesados correctamente', 'datos' => $data], 200);
