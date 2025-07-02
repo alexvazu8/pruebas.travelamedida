@@ -150,9 +150,9 @@ class BancardController extends Controller
     }
     public function handleCallback(Request $request) {
 
-        echo $request->header('Content-Type');
+       
         echo "<pre>";
-        print_r($request->headers->all());
+        print_r($request->getContent());   // Muestra el contenido crudo del cuerpo (raw body)
         echo "</pre>";
            // echo "<pre>";
            // print_r($request->all());
