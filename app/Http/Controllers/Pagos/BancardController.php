@@ -150,19 +150,29 @@ class BancardController extends Controller
     }
     public function handleCallback(Request $request) {
 
-       $raw = $request->getContent();
-        $data = json_decode($raw, true);
+      // Datos que Laravel interpreta (GET y POST form)
+    $dataLaravel = $request->all();
 
-        if ($data === null) {
-            // No es JSON válido, quizás venga como form-urlencoded
-            $data = $request->all();
-        }
+    // Contenido crudo del cuerpo
+    $rawContent = $request->getContent();
 
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
+    // Intento decodificar JSON del cuerpo
+    $jsonBody = json_decode($rawContent, true);
 
-        return response()->json(['mensaje' => $data], 200);
+    // Si el cuerpo es JSON válido, combinar con datos Laravel
+    if (is_array($jsonBody)) {
+        // Mezclamos datos sin perder información
+        $data = array_merge($dataLaravel, $jsonBody);
+    } else {
+        // Si no hay JSON válido, usamos solo lo que Laravel interpreta
+        $data = $dataLaravel;
+    }
+
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
+
+    return response()->json(['mensaje' => 'Datos procesados correctamente', 'datos' => $data], 200);
 
            // echo "<pre>";
            // print_r($request->all());
