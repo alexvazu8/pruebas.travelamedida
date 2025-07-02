@@ -150,7 +150,10 @@ class BancardController extends Controller
     }
     public function handleCallback(Request $request) {
          $operation = $request->input('operation');
-        // Opción 1: Si los datos llegan como texto plano (ej: "Array(...) {...}")
+         print_r($request->all());
+         return response()->json(['exito' => $request->all()], 200);
+        /*
+         // Opción 1: Si los datos llegan como texto plano (ej: "Array(...) {...}")
             $rawContent = $request->getContent();
             
             // Extrae el JSON manualmente (si existe)
@@ -164,6 +167,7 @@ class BancardController extends Controller
             // Log para depuración (verifica qué llega realmente)
             Log::debug('Raw Bancard Callback:', ['raw' => $rawContent, 'decoded' => $decodedData]);
             */
+        /*
             // Procesa el estado de error
             if (($decodedData['success'] ?? null) === false || str_contains($rawContent, 'payment_fail')) {
                 return response()->json([
@@ -197,6 +201,7 @@ class BancardController extends Controller
         ]);
 
         return redirect()->route('reservas.confirmar');
+    */
     }
 
 
