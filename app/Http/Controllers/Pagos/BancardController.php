@@ -149,6 +149,8 @@ class BancardController extends Controller
         });
     }
     public function handleCallback(Request $request) {
+
+        echo $request->header('Content-Type');
             echo "<pre>";
             print_r($request->all());
             echo "</pre>";
