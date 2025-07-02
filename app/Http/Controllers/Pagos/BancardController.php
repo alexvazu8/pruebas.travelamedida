@@ -151,10 +151,10 @@ class BancardController extends Controller
     public function handleCallback(Request $request) {
 
         echo $request->header('Content-Type');
-            echo "<pre>";
-            print_r($request->all());
-            echo "</pre>";
-            return response()->json(['exito' => $request->all()], 200);
+           // echo "<pre>";
+           // print_r($request->all());
+           // echo "</pre>";
+           // return response()->json(['exito' => $request->all()], 200);
         /*
          // Opción 1: Si los datos llegan como texto plano (ej: "Array(...) {...}")
             $rawContent = $request->getContent();
