@@ -155,12 +155,16 @@ class BancardController extends Controller
       print_r($data);
       if(isset($data['id_pago'])&& $data['status']=="payment_success")
       {
-        echo $data['id_pago'];
+        return response()->json(['mensaje' => 'Pago Realizado', 'id_pago' => $data['id_pago']], 200);
+      }
+      else
+      {
+        return response()->json(['Error' => 'No se realizo el pago', 'id_pago' => $data['id_pago']], 400);
       }
 
    
 
-    return response()->json(['mensaje' => 'Datos procesados correctamente', 'datos' => $data], 200);
+    
 
            // echo "<pre>";
            // print_r($request->all());
