@@ -149,11 +149,10 @@ class BancardController extends Controller
         });
     }
     public function handleCallback(Request $request) {
-         $operation = $request->input('operation');
-         $jsonRaw = $request->getContent();
-         $data = json_decode($jsonRaw, true); // aquí sí necesitas json_decode
-         print_r($data);
-         return response()->json(['exito' => $request->all()], 200);
+            echo "<pre>";
+            print_r($request->all());
+            echo "</pre>";
+            return response()->json(['exito' => $request->all()], 200);
         /*
          // Opción 1: Si los datos llegan como texto plano (ej: "Array(...) {...}")
             $rawContent = $request->getContent();
