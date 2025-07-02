@@ -98,7 +98,7 @@ class BancardController extends Controller
                         'currency' => 'PYG',
                         'amount' => $amount,
                         'description' => "Pagos Bancard y Vision Mundo",
-                        'return_url' => route('pagos.callback'),
+                        'return_url' => route('pagos.callback',['id_pago' => $pago->id]),
                         'cancel_url' => route('pagos.cancelar', $pago)
                     ]
                 ];
@@ -152,22 +152,9 @@ class BancardController extends Controller
 
       // Datos que Laravel interpreta (GET y POST form)
       $data = $request->all();
+      print_r($data);
 
-      echo gettype($data); 
-      $datajson=response()->json($data,200);
-      print_r($datajson);
-      // Obtener el contenido JSON como string
-        $jsonContent = $datajson->getContent();
-
-        // Convertir a array asociativo
-        $dataArray = json_decode($jsonContent, true);
-
-        // Verificar y mostrar shop_process_id
-        if (isset($dataArray['operation']['shop_process_id'])) {
-            echo "OK: shop_process_id es " . $dataArray['operation']['shop_process_id'];
-        } else {
-            echo "No existe shop_process_id en el JSON decodificado";
-        }
+   
 
     return response()->json(['mensaje' => 'Datos procesados correctamente', 'datos' => $data], 200);
 
