@@ -176,6 +176,7 @@ class BancardController extends Controller
     } else {
         echo "No existe shop_process_id";
     }
+    echo gettype($data); 
 
     return response()->json(['mensaje' => 'Datos procesados correctamente', 'datos' => $data], 200);
 
