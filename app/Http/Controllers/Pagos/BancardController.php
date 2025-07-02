@@ -86,7 +86,7 @@ class BancardController extends Controller
                 Log::debug('Formato Monto: ', ['amount' =>$amount]);
                 Log::debug('Token antes del MD5: ', ['token_antes' =>$privateKey.$pago->id.$amount.'USD']);
                 //$token = hash('sha256', $privateKey.$pago->id.$amount.'USD');
-                $token = md5($privateKey.$pago->id.$amount.'USD');
+                $token = md5($privateKey.$pago->id.$amount.'PYG');
                
                 Log::debug('Token generado para Bancard', ['token' => $token]);
 
@@ -95,17 +95,11 @@ class BancardController extends Controller
                     'operation' => [
                         'token' => $token,
                         'shop_process_id' => $pago->id,
-                        'currency' => 'USD',
+                        'currency' => 'PYG',
                         'amount' => $amount,
                         'description' => "Pagos Bancard y Vision Mundo",
                         'return_url' => route('pagos.callback', $pago->id),
-                        'cancel_url' => route('pagos.cancelar', $pago),
-                        'additional_data' => [
-                            '3ds' => [
-                                'enabled' => true,
-                                'challenge_indicator' => '02' // 02 = 3DS obligatorio
-                            ]
-                        ]
+                        'cancel_url' => route('pagos.cancelar', $pago)
                     ]
                 ];
 
