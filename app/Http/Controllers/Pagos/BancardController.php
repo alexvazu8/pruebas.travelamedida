@@ -162,7 +162,7 @@ class BancardController extends Controller
             'fecha_pago' => now()
            // 'autorizacion' => $operation['authorization_number'] ?? null
         ]);
-        return redirect()->route('reservas.showReserva');
+        return redirect()->route('carritos.show');
        // return response()->json(['mensaje' => 'Pago Realizado', 'id_pago' => $data['id_pago']], 200);
       }
       else
