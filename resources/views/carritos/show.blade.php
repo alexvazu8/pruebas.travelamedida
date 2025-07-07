@@ -439,8 +439,8 @@
         
     document.addEventListener('DOMContentLoaded', function() {
        
-       const tokenVM = {{ $tokenVM }};
-       alert(tokenVM);
+      // const tokenVM = {{ $tokenVM }};
+       //alert(tokenVM);
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
