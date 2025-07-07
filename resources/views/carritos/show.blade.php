@@ -25,6 +25,7 @@
         @if(isset($respuestas['Precio_total_carrito']))
             @php
             $exp=$respuestas[0]['expiration_token'];
+            $tokenVM = Cache::get('api_access_token');
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
@@ -437,7 +438,9 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
-       alert("hola");
+       
+       const tokenVM = {{ $tokenVM }};
+       alert(tokenVM);
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
