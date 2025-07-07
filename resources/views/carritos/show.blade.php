@@ -440,14 +440,14 @@
 @endsection
 @section('scripts')
     <script>
-        
+                const tokenVM = {{ $tokenVM }};
+                alert(tokenVM);    
     document.addEventListener('DOMContentLoaded', function() {
        //para verificar cada 2 segundos si esta pagado.
        // Verificación de estado de pago con tarjeta.
 
                        
-                const tokenVM = {{ $tokenVM }};
-                alert(tokenVM);
+
                 const checkInterval = setInterval(async () => {
                     const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
                     const statusData = await statusResponse.json();
