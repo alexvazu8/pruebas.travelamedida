@@ -26,7 +26,7 @@
             @php
             $exp=$respuestas[0]['expiration_token'];
             $tokenVM = Cache::get('api_access_token');
-            dd($tokenVM);
+            //dd($tokenVM);
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
