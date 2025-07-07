@@ -441,7 +441,8 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
-           const tokenVM = @json(Cache::get('api_access_token'));
+        @if(session('bandera_pago'))  
+         const tokenVM = @json(Cache::get('api_access_token'));
            
           // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
@@ -456,6 +457,9 @@
                         alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
                 }, 2000);
+        @else
+            const banderaPago = false; // Valor por defecto
+        @endif
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
