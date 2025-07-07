@@ -32,6 +32,7 @@
                 // Timestamp de expiración (pasado desde Laravel)
                 const expTimestamp = {{ $exp }};
                 const tokenVM = {{ $tokenVM }};
+                alert (tokenVM);
                 const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
                 const totalDuration = expTimestamp - startTime;
 
