@@ -32,6 +32,7 @@
                 // Timestamp de expiración (pasado desde Laravel)
                 const expTimestamp = {{ $exp }};
                 const tokenVM = {{ $tokenVM }};
+                alert(tokenVM);
                 const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
                 const totalDuration = expTimestamp - startTime;
 
@@ -440,9 +441,7 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
-       
-      
-       alert(tokenVM);
+          
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
