@@ -441,8 +441,8 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
-           const apiAccessToken = @json(Cache::get('api_access_token'));
-           alert(apiAccessToken);
+           const tokenVM = @json(Cache::get('api_access_token'));
+          
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
@@ -535,7 +535,7 @@
 
                 // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
-                    const statusResponse = await fetch(`/pagos/verificar-estado/${data.pago_id}`);
+                    const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
                     const statusData = await statusResponse.json();
 
                     if (statusData.status === 'PAGADO') {
