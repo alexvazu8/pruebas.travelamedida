@@ -442,12 +442,12 @@
         
     document.addEventListener('DOMContentLoaded', function() {
            const tokenVM = @json(Cache::get('api_access_token'));
-           alert(tokenVM);
+           
           // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
                     const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
                     const statusData = await statusResponse.json();
-
+                    alert(statusData);
                     if (statusData.status === 'PAGADO') {
                         clearInterval(checkInterval);
                         modal.hide();
