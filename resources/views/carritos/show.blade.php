@@ -439,26 +439,7 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
-       //para verificar cada 2 segundos si esta pagado.
-       // Verificación de estado de pago con
-                const checkInterval = setInterval(async () => {
-                    const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
-                    const statusData = await statusResponse.json();
 
-                    if (statusData.status === 'PAGADO') {
-                        clearInterval(checkInterval);
-                        modal.hide();
-                        window.location.href = "{{ route('reservas.confirmar') }}";
-                    } else if (statusData.status === 'requires_3ds_action') {
-                        // Caso especial: Bancard requiere acción del usuario en 3DS
-                        clearInterval(checkInterval);
-                        // No ocultar el modal (el iframe 3DS ya está visible)
-                    } else if (statusData.status === 'fallido') {
-                        clearInterval(checkInterval);
-                        modal.hide();
-                        alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
-                    }
-                }, 2000);
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
@@ -549,7 +530,25 @@
                     );
                 }
 
-                
+                // Verificación de estado (modificado para 3DS)
+                const checkInterval = setInterval(async () => {
+                    const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
+                    const statusData = await statusResponse.json();
+
+                    if (statusData.status === 'PAGADO') {
+                        clearInterval(checkInterval);
+                        modal.hide();
+                        window.location.href = "{{ route('reservas.confirmar') }}";
+                    } else if (statusData.status === 'requires_3ds_action') {
+                        // Caso especial: Bancard requiere acción del usuario en 3DS
+                        clearInterval(checkInterval);
+                        // No ocultar el modal (el iframe 3DS ya está visible)
+                    } else if (statusData.status === 'fallido') {
+                        clearInterval(checkInterval);
+                        modal.hide();
+                        alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
+                    }
+                }, 2000);
 
             } catch (error) {
                 console.error('Error:', error);
