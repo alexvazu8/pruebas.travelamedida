@@ -51,7 +51,7 @@ class ReservasController extends Controller
        } else {
                     
            $jsonResponse= response()->json($response->json());
-           //print_r(response()->json($jsonResponse));
+           dd(response()->json($jsonResponse));
            // Limpiar caché relacionada con el token anterior
             Cache::forget('api_access_token');
             Cache::forget('api_access_token_expire_at');
