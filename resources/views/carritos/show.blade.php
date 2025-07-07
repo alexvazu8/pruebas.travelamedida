@@ -437,7 +437,7 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
-
+       alert("hola");
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
