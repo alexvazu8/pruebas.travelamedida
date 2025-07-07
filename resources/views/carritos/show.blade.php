@@ -447,7 +447,7 @@
                 const checkInterval = setInterval(async () => {
                     const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
                     const statusData = await statusResponse.json();
-                    alert(statusData);
+                    alert(statusData.status);
                     if (statusData.status === 'PAGADO') {
                         clearInterval(checkInterval);
                         modal.hide();
