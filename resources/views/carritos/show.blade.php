@@ -30,9 +30,9 @@
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
-                alert (tokenVM);
+
                 const expTimestamp = {{ $exp }};
-                const tokenVM = {{ $tokenVM }};
+                
                 
                 const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
                 const totalDuration = expTimestamp - startTime;
@@ -443,7 +443,11 @@
         
     document.addEventListener('DOMContentLoaded', function() {
        //para verificar cada 2 segundos si esta pagado.
-       // Verificación de estado de pago con tarjeta
+       // Verificación de estado de pago con tarjeta.
+
+                       
+                const tokenVM = {{ $tokenVM }};
+                alert(tokenVM);
                 const checkInterval = setInterval(async () => {
                     const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
                     const statusData = await statusResponse.json();
