@@ -25,12 +25,10 @@
         @if(isset($respuestas['Precio_total_carrito']))
             @php
             $exp=$respuestas[0]['expiration_token'];
-            $tokenVM=$respuestas[0]['token'];
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
                 const expTimestamp = {{ $exp }};
-                const tokenVM = {{ $tokenVM }};
                 const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
                 const totalDuration = expTimestamp - startTime;
 
@@ -532,7 +530,7 @@
 
                 // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
-                    const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
+                    const statusResponse = await fetch(`/pagos/verificar-estado/${data.pago_id}`);
                     const statusData = await statusResponse.json();
 
                     if (statusData.status === 'PAGADO') {
@@ -548,7 +546,7 @@
                         modal.hide();
                         alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
-                }, 2000);
+                }, 3000);
 
             } catch (error) {
                 console.error('Error:', error);
