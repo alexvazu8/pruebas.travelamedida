@@ -155,10 +155,18 @@ class BancardController extends Controller
       print_r($data);
       if(isset($data['id_pago'])&& $data['status']=="payment_success")
       {
-        return response()->json(['mensaje' => 'Pago Realizado', 'id_pago' => $data['id_pago']], 200);
+         $pago = Pago::find($data['id_pago']);
+        // Pago exitoso
+        $pago->update([
+            'estado' => 'PAGADO',
+            'fecha_pago' => now()
+           // 'autorizacion' => $operation['authorization_number'] ?? null
+        ]);
+        return redirect()->route('reservas.showReserva');
+       // return response()->json(['mensaje' => 'Pago Realizado', 'id_pago' => $data['id_pago']], 200);
       }
       else
-      {
+      { // return redirect()->route('reservas.showReserva');
         return response()->json(['Error' => 'No se realizo el pago', 'id_pago' => $data['id_pago']], 400);
       }
 
