@@ -25,7 +25,8 @@
         @if(isset($respuestas['Precio_total_carrito']))
             @php
             $exp=$respuestas[0]['expiration_token'];
-            $tokenVM=$respuestas[0]['token'];
+            dd($respuestas);
+            //$tokenVM=$respuestas[0]['token'];
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
