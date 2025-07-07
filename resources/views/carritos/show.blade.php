@@ -25,15 +25,12 @@
         @if(isset($respuestas['Precio_total_carrito']))
             @php
             $exp=$respuestas[0]['expiration_token'];
-            
-            $tokenVM = Cache::get('api_access_token');;
+            $tokenVM=$respuestas[0]['token'];
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
-
                 const expTimestamp = {{ $exp }};
-                
-                
+                const tokenVM = {{ $tokenVM }};
                 const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
                 const totalDuration = expTimestamp - startTime;
 
@@ -440,14 +437,10 @@
 @endsection
 @section('scripts')
     <script>
-                const tokenVM = {{ $tokenVM }};
-                alert(tokenVM);    
+        
     document.addEventListener('DOMContentLoaded', function() {
        //para verificar cada 2 segundos si esta pagado.
-       // Verificación de estado de pago con tarjeta.
-
-                       
-
+       // Verificación de estado de pago con
                 const checkInterval = setInterval(async () => {
                     const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
                     const statusData = await statusResponse.json();
