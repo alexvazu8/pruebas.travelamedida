@@ -26,10 +26,12 @@
             @php
             $exp=$respuestas[0]['expiration_token'];
             $tokenVM = Cache::get('api_access_token');
+            dd($tokenVM);
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
                 const expTimestamp = {{ $exp }};
+                const tokenVM = {{ $tokenVM }};
                 const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
                 const totalDuration = expTimestamp - startTime;
 
@@ -439,7 +441,7 @@
         
     document.addEventListener('DOMContentLoaded', function() {
        
-      // const tokenVM = {{ $tokenVM }};
+      
        //alert(tokenVM);
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
