@@ -25,9 +25,8 @@
         @if(isset($respuestas['Precio_total_carrito']))
             @php
             $exp=$respuestas[0]['expiration_token'];
-            dd(Cache::get('api_access_token'));
-            dd($respuestas);
-            //$tokenVM=$respuestas[0]['token'];
+            
+            $tokenVM = Cache::get('api_access_token');;
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
