@@ -442,6 +442,7 @@
         
     document.addEventListener('DOMContentLoaded', function() {
            const tokenVM = @json(Cache::get('api_access_token'));
+           alert(tokenVM);
           // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
                     const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
