@@ -449,16 +449,10 @@
                     const statusData = await statusResponse.json();
                     alert(statusData.status);
                     if (statusData.status === 'PAGADO') {
-                        clearInterval(checkInterval);
-                        modal.hide();
-                        window.location.href = "{{ route('reservas.confirmar') }}";
-                    } else if (statusData.status === 'requires_3ds_action') {
-                        // Caso especial: Bancard requiere acción del usuario en 3DS
-                        clearInterval(checkInterval);
-                        // No ocultar el modal (el iframe 3DS ya está visible)
-                    } else if (statusData.status === 'fallido') {
-                        clearInterval(checkInterval);
-                        modal.hide();
+                        
+                        document.getElementById('formReserva').submit();
+                    }else{
+                     
                         alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
                 }, 2000);
