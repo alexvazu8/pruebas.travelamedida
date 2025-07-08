@@ -166,10 +166,11 @@ class BancardController extends Controller
             Log::error('Pago no encontrado', ['shop_process_id' => $operation['shop_process_id']]);
             return response()->json(['error' => 'Pago no existe'], 404);
         }
-
+        //  Determinar el estado real (considerando response_code)
+        $estado = $this->determinarEstado($operation['response'], $operation['response_code']);
         // 3. Actualizar el pago con todos los datos de Bancard
-        $pago->update([
-            'estado' => $operation['response'] === 'S' ? 'PAGADO' : 'RECHAZADO',
+        $pago-> update([
+            'estado' => $estado,
             'fecha_pago' => now(),
             'autorizacion' => $operation['authorization_number'] ?? null,            
             // Agrega otros campos si son necesarios
@@ -186,6 +187,15 @@ class BancardController extends Controller
         
 
    
+    }
+
+    // Método auxiliar para determinar el estado
+    private function determinarEstado($response, $responseCode)
+    {
+        if ($response === 'S') {
+            return ($responseCode == '00') ? 'PAGADO' : 'DUPLICADO'; // Código 00 = éxito real
+        }
+        return 'RECHAZADO'; // Para response = "F"
     }
 
 
