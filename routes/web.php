@@ -98,5 +98,5 @@ Route::get('/pagos/verificar-estado/{pagoId}', [BancardController::class, 'verif
 //cancelado
 Route::post('/pagos/cancelar/{pago}', [BancardController::class, 'cancelar'])->name('pagos.cancelar');
 
-
-Route::resource('tipos-cambios', TiposCambioController::class)->middleware('auth');
+//requiere trabajar en roles y permisos para poder usarla
+//Route::resource('tipos-cambios', TiposCambioController::class)->middleware('auth');
