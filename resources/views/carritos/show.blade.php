@@ -441,8 +441,10 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
-        alert("hola");
-        @if(isset($status) && $status == 'payment_success')
+        const status = "{{ $status ?? '' }}";  // "" si no existe
+        
+        if (status === "payment_success") {
+            alert("¡Pago exitoso (desde JS)!");
         
          const tokenVM = @json(Cache::get('api_access_token'));
            
@@ -459,9 +461,8 @@
                         alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
                 }, 2000);
-        @else
-            const banderaPago = false; // Valor por defecto
-        @endif
+        }//fin del si el pago es satisfactorio
+        
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
