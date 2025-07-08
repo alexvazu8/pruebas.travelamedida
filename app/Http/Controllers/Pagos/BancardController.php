@@ -54,14 +54,6 @@ class BancardController extends Controller
                     'expiration_tokenVM' => $expiration_tokenVM
                 ]);
 
-                               // Obtener el último tipo de cambio registrado para USD → PYG
-                $ultimoTipoCambio = TiposCambio::where('moneda_origen', 'USD')
-                    ->where('moneda_destino', 'PYG')
-                    ->latest('fecha_validez') // Ordena por fecha más reciente
-                    ->first();
-                    
-                //monto en Guaranies PYG
-                $amount=$request->amount*$ultimoTipoCambio->tasa_cambio;
 
                 // Crear registro de pago
                 $pago = Pago::create([
@@ -87,9 +79,19 @@ class BancardController extends Controller
                     'apiUrl' => $apiUrl
                 ]);
 
+                               // Obtener el último tipo de cambio registrado para USD → PYG
+                $ultimoTipoCambio = TiposCambio::where('moneda_origen', 'USD')
+                    ->where('moneda_destino', 'PYG')
+                    ->latest('fecha_validez') // Ordena por fecha más reciente
+                    ->first();
+                    
+                //monto en Guaranies PYG
+                
+                
+
                 // Generar token
-                $amount = number_format($amount, 2, '.', '');
-               
+                $amount = number_format($request->amount, 2, '.', '');
+                $amount=$amount*$ultimoTipoCambio->tasa_cambio;
  
                 
                 //$amount=intval($amount);
