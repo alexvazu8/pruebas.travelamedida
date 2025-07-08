@@ -459,7 +459,7 @@
                      
                         alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
-                }, 2000);
+                }, 1000);
         }//fin del si el pago es satisfactorio
 
        // Configuración para Bancard (sin cambios)
