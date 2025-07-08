@@ -150,84 +150,28 @@ class BancardController extends Controller
     }
     public function handleCallback(Request $request) {
 
-      // Datos que Laravel interpreta (GET y POST form)
-      $data = $request->all();
-      print_r($data);
-      if(isset($data['id_pago'])&& $data['status']=="payment_success")
-      {
-         $pago = Pago::find($data['id_pago']);
-        // Pago exitoso
-        $pago->update([
-            'estado' => 'PAGADO',
-            'fecha_pago' => now()
-           // 'autorizacion' => $operation['authorization_number'] ?? null
-        ]);
-        return redirect()->route('carritos.show')->with('bandera_pago', true);
-       // return response()->json(['mensaje' => 'Pago Realizado', 'id_pago' => $data['id_pago']], 200);
-      }
-      else
-      { // return redirect()->route('reservas.showReserva');
-        return response()->json(['Error' => 'No se realizo el pago', 'id_pago' => $data['id_pago']], 400);
-      }
+        // Datos que Laravel interpreta (GET y POST form)
+        $data = $request->all();
+        //print_r($data);
+        if(isset($data['id_pago'])&& $data['status']=="payment_success")
+        {
+            $pago = Pago::find($data['id_pago']);
+            // Pago exitoso
+            $pago->update([
+                'estado' => 'PAGADO',
+                'fecha_pago' => now()
+            // 'autorizacion' => $operation['authorization_number'] ?? null
+            ]);
+          //  return redirect()->route('carritos.show')->with('bandera_pago', true);
+         return response()->json(['mensaje' => 'Pago Realizado', 'id_pago' => $data['id_pago']], 200);
+        }
+        else
+        { 
+            // return redirect()->route('reservas.showReserva');
+            return response()->json(['Error' => 'No se realizo el pago', 'id_pago' => $data['id_pago']], 400);
+        }
 
    
-
-    
-
-           // echo "<pre>";
-           // print_r($request->all());
-           // echo "</pre>";
-           // return response()->json(['exito' => $request->all()], 200);
-        /*
-         // Opción 1: Si los datos llegan como texto plano (ej: "Array(...) {...}")
-            $rawContent = $request->getContent();
-            
-            // Extrae el JSON manualmente (si existe)
-            preg_match('/\{(.*?)\}/', $rawContent, $matches);
-            $jsonData = $matches[0] ?? '{}';
-            $decodedData = json_decode($jsonData, true); // Convierte JSON a array
-
-           /* // Opción 2: Si los datos llegan como form-data o JSON estándar
-            $requestData = $request->all(); // Usar esto si el request está bien formado
-
-            // Log para depuración (verifica qué llega realmente)
-            Log::debug('Raw Bancard Callback:', ['raw' => $rawContent, 'decoded' => $decodedData]);
-            */
-        /*
-            // Procesa el estado de error
-            if (($decodedData['success'] ?? null) === false || str_contains($rawContent, 'payment_fail')) {
-                return response()->json([
-                    'status'  => 'error',
-                    'message' => $decodedData['error'] ?? 'Error desconocido en el pago',
-                ], 400);
-            }
-        $shopProcessId = $operation['shop_process_id'] ?? null;
-
-        if (!$shopProcessId) {
-            return response()->json(['error' => 'ID de proceso no proporcionado'], 400);
-        }
-
-        $pago = Pago::find($shopProcessId);
-
-        if (!$pago) {
-            return response()->json(['error' => 'Pago no encontrado'], 404);
-        }
-
-        // Verificar autenticación 3DS
-        if (($operation['security_information']['3d_secure'] ?? null) !== 'authenticated') {
-            $pago->update(['estado' => 'fallido_3ds']);
-            return response()->json(['error' => 'Falla en 3DS'], 400);
-        }
-
-        // Pago exitoso
-        $pago->update([
-            'estado' => 'PAGADO',
-            'fecha_pago' => now(),
-            'autorizacion' => $operation['authorization_number'] ?? null
-        ]);
-
-        return redirect()->route('reservas.confirmar');
-    */
     }
 
 
