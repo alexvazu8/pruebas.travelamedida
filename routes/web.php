@@ -8,6 +8,7 @@ use App\Http\Controllers\HotelesController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\ReservasController;
+use App\Http\Controllers\TiposCambioController;
 use App\Http\Controllers\ToursController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -98,4 +99,4 @@ Route::get('/pagos/verificar-estado/{pagoId}', [BancardController::class, 'verif
 Route::post('/pagos/cancelar/{pago}', [BancardController::class, 'cancelar'])->name('pagos.cancelar');
 
 
-
+Route::resource('tipos-cambios', TiposCambioController::class)->middleware('auth');

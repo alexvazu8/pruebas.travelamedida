@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('moneda_origen', 3); // Ej: 'USD'
             $table->char('moneda_destino', 3); // Ej: 'PYG'
-            $table->decimal('tasa_cambio', 18, 6); // 7300.00
+            $table->decimal('tasa_cambio', 18, 2); // 7300.00
             $table->timestamp('fecha_validez');
             $table->timestamps();
         });
