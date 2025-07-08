@@ -441,7 +441,9 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
+        alert("hola");
         @if(isset($status) && $status == 'payment_success')
+        
          const tokenVM = @json(Cache::get('api_access_token'));
            
           // Verificación de estado (modificado para 3DS)
