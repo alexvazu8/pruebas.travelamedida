@@ -91,7 +91,7 @@ class BancardController extends Controller
 
                 // Generar token
                 $amount = number_format($request->amount, 2, '.', '');
-                $amount=$amount*$ultimoTipoCambio['tasa_cambio'];
+                $amount=$amount* $amount = number_format($ultimoTipoCambio['tasa_cambio'], 2, '.', '');
  
                 
                 //$amount=intval($amount);
