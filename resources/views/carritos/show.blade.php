@@ -442,10 +442,9 @@
         
     document.addEventListener('DOMContentLoaded', function() {
         const status = "{{ request('status') }}"; // Captura ?status=value desde la URL
-        alert(status);
-        if (status === "payment_success") {
-            alert("¡Pago exitoso (desde JS)!");
         
+        if (status === "payment_success") {
+           
          const tokenVM = @json(Cache::get('api_access_token'));
            
           // Verificación de estado (modificado para 3DS)

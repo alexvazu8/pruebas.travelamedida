@@ -149,30 +149,41 @@ class BancardController extends Controller
         });
     }
     public function handleCallback(Request $request) {
+         $data = $request->all();
+        $operation = $data['operation'];
 
-        // Datos que Laravel interpreta (GET y POST form)
-        $data = $request->all();
-        print_r($data);
-        Log::info('Callback', [
-            'data' => $data['id_pago']
+        // 1. Validar el token (seguridad crítica)
+        $validToken = md5(env('BANCARD_PRIVATE_KEY') . $operation['shop_process_id'] . $operation['response']);
+        if ($operation['token'] !== $validToken) {
+            Log::error('Token inválido', ['received' => $operation['token'], 'expected' => $validToken]);
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // 2. Buscar el pago por shop_process_id (no por id_pago)
+        
+        $pago = Pago::find($operation['shop_process_id']);
+        if (!$pago) {
+            Log::error('Pago no encontrado', ['shop_process_id' => $operation['shop_process_id']]);
+            return response()->json(['error' => 'Pago no existe'], 404);
+        }
+
+        // 3. Actualizar el pago con todos los datos de Bancard
+        $pago->update([
+            'estado' => $operation['response'] === 'S' ? 'PAGADO' : 'RECHAZADO',
+            'fecha_pago' => now(),
+            'autorizacion' => $operation['authorization_number'] ?? null,            
+            // Agrega otros campos si son necesarios
         ]);
-        if(isset($data['id_pago'])&& $data['status']=="payment_success")
-        {
-            $pago = Pago::find($data['id_pago']);
-            // Pago exitoso
-            $pago->update([
-                'estado' => 'PAGADO',
-                'fecha_pago' => now()
-            // 'autorizacion' => $operation['authorization_number'] ?? null
-            ]);
-          //  return redirect()->route('carritos.show')->with('bandera_pago', true);
-         return response()->json(['mensaje' => 'Pago Realizado', 'id_pago' => $data['id_pago']], 200);
-        }
-        else
-        { 
-            // return redirect()->route('reservas.showReserva');
-            return response()->json(['Error' => 'No se realizo el pago', 'id_pago' => $data['id_pago']], 400);
-        }
+
+        // 4. Registrar éxito
+        Log::info('Pago actualizado', [
+            'pago_id' => $pago->id,
+            'nuevo_estado' => $pago->estado
+        ]);
+
+        return response()->json(['status' => 'success'], 200);
+        
+        
 
    
     }
