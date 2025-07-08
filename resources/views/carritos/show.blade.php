@@ -31,7 +31,7 @@
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
                 const expTimestamp = {{ $exp }};
-            
+                const status = "{{ $status ?? '' }}";  // "" si no existe
                 
                 const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
                 const totalDuration = expTimestamp - startTime;
@@ -441,7 +441,7 @@
     <script>
         
     document.addEventListener('DOMContentLoaded', function() {
-        const status = "{{ $status ?? '' }}";  // "" si no existe
+       
         alert(status);
         if (status === "payment_success") {
             alert("¡Pago exitoso (desde JS)!");
