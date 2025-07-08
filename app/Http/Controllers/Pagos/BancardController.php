@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pagos;
 use App\Http\Controllers\Controller;
 use App\Models\Pago;
 use App\Models\Reserva;
+use App\Models\TiposCambio;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +54,14 @@ class BancardController extends Controller
                     'expiration_tokenVM' => $expiration_tokenVM
                 ]);
 
+                               // Obtener el último tipo de cambio registrado para USD → PYG
+                $ultimoTipoCambio = TiposCambio::where('moneda_origen', 'USD')
+                    ->where('moneda_destino', 'PYG')
+                    ->latest('fecha_validez') // Ordena por fecha más reciente
+                    ->first();
+                //monto en Guaranies PYG
+                $amount=$request->amount*$ultimoTipoCambio;
+
                 // Crear registro de pago
                 $pago = Pago::create([
                     'monto' => $request->amount,
@@ -78,9 +87,9 @@ class BancardController extends Controller
                 ]);
 
                 // Generar token
-                $amount = number_format($request->amount, 2, '.', '');
+                $amount = number_format($amount, 2, '.', '');
                
-            // $amount=$amount*100;
+ 
                 
                 //$amount=intval($amount);
                 Log::debug('Formato Monto: ', ['amount' =>$amount]);
