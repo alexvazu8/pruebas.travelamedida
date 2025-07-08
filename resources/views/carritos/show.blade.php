@@ -451,7 +451,7 @@
                 const checkInterval = setInterval(async () => {
                     const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
                     const statusData = await statusResponse.json();
-                    alert(statusData.status);
+                    //alert(statusData.status);
                     if (statusData.status === 'PAGADO') {
                         
                         document.getElementById('formReserva').submit();

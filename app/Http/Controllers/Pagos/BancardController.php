@@ -151,13 +151,13 @@ class BancardController extends Controller
     public function handleCallback(Request $request) {
          $data = $request->all();
         $operation = $data['operation'];
-
+           
         // 1. Validar el token (seguridad crítica)
-      /*  $validToken = md5(env('BANCARD_PRIVATE_KEY') . $operation['shop_process_id'] . $operation['response']);
+        $validToken = md5(env('BANCARD_PRIVATE_KEY') . $operation['shop_process_id'] ."confirm". $operation['amount']. $operation['currency']);
         if ($operation['token'] !== $validToken) {
             Log::error('Token inválido', ['received' => $operation['token'], 'expected' => $validToken]);
             return response()->json(['error' => 'Unauthorized'], 403);
-        }*/
+        }
 
         // 2. Buscar el pago por shop_process_id (no por id_pago)
         
