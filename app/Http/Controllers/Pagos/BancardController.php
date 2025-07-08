@@ -98,7 +98,7 @@ class BancardController extends Controller
                         'currency' => 'PYG',
                         'amount' => $amount,
                         'description' => "Pagos Bancard y Vision Mundo",
-                        'return_url' => route('pagos.callback',['id_pago' => $pago->id]),
+                        'return_url' => route('carritos.show',['id_pago' => $pago->id]),
                         'cancel_url' => route('pagos.cancelar', $pago)
                     ]
                 ];
