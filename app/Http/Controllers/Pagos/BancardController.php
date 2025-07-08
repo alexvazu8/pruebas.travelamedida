@@ -59,6 +59,7 @@ class BancardController extends Controller
                     ->where('moneda_destino', 'PYG')
                     ->latest('fecha_validez') // Ordena por fecha más reciente
                     ->first();
+                    dd($ultimoTipoCambio);
                 //monto en Guaranies PYG
                 $amount=$request->amount*$ultimoTipoCambio;
 
