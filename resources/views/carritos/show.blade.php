@@ -442,7 +442,7 @@
         
     document.addEventListener('DOMContentLoaded', function() {
         const status = "{{ $status ?? '' }}";  // "" si no existe
-        
+        alert(status);
         if (status === "payment_success") {
             alert("¡Pago exitoso (desde JS)!");
         
@@ -462,7 +462,7 @@
                     }
                 }, 2000);
         }//fin del si el pago es satisfactorio
-        
+
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
