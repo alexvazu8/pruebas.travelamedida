@@ -16,6 +16,16 @@ use Illuminate\Support\Facades\Log;
 
 class BancardController extends Controller
 {
+
+    protected function tc()
+    {
+        $ultimoTipoCambio = TiposCambio::where('moneda_origen', 'USD')
+                    ->where('moneda_destino', 'PYG')
+                    ->latest('fecha_validez') // Ordena por fecha más reciente
+                    ->first();
+                    print_r($ultimoTipoCambio['tasa_cambio']);
+                    return true;
+    }
     protected function generateUniqueGuid(): string
     {
         do {
@@ -79,19 +89,19 @@ class BancardController extends Controller
                     'apiUrl' => $apiUrl
                 ]);
 
-                               // Obtener el último tipo de cambio registrado para USD → PYG
+                // Obtener el último tipo de cambio registrado para USD → PYG
                 $ultimoTipoCambio = TiposCambio::where('moneda_origen', 'USD')
                     ->where('moneda_destino', 'PYG')
                     ->latest('fecha_validez') // Ordena por fecha más reciente
                     ->first();
                     
-                //monto en Guaranies PYG
-                
-                
+               
+                             
 
-                // Generar token
+                // formato de monto
                 $amount = number_format($request->amount, 2, '.', '');
-                $amount=$amount* $amount = number_format($ultimoTipoCambio['tasa_cambio'], 2, '.', '');
+                 //monto en Guaranies PYG
+                $amount=$amount*number_format($ultimoTipoCambio['tasa_cambio'], 2, '.', '');
  
                 
                 //$amount=intval($amount);

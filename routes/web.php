@@ -100,3 +100,5 @@ Route::post('/pagos/cancelar/{pago}', [BancardController::class, 'cancelar'])->n
 
 //requiere trabajar en roles y permisos para poder usarla
 //Route::resource('tipos-cambios', TiposCambioController::class)->middleware('auth');
+
+//Route::get('/tipocambio',[BancardController::class, 'tc']);
