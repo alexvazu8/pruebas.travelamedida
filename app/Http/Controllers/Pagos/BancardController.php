@@ -23,8 +23,8 @@ class BancardController extends Controller
                     ->where('moneda_destino', 'PYG')
                     ->latest('fecha_validez') // Ordena por fecha más reciente
                     ->first();
-                    print_r($ultimoTipoCambio['tasa_cambio']);
-                    return true;
+                    //print_r($ultimoTipoCambio['tasa_cambio']);
+                    return number_format($ultimoTipoCambio['tasa_cambio'], 2, '.', '');
     }
     protected function generateUniqueGuid(): string
     {
@@ -108,7 +108,7 @@ class BancardController extends Controller
                 
                 //$amount=intval($amount);
                 Log::debug('Formato Monto: ', ['amount' =>$amount]);
-                Log::debug('Token antes del MD5: ', ['token_antes' =>$privateKey.$pago->id.$amount.'USD']);
+                Log::debug('Token antes del MD5: ', ['token_antes' =>$privateKey.$pago->id.$amount.'PYG']);
                 //$token = hash('sha256', $privateKey.$pago->id.$amount.'USD');
                 $token = md5($privateKey.$pago->id.$amount.'PYG');
                

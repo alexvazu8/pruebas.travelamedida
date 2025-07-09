@@ -125,10 +125,11 @@
                         </div>
                         
                         <button type="button" id="btnMostrarQR" class=" btn-crypto text-white px-4">
-                            <i class="bi bi-qr-code me-2"></i> USDT (Cripto)
+                            <i class="bi bi-qr-code me-2"></i> USDT {{ number_format($respuestas['Precio_total_carrito'], 2) }} (Cripto)
                         </button>
+
                         <button type="button" id="btnMostrarTarjeta" class=" btn-card text-white px-4">
-                            <i class="bi bi-credit-card me-2"></i> Tarjeta (USD)
+                            <i class="bi bi-credit-card me-2"></i> Tarjeta {{ number_format($respuestas['Precio_total_carrito'], 2) }} (USD) -> {{ number_format($respuestas['Precio_total_carrito'], 2)*$tipoCambioGuaranies }} (Gs.)
                         </button>
                         
                     </div>

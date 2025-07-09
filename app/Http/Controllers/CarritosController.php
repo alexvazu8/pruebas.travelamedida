@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TiposCambio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class CarritosController extends Controller
 {
+    protected function tc_a_guaranies()
+    {
+        $ultimoTipoCambio = TiposCambio::where('moneda_origen', 'USD')
+                    ->where('moneda_destino', 'PYG')
+                    ->latest('fecha_validez') // Ordena por fecha más reciente
+                    ->first();
+                    //print_r($ultimoTipoCambio['tasa_cambio']);
+                    return number_format($ultimoTipoCambio['tasa_cambio'], 2, '.', '');
+    }
     //hacer la funcion show
     public function show()
     {  $error = session('error');
+        $tc_grs=$this->tc_a_guaranies();
         //usar ApiController
         $apiController = new ApiController();
         $response = $apiController->showCarrito();
@@ -21,7 +32,7 @@ class CarritosController extends Controller
             $data = json_decode($jsonResponse->getContent(), true);
 
 
-            return view('carritos.show', ['respuestas' => $data,'mensaje'=>'Error o Carrito vacio.!!!']);
+            return view('carritos.show', ['respuestas' => $data,'mensaje'=>'Error o Carrito vacio.!!!','tipoCambioGuaranies'=>$tc_grs]);
         } else {
             $jsonResponse= response()->json($response->json());
             //print_r(response()->json($jsonResponse));
