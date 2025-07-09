@@ -41,7 +41,7 @@ class CarritosController extends Controller
              $mensaje='Exito!!!';
              
              if(isset($error)){$mensaje=$error;} 
-            return view('carritos.show', ['respuestas' => $data,'mensaje'=>$mensaje]);
+            return view('carritos.show', ['respuestas' => $data,'mensaje'=>$mensaje,'tipoCambioGuaranies'=>$tc_grs]);
         
         } 
     }
