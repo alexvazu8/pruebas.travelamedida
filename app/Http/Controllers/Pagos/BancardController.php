@@ -103,6 +103,7 @@ class BancardController extends Controller
                  //monto en Guaranies PYG
                 $tc=number_format($ultimoTipoCambio['tasa_cambio'], 2, '.', '');
                 $amount=$amount*$tc;
+                $amount=number_format($amount,2,'.','');
  
                 
                 //$amount=intval($amount);
