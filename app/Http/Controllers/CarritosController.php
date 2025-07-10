@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TiposCambio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class CarritosController extends Controller
@@ -64,10 +65,10 @@ class CarritosController extends Controller
             return view('carritos.show', ['respuestas' => $data,'mensaje'=>'Error o Carrito vacio.!!!']);
         } else {
             $jsonResponse= response()->json($response->json());
-
+            $userId = Auth::id();
             // Limpiar caché relacionada con el token anterior
-            Cache::forget('api_access_token');
-            Cache::forget('api_access_token_expire_at');
+            Cache::forget('api_access_token_'.$userId);
+            Cache::forget('api_access_token_expire_at_'.$userId);
             session()->regenerate();
             //print_r(response()->json($jsonResponse));
             $data = json_decode($jsonResponse->getContent(), true);
@@ -75,8 +76,8 @@ class CarritosController extends Controller
              // Acceder a los valores específicos
             $token = $data['new_token'];
             $expireInMinutes = $data['expires_in']/60;
-            Cache::put('api_access_token', $token, now()->addMinutes($expireInMinutes));
-            Cache::put('api_access_token_expire_at', now()->addMinutes($expireInMinutes));
+            Cache::put('api_access_token_'.$userId, $token, now()->addMinutes($expireInMinutes));
+            Cache::put('api_access_token_expire_at_'.$userId, now()->addMinutes($expireInMinutes));
 
            
             return view('carritos.show', ['respuestas' => $data,'mensaje'=>'Carrito Vacio!!!']);
