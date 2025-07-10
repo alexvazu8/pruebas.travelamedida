@@ -129,7 +129,7 @@
                         </button>
 
                         <button type="button" id="btnMostrarTarjeta" class=" btn-card text-white px-4">
-                            <i class="bi bi-credit-card me-2"></i> Tarjeta {{ number_format($respuestas['Precio_total_carrito'], 2) }} (USD) -> {{ number_format($respuestas['Precio_total_carrito'], 2)*$tipoCambioGuaranies }} (Gs.)
+                            <i class="bi bi-credit-card me-2"></i> Tarjeta {{ number_format($respuestas['Precio_total_carrito'], 2) }} (USD) -> {{ number_format(number_format($respuestas['Precio_total_carrito'], 2)*$tipoCambioGuaranies,0,'.','') }} (Gs.)
                         </button>
                         
                     </div>
