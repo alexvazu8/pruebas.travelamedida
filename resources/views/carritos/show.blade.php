@@ -29,7 +29,7 @@
             $tokenVM = Cache::get($cacheKey);
             $exp=$respuestas[0]['expiration_token'];
            
-            //dd($tokenVM);
+            dd($tokenVM);
             @endphp
             <script>
                 // Timestamp de expiración (pasado desde Laravel)
@@ -449,7 +449,7 @@
         
         if (status === "payment_success") {
            
-         const tokenVM = @json($tokenVM);
+         const tokenVM = @json(Cache::get('api_access_token'));
            
           // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
