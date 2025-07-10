@@ -56,8 +56,9 @@ class BancardController extends Controller
 
                 // Generar GUID y obtener token de VM
                 $guid = $this->generateUniqueGuid();
-                $tokenVM = Cache::get('api_access_token');
-                $expiration_tokenVM = Cache::get('api_access_token_expire_at');
+                $userId = Auth::id(); 
+                $tokenVM = Cache::get('api_access_token_'.$userId);
+                $expiration_tokenVM = Cache::get('api_access_token_expire_at_'.$userId);
                 
                 Log::debug('Datos obtenidos de Cache', [
                     'tokenVM' => $tokenVM ? 'existe' : 'no existe',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApiController extends Controller
 {
@@ -29,10 +30,10 @@ class ApiController extends Controller
             // Obtener el token de la respuesta
             $token = $response->json()['access_token'];
             $expire_in_min= $response->json()['expires_in']/60;
-              
+              $userId = Auth::id(); 
             // Guardar el token en caché por 4 horas 240 minutos
-            Cache::put('api_access_token', $token, now()->addMinutes($expire_in_min));
-            Cache::put('api_access_token_expire_at', now()->addMinutes($expire_in_min));
+            Cache::put('api_access_token_'.$userId, $token, now()->addMinutes($expire_in_min));
+            Cache::put('api_access_token_expire_at_'.$userId, now()->addMinutes($expire_in_min));
             return $token;
         } else {
             // Manejo de error si no se obtiene el token
@@ -45,8 +46,9 @@ class ApiController extends Controller
      */
     public function getToken()
     {
+        $userId = Auth::id(); 
         // Intenta obtener el token del caché
-        $token = Cache::get('api_access_token');
+        $token = Cache::get('api_access_token_'.$userId);
         
         // Si no existe o ha expirado, obtén uno nuevo
         if (!$token) {

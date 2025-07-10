@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Cache;
 class VerifyPayment
 {
     public function handle(Request $request, Closure $next)
-    {  $tokenVM = Cache::get('api_access_token');
+    {  $userId = Auth::id(); 
+        $tokenVM = Cache::get('api_access_token_'.$userId);
         $now = Carbon::now()->timestamp;
         $pago = Pago::where('usuario_id', Auth::id())
                     ->where('estado', 'PAGADO')

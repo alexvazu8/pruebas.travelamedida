@@ -61,10 +61,11 @@ class StereumPayController extends Controller
                 $token = $data['access_token'] ?? null;
                 $refresh = $data['refresh_token'] ?? null;
                 $USER_ID = $data['user']['id'] ?? null;
+                $userId = Auth::id(); 
 
                 if ($token) {
                     // Puedes guardar el token en sesión o en cache, lo guardo en 240 minutos o sea 4 horas.
-                      Cache::put('stereumpay_token', $token, now()->addMinutes(240));
+                      Cache::put('stereumpay_token_'.$userId, $token, now()->addMinutes(240));
 
                     return response()->json(['message' => 'Login exitoso', 'token' => $token]);
                 } else {
@@ -90,19 +91,19 @@ class StereumPayController extends Controller
 
             if (Cache::has($cacheKey)) {
                  $datos = Cache::get($cacheKey);
-                 if(isset($datos['amount']) && ($datos['amount']==$amount)&&($datos['tokenVM']==Cache::get('api_access_token'))){
+                 if(isset($datos['amount']) && ($datos['amount']==$amount)&&($datos['tokenVM']==Cache::get('api_access_token_'.$usuarioId))){
                     return response()->json([
                         'message' => 'QR existente',
                         'data' => Cache::get($cacheKey)
                     ]);
                  }  
             }            
-            $token = Cache::get('stereumpay_token');
+            $token = Cache::get('stereumpay_token_'.$usuarioId);
 
             if (!$token) {
                 //return response()->json(['error' => 'Token no disponible. Inicia sesión primero.'], 401);
                 $this->login();
-                $token = Cache::get('stereumpay_token');
+                $token = Cache::get('stereumpay_token_'.$usuarioId);
             }
             
             $payload = [
@@ -120,9 +121,9 @@ class StereumPayController extends Controller
                     'x-api-key' => env('STEREUM_API_KEY'),
                 ])
                 ->post("{$this->apiUrl}/api/v1/transactions/create-charge", $payload);
-
-            $tokenVM = Cache::get('api_access_token');
-            $expiration_tokenVM = Cache::get('api_access_token_expire_at');
+            $userId = Auth::id(); 
+            $tokenVM = Cache::get('api_access_token_'.$userId);
+            $expiration_tokenVM = Cache::get('api_access_token_expire_at_'.$userId);
             $timestamp = $expiration_tokenVM->timestamp;
             //echo $fecha = Carbon::createFromTimestamp($timestamp);//fecha que vence.
             if ($response->successful()) {
@@ -163,8 +164,8 @@ class StereumPayController extends Controller
         }
     }
     public function checkPaymentStatus($transactionId)
-    {
-        $tokenVM = Cache::get('api_access_token');
+    {   $userId = Auth::id(); 
+        $tokenVM = Cache::get('api_access_token_'.$userId);
             $now = Carbon::now()->timestamp;
             $pago = Pago::where('usuario_id', Auth::id())
                         ->where('transaction_id_metodo_pago', $transactionId)
