@@ -32,7 +32,7 @@
             //dd($tokenVM);
             @endphp
             <script>
-                alert("hoal");
+                
                 // Timestamp de expiración (pasado desde Laravel)
                 const expTimestamp = {{ $exp }};
                 
@@ -464,7 +464,7 @@
                      
                         alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
-                }, 1000);
+                }, 700);
         }//fin del si el pago es satisfactorio
 
        // Configuración para Bancard (sin cambios)
