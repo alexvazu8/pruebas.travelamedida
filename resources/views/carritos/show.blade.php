@@ -3,7 +3,9 @@
 @section('content')
 <div class="container">
     <h1 class="text-xl font-bold mb-4">Detalles del Carrito</h1>
-
+    @php
+    $tokenVM ="";
+    @endphp
     {{-- Mostrar mensaje de éxito o error --}}
     @if(isset($mensaje))
         <div class="alert {{ $mensaje === 'Exito!!!' ? 'alert-success' : 'alert-danger' }}">
@@ -26,7 +28,7 @@
             @php
             $userId = Auth::id(); // O cualquier forma en que obtengas el ID del usuario
             $cacheKey = 'api_access_token_'.$userId;
-            $tokenVM = Cache::get($cacheKey) ?? 'no'; // Si no existe, devuelve 'no'
+            $tokenVM = Cache::get($cacheKey) ?? ''; // Si no existe, devuelve ''
             $exp=$respuestas[0]['expiration_token'];
             //echo $tokenVM;
             //dd($tokenVM);
