@@ -28,10 +28,11 @@
             $cacheKey = 'api_access_token_'.$userId;
             $tokenVM = Cache::get($cacheKey);
             $exp=$respuestas[0]['expiration_token'];
-           echo $tokenVM;
-            dd($tokenVM);
+            //echo $tokenVM;
+            //dd($tokenVM);
             @endphp
             <script>
+                alert("hoal");
                 // Timestamp de expiración (pasado desde Laravel)
                 const expTimestamp = {{ $exp }};
                 
