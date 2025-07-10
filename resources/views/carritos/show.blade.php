@@ -449,7 +449,7 @@
         
         if (status === "payment_success") {
            
-         const tokenVM = @json(Cache::get('api_access_token'));
+         const tokenVM = @json($tokenVM);
            
           // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
