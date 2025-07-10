@@ -24,11 +24,11 @@
         {{-- Mostrar el precio total del carrito si está disponible --}}
         @if(isset($respuestas['Precio_total_carrito']))
             @php
-            $userId = auth()->id(); // O cualquier forma en que obtengas el ID del usuario
-            $cacheKey = 'api_access_token_'. $userId;
+            $userId = Auth::id(); // O cualquier forma en que obtengas el ID del usuario
+            $cacheKey = 'api_access_token_'.$userId;
             $tokenVM = Cache::get($cacheKey);
             $exp=$respuestas[0]['expiration_token'];
-           
+           echo $tokenVM;
             dd($tokenVM);
             @endphp
             <script>
