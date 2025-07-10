@@ -26,7 +26,7 @@
             @php
             $userId = Auth::id(); // O cualquier forma en que obtengas el ID del usuario
             $cacheKey = 'api_access_token_'.$userId;
-            $tokenVM = Cache::get($cacheKey) ?? ''; // Si no existe, devuelve ''
+            $tokenVM = Cache::get($cacheKey) ?? 'no'; // Si no existe, devuelve 'no'
             $exp=$respuestas[0]['expiration_token'];
             //echo $tokenVM;
             //dd($tokenVM);
