@@ -35,7 +35,7 @@ class ReservasController extends Controller
 
    public function confirmar(Request $request)
    {   //Solo debe ingresar si esta hecho el pago.
-       
+        $userId = Auth::id();
        //usar ApiController
        $apiController = new ApiController();
        $response = $apiController->confirmarReserva($request);
@@ -53,8 +53,8 @@ class ReservasController extends Controller
            $jsonResponse= response()->json($response->json());
            //dd(response()->json($jsonResponse));
            // Limpiar caché relacionada con el token anterior
-            Cache::forget('api_access_token');
-            Cache::forget('api_access_token_expire_at');
+            Cache::forget('api_access_token_'.$userId);
+            Cache::forget('api_access_token_expire_at_'.$userId);
            $data = json_decode($jsonResponse->getContent(), true);
            //regenerar session de la pagina para el usuario que esta con login
            $request->session()->regenerate();
@@ -62,8 +62,8 @@ class ReservasController extends Controller
             // Acceder a los valores específicos
             $token = $data['new_token'];
             $expireInMinutes = $data['expires_in']/60;
-            Cache::put('api_access_token', $token, now()->addMinutes($expireInMinutes));
-            Cache::put('api_access_token_expire_at', now()->addMinutes($expireInMinutes));
+            Cache::put('api_access_token_'.$userId, $token, now()->addMinutes($expireInMinutes));
+            Cache::put('api_access_token_expire_at_'.$userId, now()->addMinutes($expireInMinutes));
             
             // ok aqui puedo guardar en mi propia BD con el id de usuario que compro, de esta forma
             //puede ver su reserva.

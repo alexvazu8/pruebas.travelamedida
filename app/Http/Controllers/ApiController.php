@@ -18,7 +18,7 @@ class ApiController extends Controller
         $email = env('API_VM_USERNAME');
         $password = env('API_VM_PASSWORD');
         $apiUrl = env('API_VM_URL') . '/login';  // URL de login, ajusta si es necesario
-       
+        dd($apiUrl);
         // Hacer la solicitud para obtener el token
         $response = Http::post($apiUrl, [
             'email' => $email,
