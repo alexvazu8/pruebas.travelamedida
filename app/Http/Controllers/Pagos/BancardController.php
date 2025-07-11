@@ -206,8 +206,22 @@ class BancardController extends Controller
             'pago_id' => $pago->id,
             'nuevo_estado' => $pago->estado
         ]);
+        if($operation['response_code']==='00')
+        {
+            return response()->json(['status' => 'success'], 200);
+        }
+        else{
+            return response()->json(
+                [
+                    'status'  => 'error', // o "fail" (pero "error" es más común en APIs modernas)
+                    'code'    => $operation['response_code'], // Código interno legible (opcional)
+                    'message' => $estado
+                ],
+                402 // Código HTTP recomendado para fondos insuficientes
+            );
+        }
 
-        return response()->json(['status' => 'success'], 200);
+        
         
         
 
@@ -218,7 +232,17 @@ class BancardController extends Controller
     private function determinarEstado($response, $responseCode)
     {
         if ($response === 'S') {
-            return ($responseCode == '00') ? 'PAGADO' : 'DUPLICADO'; // Código 00 = éxito real
+            switch ($responseCode) {
+                case '00':
+                    return 'PAGADO'; // Código 00 = éxito real
+                case '51':
+                    return 'FONDOS INSUFICIENTES';
+                // Puedes agregar más casos específicos aquí
+                case '94':
+                    return 'TRANSACCIøN DUPLICADA';
+                default:
+                    return 'OTRO CASO'; // Para otros códigos cuando response es "S"
+            }
         }
         return 'RECHAZADO'; // Para response = "F"
     }
