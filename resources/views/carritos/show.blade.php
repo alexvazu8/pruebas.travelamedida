@@ -469,7 +469,7 @@
             fetch(`/pagos/verificar-estado`)
                 .then(response => response.json())
                 .then(statusData => {
-                    alert(`Error de pago`);
+                     alert(`Error de pago: ${statusData.status || 'Falló el pago'}`);
                 })
                 .catch(error => {
                     alert("Error al contactar al servidor");
