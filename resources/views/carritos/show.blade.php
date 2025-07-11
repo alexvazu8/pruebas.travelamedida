@@ -463,6 +463,22 @@
                     }
                 }, 700);
         }//fin del si el pago es satisfactorio
+        else if (status === "payment_fail") {
+            // Verificación de estado para pago fallido
+            const checkInterval = setInterval(async () => {
+                const statusResponse = await fetch(`/pagos/verificar-estado`);
+                const statusData = await statusResponse.json();
+                
+                if (statusData.status === 'PAGADO') {
+                    clearInterval(checkInterval); // Por si acaso el pago se completa después de un fallo
+                    document.getElementById('formReserva').submit();
+                } else {
+                    // Mostrar el error específico o genérico
+                    alert(`Pago fallido: ${statusData.status || statusData.error_code || 'Error desconocido'}`);
+                    clearInterval(checkInterval); // Detener la verificación
+                }
+            }, 700);
+        }
 
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
