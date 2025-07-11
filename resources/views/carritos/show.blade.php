@@ -466,7 +466,7 @@
         else if (status === "payment_fail") {
             alert("Error de pago");
             
-            fetch(`/pagos/verificar-estado`)
+            fetch(`/pagos/determinar-estado`)
                 .then(response => response.json())
                 .then(statusData => {
                     alert(`Error de pago`);
