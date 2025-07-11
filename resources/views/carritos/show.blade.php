@@ -465,13 +465,16 @@
         }//fin del si el pago es satisfactorio
         else if (status === "payment_fail") {
             alert("Error de pago");
-            // Verificación de estado para pago fallido
-           
-                const statusResponse = await fetch(`/pagos/verificar-estado/`);
-               // const statusData = await statusResponse.json();
-                 alert("Error de pago2");
-
-           
+            
+            fetch(`/pagos/verificar-estado`)
+                .then(response => response.json())
+                .then(statusData => {
+                    alert(`Error de pago: ${statusData.message || "Motivo desconocido"}`);
+                })
+                .catch(error => {
+                    alert("Error al contactar al servidor");
+                    console.error(error);
+                });
         }
 
        // Configuración para Bancard (sin cambios)
