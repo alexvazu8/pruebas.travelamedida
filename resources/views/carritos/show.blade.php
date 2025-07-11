@@ -464,24 +464,89 @@
                 }, 700);
         }//fin del si el pago es satisfactorio
         else if (status === "payment_fail") {
-            alert("Error de pago detectado. Verificando estado...");
+            // Mostrar modal de carga inicial
+            showModalErrorPago('Verificando pago', 'Estamos validando el estado de tu transacción...', 'loading');
             
-            // Envolvemos la lógica en una función async autoinvocada
+            // Función async autoinvocada
             (async () => {
                 try {
                     const response = await fetch('/pagos/verificar-estado');
                     const statusData = await response.json();
                     
-                    alert(`Estado del pago: ${statusData.status || 'Desconocido'}`);
+                    // Cerrar modal
+                    closePaymentErrorModal();
                     
                     if (statusData.status === 'PAGADO') {
                         document.getElementById('formReserva').submit();
+                    } else {
+                        // Mostrar modal de error específico
+                        const errorMessage = getPaymentErrorMessage(statusData.status);
+                        showModalErrorPago('Error en el pago', errorMessage, 'error');
                     }
                 } catch (error) {
-                    alert("Error al verificar el pago");
-                    console.error("Detalles del error:", error);
+                    closePaymentErrorModal();
+                    showModalErrorPago('Error de conexión', 'No pudimos verificar tu pago. Por favor intenta nuevamente.', 'error');
+                    console.error("Error:", error);
                 }
-            })(); // Los paréntesis () ejecutan la función inmediatamente
+            })();
+        }
+
+        // Función para mostrar modal de error
+        function showModalErrorPago(title, message, type) {
+            let modal = document.getElementById('paymentModalError') || createPaymentErrorModal();
+            
+            modal.querySelector('.payment-modal-title').textContent = title;
+            modal.querySelector('.payment-modal-body').innerHTML = `
+                <div class="payment-icon ${type}">${getPaymentIcon(type)}</div>
+                <p class="payment-modal-text">${message}</p>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        // Crear modal de error
+        function createPaymentErrorModal() {
+            const modalHTML = `
+            <div id="paymentModalError" class="payment-modal">
+                <div class="payment-modal-content">
+                    <span class="payment-close-btn">&times;</span>
+                    <h3 class="payment-modal-title"></h3>
+                    <div class="payment-modal-body"></div>
+                </div>
+            </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            document.querySelector('.payment-close-btn').addEventListener('click', closePaymentErrorModal);
+            
+            return document.getElementById('paymentModalError');
+        }
+
+        // Cerrar modal
+        function closePaymentErrorModal() {
+            const modal = document.getElementById('paymentModalError');
+            if (modal) modal.style.display = 'none';
+        }
+
+        // Obtener icono
+        function getPaymentIcon(type) {
+            const icons = {
+                loading: '⏳',
+                success: '✅',
+                error: '❌'
+            };
+            return icons[type] || '!';
+        }
+
+        // Mensajes de error específicos
+        function getPaymentErrorMessage(status) {
+            const messages = {
+                'FONDOS_INSUFICIENTES': 'No hay fondos suficientes en tu cuenta',
+                'TARJETA_RECHAZADA': 'Tu tarjeta fue rechazada por el banco',
+                'TIMEOUT': 'La operación tardó demasiado',
+                'default': 'Hubo un problema al procesar tu pago'
+            };
+            return messages[status] || messages['default'];
         }
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
