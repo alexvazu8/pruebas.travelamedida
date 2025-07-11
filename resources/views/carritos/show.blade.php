@@ -469,7 +469,7 @@
             fetch(`/pagos/verificar-estado`)
                 .then(response => response.json())
                 .then(statusData => {
-                    alert(`Error de pago: ${statusData.message || "Motivo desconocido"}`);
+                    alert(`Error de pago`);
                 })
                 .catch(error => {
                     alert("Error al contactar al servidor");
