@@ -464,17 +464,24 @@
                 }, 700);
         }//fin del si el pago es satisfactorio
         else if (status === "payment_fail") {
-            alert("Error de pago");
+            alert("Error de pago detectado. Verificando estado...");
             
-            fetch(`/pagos/verificar-estado`)
-                .then(response => response.json())
-                .then(statusData => {
-                     alert(`Error de pago: ${statusData.status || 'Falló el pago'}`);
-                })
-                .catch(error => {
-                    alert("Error al contactar al servidor");
-                    console.error(error);
-                });
+            // Consulta ÚNICA (sin intervalo)
+            try {
+                const response = await fetch('/pagos/verificar-estado');
+                const statusData = await response.json();
+                
+                // Mostrar el estado específico del pago
+                alert(`Estado del pago: ${statusData.status || 'Desconocido'}`);
+                
+                // Opcional: Redirigir o hacer algo con el estado
+                if (statusData.status === 'PAGADO') {
+                    document.getElementById('formReserva').submit();
+                }
+            } catch (error) {
+                alert("Error al verificar el pago");
+                console.error("Detalles del error:", error);
+            }
         }
 
        // Configuración para Bancard (sin cambios)
