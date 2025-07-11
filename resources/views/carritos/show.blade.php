@@ -464,7 +464,7 @@
                 }, 700);
         }//fin del si el pago es satisfactorio
         else if (status === "payment_fail") {
-            alert("hola");
+            alert("Error de pago");
             // Verificación de estado para pago fallido
             const checkInterval = setInterval(async () => {
                 const statusResponse = await fetch(`/pagos/verificar-estado`);
