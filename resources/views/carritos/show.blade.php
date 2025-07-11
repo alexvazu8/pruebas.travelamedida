@@ -466,7 +466,7 @@
         else if (status === "payment_fail") {
             // Mostrar modal de carga inicial
             showModalErrorPago('Verificando pago', 'Estamos validando el estado de tu transacción...', 'loading');
-            
+            alert("Verificar pago");
             // Función async autoinvocada
             (async () => {
                 try {
