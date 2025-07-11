@@ -466,7 +466,7 @@
         else if (status === "payment_fail") {
             alert("Error de pago");
             // Verificación de estado para pago fallido
-            const checkInterval = setInterval(async () => {
+           
                 const statusResponse = await fetch(`/pagos/verificar-estado`);
                 const statusData = await statusResponse.json();
                  alert("Error de pago2");
@@ -479,7 +479,7 @@
                     alert(`Pago fallido: ${statusData.status || statusData.error_code || 'Error desconocido'}`);
                     clearInterval(checkInterval); // Detener la verificación
                 }
-            }, 700);
+           
         }
 
        // Configuración para Bancard (sin cambios)
