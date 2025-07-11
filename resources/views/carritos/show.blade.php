@@ -493,7 +493,15 @@
 
         // Función para mostrar modal de error
         function showModalErrorPago(title, message, type) {
-            let modal = document.getElementById('paymentModalError') || createPaymentErrorModal();
+            console.log("Intentando mostrar modal..."); // Debug
+            let modal = document.getElementById('paymentModalError');
+            
+            if (!modal) {
+                console.log("Creando nuevo modal..."); // Debug
+                modal = createPaymentErrorModal();
+            }
+            
+            console.log(modal); // Verifica que el modal existe
             
             modal.querySelector('.payment-modal-title').textContent = title;
             modal.querySelector('.payment-modal-body').innerHTML = `
@@ -502,6 +510,7 @@
             `;
             
             modal.style.display = 'block';
+            console.log("Modal debería ser visible ahora"); // Debug
         }
 
         // Crear modal de error
