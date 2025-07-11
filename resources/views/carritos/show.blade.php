@@ -466,24 +466,23 @@
         else if (status === "payment_fail") {
             alert("Error de pago detectado. Verificando estado...");
             
-            // Consulta ÚNICA (sin intervalo)
-            try {
-                const response = await fetch('/pagos/verificar-estado');
-                const statusData = await response.json();
-                
-                // Mostrar el estado específico del pago
-                alert(`Estado del pago: ${statusData.status || 'Desconocido'}`);
-                
-                // Opcional: Redirigir o hacer algo con el estado
-                if (statusData.status === 'PAGADO') {
-                    document.getElementById('formReserva').submit();
+            // Envolvemos la lógica en una función async autoinvocada
+            (async () => {
+                try {
+                    const response = await fetch('/pagos/verificar-estado');
+                    const statusData = await response.json();
+                    
+                    alert(`Estado del pago: ${statusData.status || 'Desconocido'}`);
+                    
+                    if (statusData.status === 'PAGADO') {
+                        document.getElementById('formReserva').submit();
+                    }
+                } catch (error) {
+                    alert("Error al verificar el pago");
+                    console.error("Detalles del error:", error);
                 }
-            } catch (error) {
-                alert("Error al verificar el pago");
-                console.error("Detalles del error:", error);
-            }
+            })(); // Los paréntesis () ejecutan la función inmediatamente
         }
-
        // Configuración para Bancard (sin cambios)
         const bancardConfig = {
             publicKey: '{{ env("BANCARD_PUBLIC_KEY") }}',
