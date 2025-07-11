@@ -254,7 +254,6 @@ class BancardController extends Controller
         $userId = Auth::id(); 
         $tokenVM = Cache::get('api_access_token_'.$userId);
         $pago = Pago::where('token', $tokenVM)
-           // ->where('estado', 'PAGADO') // Asegurarse de que esté pagado
             ->first(); // Devuelve un solo modelo o `null`
         
         return response()->json([
