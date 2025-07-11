@@ -3,9 +3,7 @@
 @section('content')
 <div class="container">
     <h1 class="text-xl font-bold mb-4">Detalles del Carrito</h1>
-    @php
-    $tokenVM ="";
-    @endphp
+
     {{-- Mostrar mensaje de éxito o error --}}
     @if(isset($mensaje))
         <div class="alert {{ $mensaje === 'Exito!!!' ? 'alert-success' : 'alert-danger' }}">
@@ -26,12 +24,9 @@
         {{-- Mostrar el precio total del carrito si está disponible --}}
         @if(isset($respuestas['Precio_total_carrito']))
             @php
-            $userId = Auth::id(); // O cualquier forma en que obtengas el ID del usuario
-            $cacheKey = 'api_access_token_'.$userId;
-            $tokenVM = Cache::get($cacheKey) ?? ''; // Si no existe, devuelve ''
+           
             $exp=$respuestas[0]['expiration_token'];
-            //echo $tokenVM;
-            //dd($tokenVM);
+
             @endphp
             <script>
                 
@@ -452,11 +447,11 @@
         
         if (status === "payment_success") {
            
-         const tokenVM = @json($tokenVM);
+         
            
           // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
-                    const statusResponse = await fetch(`/pagos/verificar-estado/${tokenVM}`);
+                    const statusResponse = await fetch(`/pagos/verificar-estado`);
                     const statusData = await statusResponse.json();
                     //alert(statusData.status);
                     if (statusData.status === 'PAGADO') {

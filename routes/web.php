@@ -93,7 +93,7 @@ Route::post('/pagos/status/{transactionId}', [StereumPayController::class, 'chec
     ->name('pagos.callback');
 
 //verificar estado pago
-Route::get('/pagos/verificar-estado/{pagoId}', [BancardController::class, 'verificarEstado'])->name('pagos.verificar-estado');
+Route::get('/pagos/verificar-estado', [BancardController::class, 'verificarEstado'])->name('pagos.verificar-estado');
 
 //cancelado
 Route::post('/pagos/cancelar/{pago}', [BancardController::class, 'cancelar'])->name('pagos.cancelar');

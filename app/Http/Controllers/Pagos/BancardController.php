@@ -225,8 +225,10 @@ class BancardController extends Controller
 
 
     // Nuevo método para verificar estado del pago
-    public function verificarEstado($tokenVM)
+    public function verificarEstado()
     {
+        $userId = Auth::id(); 
+        $tokenVM = Cache::get('api_access_token_'.$userId);
         $pago = Pago::where('token', $tokenVM)
             ->where('estado', 'PAGADO') // Asegurarse de que esté pagado
             ->first(); // Devuelve un solo modelo o `null`
