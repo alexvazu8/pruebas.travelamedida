@@ -467,18 +467,10 @@
             alert("Error de pago");
             // Verificación de estado para pago fallido
            
-                const statusResponse = await fetch(`/pagos/verificar-estado/`);
-                const statusData = await statusResponse.json();
+               // const statusResponse = await fetch(`/pagos/verificar-estado/`);
+               // const statusData = await statusResponse.json();
                  alert("Error de pago2");
-                
-                if (statusData.status === 'PAGADO') {
-                    clearInterval(checkInterval); // Por si acaso el pago se completa después de un fallo
-                    document.getElementById('formReserva').submit();
-                } else {
-                    // Mostrar el error específico o genérico
-                    alert(`Pago fallido: ${statusData.status || statusData.error_code || 'Error desconocido'}`);
-                    clearInterval(checkInterval); // Detener la verificación
-                }
+
            
         }
 
