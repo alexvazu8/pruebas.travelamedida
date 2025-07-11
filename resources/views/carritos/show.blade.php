@@ -469,6 +469,7 @@
             const checkInterval = setInterval(async () => {
                 const statusResponse = await fetch(`/pagos/verificar-estado`);
                 const statusData = await statusResponse.json();
+                 alert("Error de pago2");
                 
                 if (statusData.status === 'PAGADO') {
                     clearInterval(checkInterval); // Por si acaso el pago se completa después de un fallo
