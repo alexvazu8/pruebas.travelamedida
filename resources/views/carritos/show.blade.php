@@ -515,8 +515,11 @@
 
         // Crear modal de error
         function createPaymentErrorModal() {
+            // Verifica si ya existe
+            if (document.getElementById('paymentModalError')) return;
+            
             const modalHTML = `
-            <div id="paymentModalError" class="payment-modal">
+            <div id="paymentModalError">
                 <div class="payment-modal-content">
                     <span class="payment-close-btn">&times;</span>
                     <h3 class="payment-modal-title"></h3>
@@ -524,11 +527,17 @@
                 </div>
             </div>
             `;
+            
+            // Inserta al FINAL del body (asegura que esté encima de todo)
             document.body.insertAdjacentHTML('beforeend', modalHTML);
             
+            // Agrega evento para cerrar
             document.querySelector('.payment-close-btn').addEventListener('click', closePaymentErrorModal);
             
-            return document.getElementById('paymentModalError');
+            // Cierra al hacer clic fuera del contenido
+            document.getElementById('paymentModalError').addEventListener('click', function(e) {
+                if (e.target === this) closePaymentErrorModal();
+            });
         }
 
         // Cerrar modal
