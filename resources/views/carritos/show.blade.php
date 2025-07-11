@@ -467,7 +467,7 @@
             alert("Error de pago");
             // Verificación de estado para pago fallido
            
-               // const statusResponse = await fetch(`/pagos/verificar-estado/`);
+                const statusResponse = await fetch(`/pagos/verificar-estado/`);
                // const statusData = await statusResponse.json();
                  alert("Error de pago2");
 
