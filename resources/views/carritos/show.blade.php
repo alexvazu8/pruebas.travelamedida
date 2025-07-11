@@ -493,57 +493,57 @@
 
         // Función para mostrar modal de error
         function showModalErrorPago(title, message, type) {
-            console.log("Intentando mostrar modal..."); // Debug
-            let modal = document.getElementById('paymentModalError');
+            // Crear o obtener el modal
+            const modal = createPaymentErrorModal();
             
-            if (!modal) {
-                console.log("Creando nuevo modal..."); // Debug
-                modal = createPaymentErrorModal();
-            }
-            
-            console.log(modal); // Verifica que el modal existe
-            
+            // Configurar contenido
             modal.querySelector('.payment-modal-title').textContent = title;
             modal.querySelector('.payment-modal-body').innerHTML = `
-                <div class="payment-icon ${type}">${getPaymentIcon(type)}</div>
-                <p class="payment-modal-text">${message}</p>
+                <div style="font-size:4em; margin-bottom:20px;">${getPaymentIcon(type)}</div>
+                <p style="font-size:1.1em; color:#555;">${message}</p>
             `;
             
+            // Mostrar modal
             modal.style.display = 'block';
-            console.log("Modal debería ser visible ahora"); // Debug
+            
+            // Bloquear scroll del body
+            document.body.style.overflow = 'hidden';
         }
-
         // Crear modal de error
         function createPaymentErrorModal() {
-            // Verifica si ya existe
-            if (document.getElementById('paymentModalError')) return;
+            // Verificar si ya existe
+            if (document.getElementById('paymentModalError')) {
+                return document.getElementById('paymentModalError');
+            }
             
+            // Crear estructura COMPLETA del modal
             const modalHTML = `
-            <div id="paymentModalError">
-                <div class="payment-modal-content">
-                    <span class="payment-close-btn">&times;</span>
-                    <h3 class="payment-modal-title"></h3>
-                    <div class="payment-modal-body"></div>
+            <div id="paymentModalError" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.7); z-index:9999;">
+                <div style="position:relative; background:white; margin:5% auto; padding:25px; width:90%; max-width:600px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.3);">
+                    <span class="payment-close-btn" style="position:absolute; top:15px; right:20px; font-size:1.8em; color:#aaa; cursor:pointer;">×</span>
+                    <h3 class="payment-modal-title" style="color:#d32f2f; margin-bottom:20px; text-align:center;"></h3>
+                    <div class="payment-modal-body" style="text-align:center; padding:10px;"></div>
                 </div>
             </div>
             `;
             
-            // Inserta al FINAL del body (asegura que esté encima de todo)
+            // Insertar en el body
             document.body.insertAdjacentHTML('beforeend', modalHTML);
             
-            // Agrega evento para cerrar
+            // Agregar evento para cerrar
             document.querySelector('.payment-close-btn').addEventListener('click', closePaymentErrorModal);
             
-            // Cierra al hacer clic fuera del contenido
-            document.getElementById('paymentModalError').addEventListener('click', function(e) {
-                if (e.target === this) closePaymentErrorModal();
-            });
+            return document.getElementById('paymentModalError');
         }
 
         // Cerrar modal
         function closePaymentErrorModal() {
             const modal = document.getElementById('paymentModalError');
-            if (modal) modal.style.display = 'none';
+            if (modal) {
+                modal.style.display = 'none';
+                // Restaurar scroll del body
+                document.body.style.overflow = 'auto';
+            }
         }
 
         // Obtener icono
