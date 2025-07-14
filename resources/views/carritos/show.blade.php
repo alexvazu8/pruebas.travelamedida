@@ -461,7 +461,7 @@
                      
                         alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
-                }, 700);
+                }, 200);
         }//fin del si el pago es satisfactorio
         else if (status === "payment_fail") {
             // Mostrar modal de carga inicial
