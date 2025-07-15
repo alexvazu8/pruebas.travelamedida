@@ -452,13 +452,13 @@
           // Verificación de estado (modificado para 3DS)
                 const checkInterval = setInterval(async () => {
                     const pago_id = new URLSearchParams(window.location.search).get('id_pago');
-                    alert("hoal");
+                    
                     const statusResponse = await fetch(`/pagos/verificar-estado/${pago_id}`);
                     
                     const statusData = await statusResponse.json();
                     //alert(statusData.status);
                     if (statusData.status === 'PAGADO') {
-                        
+                        alert("hoal");
                         document.getElementById('formReserva').submit();
                     }else{
                      
