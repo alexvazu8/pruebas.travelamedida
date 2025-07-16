@@ -446,11 +446,9 @@
         const status = "{{ request('status') }}"; // Captura ?status=value desde la URL
         
         if (status === "payment_success") {
-           
-         
-           
-          // Verificación de estado (modificado para 3DS)
-                const checkInterval = setInterval(async () => {
+                   
+          // Verificación de estado
+                (async () => {
                     const pago_id = new URLSearchParams(window.location.search).get('id_pago');
                     
                     const statusResponse = await fetch(`/pagos/verificar-estado/${pago_id}`);
@@ -458,13 +456,13 @@
                     const statusData = await statusResponse.json();
                     //alert(statusData.status);
                     if (statusData.status === 'PAGADO') {
-                        alert("hoal");
+                        
                         document.getElementById('formReserva').submit();
                     }else{
                      
                         alert(`Pago fallido: ${statusData.message || 'Error desconocido'}`);
                     }
-                }, 200);
+                })();
         }//fin del si el pago es satisfactorio
         else if (status === "payment_fail") {
             // Mostrar modal de carga inicial
