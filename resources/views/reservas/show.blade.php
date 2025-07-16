@@ -43,8 +43,15 @@
                             <div class="mb-4 border-info">
                                 <div class="service-details-border p-4 border border-primary rounded">
                                     {{-- Título "Detalles del Servicio" pegado al borde --}}
-                                    <h5 class="text-center text-white font-weight-bold mb-0 p-3" style="background-color: #007bff; border-radius: 8px 8px 0 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); margin-bottom: 0;">
+                                    @php
+                                        $colorFondo = ($detalle['estado'] === 'Cancelado') ? 'rgb(255, 0, 4)' : '#007bff';
+                                    @endphp
+
+                                    <h5 class="text-center text-white font-weight-bold mb-0 p-3"
+                                        style="background-color: {{ $colorFondo }}; border-radius: 8px 8px 0 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); margin-bottom: 0;">
+                                        
                                         Detalles del Servicio <strong>ID:</strong> {{ $detalle['id'] }}
+
                                         @if($detalle['estado'] === 'Cancelado')
                                             <span class="text-white font-weight-bold mb-0 p-3">Cancelado</span>
                                         @else
@@ -52,8 +59,8 @@
                                                 Ver Voucher
                                             </a>
                                         @endif
-                                        
                                     </h5>
+
 
                                     <div class="row">
                                         <div class="col-md-6">
