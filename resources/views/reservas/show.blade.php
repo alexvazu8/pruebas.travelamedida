@@ -116,13 +116,7 @@
                                                     <p><strong>Ciudad:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['ciudad']['Nombre_Ciudad'] }}</p>
                                                     <p><strong>Zona:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['zona']['Nombre_Zona'] }}</p>
                                                     <p><strong>Teléfono:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Telefono_reservas_hotel'] }}</p>
-                                                    <button type="button" class="btn btn-primary mt-3" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#mapaModal"  
-                                                        data-lat="{{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Latitud'] ?? 0 }}" 
-                                                        data-lon="{{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Longitud'] ?? 0 }}">
-                                                        Ver Mapa
-                                                    </button>
+
                                                 </div>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="mapaModal" tabindex="-1" aria-labelledby="mapaModalLabel" aria-hidden="true">
