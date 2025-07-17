@@ -58,7 +58,7 @@
                 <tbody>
                     @foreach($data['detalle_hotel']['politica']['penalidads'] as $penalidad)
                     <tr>
-                        <td>{{ $penalidad['porcentaje_penalidad_por_noche'] }}%</td>
+                        <td>{{ $penalidad['porcentaje_penalidad_por_noche'] }}</td>
                         <td>{{ $penalidad['desde_noches_antes'] }}</td>
                         <td>{{ $penalidad['hasta_noches_antes'] }}</td>
                     </tr>
