@@ -194,7 +194,7 @@ class ApiController extends Controller
         
         // Realiza la solicitud POST con el token y el cuerpo de la solicitud
         //print_r($data);
-        dd($data);
+        //dd($data);
         
         
         $response = Http::withToken($token)
