@@ -139,7 +139,7 @@ class TrasladosController extends Controller
             $jsonResponse= response()->json($response->json());
             $data = json_decode($jsonResponse->getContent(), true);
 
-             dd($data);
+             dd($response->json());
             return view('traslados.respuestaCarrito', ['respuestas' => $data]);
         } else {
             $jsonResponse= response()->json($response->json());
