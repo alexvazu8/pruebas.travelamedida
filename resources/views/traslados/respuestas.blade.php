@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <input type="text" class="form-control @error('Lugar_Destino') is-invalid @enderror" 
-                                                name="Lugar_Destino" placeholder="Ej: Nombre del Hotel o Aeropuerto" 
+                                                name="Lugar_Destino" placeholder="Nombre del Hotel o Aeropuerto" 
                                                 value="{{ old('Lugar_Destino') }}" required maxlength="35" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
                                             @error('Lugar_Destino')
                                                 <div class="invalid-feedback">{{ $message }}</div>
