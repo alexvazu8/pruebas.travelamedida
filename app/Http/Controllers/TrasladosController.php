@@ -128,7 +128,7 @@ class TrasladosController extends Controller
     }
     public function addCarritoTraslados(Request $request)
     {      
-
+      
          // Llamamos al método addCarrito del ApiController
          $apiController = new ApiController();
          $response = $apiController->addCarrito($request);
@@ -139,7 +139,7 @@ class TrasladosController extends Controller
             $jsonResponse= response()->json($response->json());
             $data = json_decode($jsonResponse->getContent(), true);
 
-             dd($response);
+            // dd($response);
             return view('traslados.respuestaCarrito', ['respuestas' => $data]);
         } else {
             $jsonResponse= response()->json($response->json());
