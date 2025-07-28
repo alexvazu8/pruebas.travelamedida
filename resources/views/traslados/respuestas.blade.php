@@ -71,16 +71,16 @@
                                     <div class="row g-2 mb-3">
                                         <div class="col-md-6">
                                             <input type="text" class="form-control @error('Lugar_Origen') is-invalid @enderror" 
-                                                name="Lugar_Origen" placeholder="Ej: Aeropuerto Viru Viru (VVI)" 
-                                                value="{{ old('Lugar_Origen') }}" required maxlength="60" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
+                                                name="Lugar_Origen" placeholder="Nombre del Hotel o Aeropuerto" 
+                                                value="{{ old('Lugar_Origen') }}" required maxlength="35" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
                                             @error('Lugar_Origen')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="col-md-6">
                                             <input type="text" class="form-control @error('Lugar_Destino') is-invalid @enderror" 
-                                                name="Lugar_Destino" placeholder="Ej: Hotel Camino Real" 
-                                                value="{{ old('Lugar_Destino') }}" required maxlength="60" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
+                                                name="Lugar_Destino" placeholder="Ej: Nombre del Hotel o Aeropuerto" 
+                                                value="{{ old('Lugar_Destino') }}" required maxlength="35" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
                                             @error('Lugar_Destino')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
