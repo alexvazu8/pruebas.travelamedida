@@ -98,7 +98,7 @@
                         <!-- Fila 4: Precio Total -->
                         <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
                             <td><strong>Precio Total</strong></td>
-                            <td colspan="2">{{ $respuesta['Precio_Total'] }}</td>
+                            <td colspan="2">{{ number_format($respuesta['Precio_Total'], 2) }} USD</td>
                         </tr>
 
                         <!-- Fila 5: Fecha Disponible -->
