@@ -207,7 +207,7 @@ class StereumPayController extends Controller
         //tiempo del server de stereum
         date_default_timezone_set('America/La_Paz');
         // Validar timestamp para evitar reenvíos viejos (5 min máx)
-       echo $timestamp = (int) $timestampHeader;
+        $timestamp = (int) $timestampHeader;
        
        //al timestamp le aumento 14400 porque son las 4 horas de diferencia con el servidor de Bolivia de stereum aparentemente
         if (abs(time() - ($timestamp+14400)) > 300) {
@@ -227,13 +227,13 @@ class StereumPayController extends Controller
 
   
         if(isset($data['notification_type']) && $data['notification_type'] === 'test')
-            { //pruebas de validacion de cualquier texto json
-            // Log opcional en desarrollo Notification Type
-            Log::info(' Verificar Notification Data', [
-                'notification_type' =>$data['notification_type']
-            ]);
-                return response()->json(['success' => true],200);
-            }
+        { //pruebas de validacion de cualquier texto json
+                // Log opcional en desarrollo Notification Type
+                Log::info(' Verificar Notification Data', [
+                    'notification_type' =>$data['notification_type']
+                ]);
+            return response()->json(['success' => true],200);
+        }
         // Verifica y procesa si es transacción válida
         if (
             isset($data['notification_type']) &&
