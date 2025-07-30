@@ -224,6 +224,11 @@ class StereumPayController extends Controller
 
         // Decodifica el JSON
         $data = json_decode($payload, true);
+
+        // Log opcional en desarrollo Notification Type
+        Log::info('📩 Webhook Notification Data', [
+            'notification_type' =>$data['notification_type']
+        ]);
         if(isset($data['notification_type']) && $data['notification_type'] === 'test')
             { //pruebas de validacion de cualquier texto json
                 return response()->json(['success' => true],200);
