@@ -201,8 +201,9 @@ class PagoController extends Controller
         // 3) Si existe, repite el bucle; si no, sale y devuelve $guid
         } while ($exists);
 
-
-        return response()->json(['guid' => $guid], 200);
+       $respuesta= ['guid' => $guid];
+       
+        return json_encode($respuesta);
     }
 
     /**
