@@ -204,7 +204,7 @@ class PagoController extends Controller
 
         return response()->json([
         'guid' => $guid
-        ])->withoutHeaders(['Cache-Control', 'Date', 'X-Powered-By']);
+        ])->withoutHeaders();
     }
 
     /**
