@@ -202,9 +202,7 @@ class PagoController extends Controller
         } while ($exists);
 
 
-        return response()->json([
-        'guid' => $guid
-        ]);
+        return $guid;
     }
 
     /**
