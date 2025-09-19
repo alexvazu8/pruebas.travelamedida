@@ -268,9 +268,9 @@ class PagoController extends Controller
         $pago = Pago::where('usuario_id', $usuarioId)
                     ->where('transaction_id_metodo_pago', $transactionId)
                    // ->where('expiration_token', '>', $now)
-                    ->where('token', $tokenVM)
-                    ->latest()
-                    ->first();
+                    ->where('token', $tokenVM);
+                   // ->latest()
+                   // ->first();
          //print_r($pago);
         // print_r("hola mundo");
          // Muestra la consulta con los placeholders
