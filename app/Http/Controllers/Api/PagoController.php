@@ -271,6 +271,8 @@ class PagoController extends Controller
                     ->first();
          print_r($pago);
          print_r("hola mundo");
+         // Muestra la consulta con los placeholders
+        dd($pago->toSql());
         if (!$pago) {
             return response()->json(['error' => 'Pago no encontrado'], 404);
         }
