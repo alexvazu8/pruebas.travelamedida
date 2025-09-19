@@ -256,7 +256,7 @@ class PagoController extends Controller
  *     )
  * )
  */
-    public function verificarEstadoPago(Request $request)
+    public function verificarEstadoPago(PagoRequest $request)
     {
         print_r($request->all());
         echo $usuarioId = $request->query('usuario_id');
