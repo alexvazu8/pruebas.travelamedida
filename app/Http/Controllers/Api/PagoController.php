@@ -258,8 +258,8 @@ class PagoController extends Controller
  */
     public function verificarEstadoPago(PagoRequest $request)
     {
-        print_r($request->all());
-        echo $usuarioId = $request->query('usuario_id');
+        //print_r($request->all());
+    /*    $usuarioId = $request->query('usuario_id');
         $transactionId = $request->query('transaction_id');
         $tokenVM = $request->query('token');
         $now = Carbon::now()->timestamp;
@@ -270,16 +270,16 @@ class PagoController extends Controller
                     ->where('token', $tokenVM)
                     ->latest()
                     ->first();
-         print_r($pago);
-         print_r("hola mundo");
+         //print_r($pago);
+        // print_r("hola mundo");
          // Muestra la consulta con los placeholders
-        dd($pago->toSql());
+        //dd($pago->toSql());
         if (!$pago) {
             return response()->json(['error' => 'Pago no encontrado'], 404);
         }
 
         return response()->json([
             'estado' => strtolower($pago->estado)
-        ]);
+        ]);*/
     }
 }
