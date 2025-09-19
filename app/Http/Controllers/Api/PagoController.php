@@ -273,8 +273,6 @@ class PagoController extends Controller
                     ->where('token', $tokenVM);
                    // ->latest()
                    // ->first();*/
-         //print_r($pago);
-        // print_r("hola mundo");
          // Muestra la consulta con los placeholders
         //dd($pago->toSql());
         if (!$pago) {
