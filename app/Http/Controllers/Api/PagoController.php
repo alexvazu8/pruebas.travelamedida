@@ -270,7 +270,7 @@ class PagoController extends Controller
                     ->where('token', $tokenVM)
                     ->latest()
                     ->first();
-
+         print_r($pago);
         if (!$pago) {
             return response()->json(['error' => 'Pago no encontrado'], 404);
         }
