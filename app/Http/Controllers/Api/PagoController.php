@@ -259,7 +259,7 @@ class PagoController extends Controller
     public function verificarEstadoPago(Request $request)
     {
         print_r($request->all());
-        $usuarioId = $request->query('usuario_id');
+        echo $usuarioId = $request->query('usuario_id');
         $transactionId = $request->query('transaction_id');
         $tokenVM = $request->query('token');
         $now = Carbon::now()->timestamp;
