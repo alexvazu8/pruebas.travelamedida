@@ -265,7 +265,6 @@ class PagoController extends Controller
 
         $pago = Pago::where('usuario_id', $usuarioId)
                     ->where('transaction_id_metodo_pago', $transactionId)
-                    ->where('estado', 'pagado')
                     ->where('expiration_token', '>', $now)
                     ->where('token', $tokenVM)
                     ->latest()
