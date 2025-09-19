@@ -264,24 +264,25 @@ class PagoController extends Controller
          $transactionId = $request->query('transaction_id');
         $tokenVM = $request->query('token');
         echo $now = Carbon::now()->timestamp;
-        
-        $pago = Pago::where('usuario_id', $usuarioId)
+        $pago = Pago::where('usuario_id', $usuarioId)->get();
+        print_r($pago);
+       /* $pago = Pago::where('usuario_id', $usuarioId)
                     ->where('transaction_id_metodo_pago', $transactionId)
                    // ->where('expiration_token', '>', $now)
                     ->where('token', $tokenVM);
                    // ->latest()
-                   // ->first();
+                   // ->first();*/
          //print_r($pago);
         // print_r("hola mundo");
          // Muestra la consulta con los placeholders
         //dd($pago->toSql());
-        if (!$pago) {
+       /* if (!$pago) {
             return response()->json(['error' => 'Pago no encontrado'], 404);
         }
 
         return response()->json([
             'estado' => strtolower($pago->estado)
-        ]);
+        ]);*/
         return true;
     }
 }
