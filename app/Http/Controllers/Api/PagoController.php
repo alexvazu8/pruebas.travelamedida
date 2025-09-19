@@ -281,5 +281,6 @@ class PagoController extends Controller
         return response()->json([
             'estado' => strtolower($pago->estado)
         ]);*/
+        return true;
     }
 }
