@@ -267,7 +267,7 @@ class PagoController extends Controller
         
         $pago = Pago::where('usuario_id', $usuarioId)
                     ->where('transaction_id_metodo_pago', $transactionId)
-                    ->where('expiration_token', '>', $now)
+                   ->where('expiration_token', '>', $now)
                     ->where('token', $tokenVM)
                     ->latest()
                     ->first();
@@ -281,7 +281,7 @@ class PagoController extends Controller
 
         return response()->json([
             'estado' => strtolower($pago->estado)
-        ]);*/
+        ]);
         return true;
     }
 }
