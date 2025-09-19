@@ -271,6 +271,7 @@ class PagoController extends Controller
                     ->latest()
                     ->first();
          print_r($pago);
+         print_r("hola mundo");
         if (!$pago) {
             return response()->json(['error' => 'Pago no encontrado'], 404);
         }
