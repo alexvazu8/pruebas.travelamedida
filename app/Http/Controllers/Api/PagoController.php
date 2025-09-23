@@ -272,7 +272,7 @@ class PagoController extends Controller
                    // ->where('expiration_token', '>', $now)
                     ->where('token', $tokenVM);
                    // ->latest()
-                   // ->first();*/
+                   // ->first();
          // Muestra la consulta con los placeholders
         //dd($pago->toSql());
         if (!$pago) {
@@ -281,7 +281,7 @@ class PagoController extends Controller
 
         return response()->json([
             'estado' => strtolower($pago->estado)
-        ]);
+        ]);*/
         
     }
 }
