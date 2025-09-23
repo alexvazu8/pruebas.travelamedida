@@ -264,7 +264,7 @@ class PagoController extends Controller
         $transactionId = $request->transaction_id;
         $tokenVM = $request->token;
         $now = Carbon::now()->timestamp;
-        $pago = Pago::where('usuario_id', $usuarioId)->where('transaction_id_metodo_pago', $transactionId)->where('expiration_token', '>', $now)->where('token', $tokenVM);
+        $pago = Pago::where('usuario_id', $usuarioId)->where('transaction_id_metodo_pago', $transactionId)->where('expiration_token', '>', $now)->where('token', $tokenVM)->latest();
         $sql=$pago->toSql(); 
         $bindings = $pago->getBindings(); // los valores reales
 
@@ -284,12 +284,13 @@ class PagoController extends Controller
                    // ->first();*/
          // Muestra la consulta con los placeholders
         //dd($pago->toSql());
+        
         if (!$pago) {
             return response()->json(['error' => 'Pago no encontrado'], 404);
         }
 
         return response()->json([
-            'estado' => strtolower($pago->estado)
+            'estado' => strtolower($pago->first()->estado)
         ]);
         
     }
