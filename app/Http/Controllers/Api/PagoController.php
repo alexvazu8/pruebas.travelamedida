@@ -261,11 +261,10 @@ class PagoController extends Controller
        // print_r($request->all());
       // print_r($request->getContent()); 
         $usuarioId = $request->query('usuario_id');
-         echo $transactionId = $request->query('transaction_id');
+         $transactionId = $request->query('transaction_id');
         $tokenVM = $request->query('token');
         $now = Carbon::now()->timestamp;
-        $pago = Pago::where('usuario_id', $usuarioId)->where('transaction_id_metodo_pago', $transactionId)->where('token', $tokenVM);
-        echo $pago->toSql();
+        $pago = Pago::where('usuario_id', $usuarioId)->where('transaction_id_metodo_pago', $transactionId)->where('expiration_token', '>', $now)->where('token', $tokenVM)->latest()->first();
         print_r($pago);
        // echo $pago->estado;
        /* $pago = Pago::where('usuario_id', $usuarioId)
@@ -273,7 +272,7 @@ class PagoController extends Controller
                    // ->where('expiration_token', '>', $now)
                     ->where('token', $tokenVM);
                    // ->latest()
-                   // ->first();
+                   // ->first();*/
          // Muestra la consulta con los placeholders
         //dd($pago->toSql());
         if (!$pago) {
@@ -282,7 +281,7 @@ class PagoController extends Controller
 
         return response()->json([
             'estado' => strtolower($pago->estado)
-        ]);*/
+        ]);
         
     }
 }
