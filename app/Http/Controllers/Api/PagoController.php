@@ -273,7 +273,7 @@ class PagoController extends Controller
             $sql = preg_replace('/\?/', $value, $sql, 1);
         }
 
-        echo $sql;
+        // echo $sql;
         //print_r($pago);
        // echo $pago->estado;
        /* $pago = Pago::where('usuario_id', $usuarioId)
@@ -288,9 +288,9 @@ class PagoController extends Controller
         if (!$pago) {
             return response()->json(['error' => 'Pago no encontrado'], 404);
         }
-
+        $pago=$pago->first();
         return response()->json([
-            'estado' => strtolower($pago->first()->estado)
+            'estado' => strtolower($pago->estado)
         ]);
         
     }
