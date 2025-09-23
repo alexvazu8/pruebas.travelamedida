@@ -308,7 +308,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         
-        let modal = document.getElementById('mapaModal');m
+        let modal = document.getElementById('mapaModal');
         let mapa = null; // Variable para almacenar el mapa
 
         modal.addEventListener('shown.bs.modal', function (event) {
