@@ -169,7 +169,7 @@ class StereumPayController extends Controller
             $now = Carbon::now()->timestamp;
             $pago = Pago::where('usuario_id', Auth::id())
                         ->where('transaction_id_metodo_pago', $transactionId)
-                        ->where('estado', 'PAGADO')
+                        ->where('estado', 'pagado')
                         ->where('expiration_token', '>', $now) // Solo tokens no expirados
                         ->where('token', $tokenVM)
                         ->latest()
