@@ -260,7 +260,7 @@ class PagoController extends Controller
     {
        // print_r($request->all());
       // print_r($request->getContent()); 
-        echo $usuarioId = $request->usuario_id;
+        $usuarioId = $request->usuario_id;
         $transactionId = $request->transaction_id;
         $tokenVM = $request->token;
         $now = Carbon::now()->timestamp;
