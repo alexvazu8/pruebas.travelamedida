@@ -265,7 +265,8 @@ class PagoController extends Controller
         $tokenVM = $request->token;
         $now = Carbon::now()->timestamp;
         $pago = Pago::where('usuario_id', $usuarioId)->where('transaction_id_metodo_pago', $transactionId)->where('expiration_token', '>', $now)->where('token', $tokenVM);
-        echo $pago->toSql(); 
+         $pago->toSql(); 
+        echo $bindings = $pago->getBindings(); // los valores reales
         //print_r($pago);
        // echo $pago->estado;
        /* $pago = Pago::where('usuario_id', $usuarioId)
