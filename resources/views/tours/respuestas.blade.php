@@ -28,9 +28,9 @@
                         {{ $respuesta['Nombre_tour'] }}
                         <a href="#" data-bs-toggle="modal" data-bs-target="#tourModal{{ $respuesta['Id_Tour'] }}" class="ms-2">Info</a>
                     </td>
-                    <td rowspan="10">
+                    <td colspan="2" class="text-end">
                         <!-- Formulario de reserva -->
-                        <form action="{{ route('tours.addCarrito')}}" method="POST">
+                        <form action="{{ route('tours.addCarrito')}}" method="POST" class="d-inline">
                             @csrf
                             <input type="hidden" name="Id_Tour" value="{{ $respuesta['Id_Tour'] }}">
                             <input type="hidden" name="Tipo_servicio" value="TOU">
