@@ -12,27 +12,65 @@
             <a href="{{ url('/tours') }}" class="btn btn-primary btn-lg mt-2">Volver a Tours</a>
         </div>
     @else
-    <div class="card shadow-lg border-0 rounded-4 p-3">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-                <tr class="text-center">
-                    <th>Campo</th>
-                    <th>Valor</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($respuestas as $index => $respuesta)
-                    <tr>
-                        <td class="fw-bold text-secondary">Nombre del Tour</td>
-                        <td>
-                            <span class="fw-semibold">{{ $respuesta['Nombre_tour'] }}</span>
-                            <a href="#" data-bs-toggle="modal" 
-                               data-bs-target="#tourModal{{ $respuesta['Id_Tour'] }}" 
-                               class="badge bg-info text-dark ms-2 text-decoration-none">Ver Info</a>
-                        </td>
-                        <td class="text-end">
-                            <form action="{{ route('tours.addCarrito') }}" method="POST" class="d-inline">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            @forelse($respuestas as $index => $respuesta)
+            <div class="tour-card p-4 border-bottom">
+                <div class="row g-4 align-items-center">
+                    <!-- Columna de imagen -->
+                    <div class="col-md-3">
+                        <div class="tour-image-container rounded-4 overflow-hidden shadow-sm">
+                            <img src="{{ $respuesta['Foto_tours'] }}" 
+                                 alt="Imagen del Tour" 
+                                 class="tour-image w-100 h-100">
+                        </div>
+                    </div>
+                    
+                    <!-- Columna de información -->
+                    <div class="col-md-6">
+                        <div class="tour-info">
+                            <h3 class="tour-title text-primary mb-3">{{ $respuesta['Nombre_tour'] }}</h3>
+                            
+                            <div class="tour-details">
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <div class="detail-item">
+                                            <span class="detail-label fw-bold text-secondary">Duración:</span>
+                                            <span class="detail-value">{{ $respuesta['cantidad_dias_tour'] }} Días / {{ $respuesta['cantidad_noches_tour'] }} Noches</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="detail-item">
+                                            <span class="detail-label fw-bold text-secondary">Precio Total:</span>
+                                            <span class="detail-value text-success fw-bold">${{ number_format($respuesta['Precio_Total'], 2) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="detail-item">
+                                            <span class="detail-label fw-bold text-secondary">Fechas:</span>
+                                            <span class="detail-value">
+                                                Disponible: {{ $respuesta['Fecha_disponible'] }}<br>
+                                                Salida: {{ $respuesta['Fecha_out'] }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="detail-item">
+                                            <span class="detail-label fw-bold text-secondary">Participantes:</span>
+                                            <span class="detail-value">
+                                                {{ $respuesta['Cantidad_adultos'] }} Adultos / {{ $respuesta['Cantidad_menores'] }} Menores
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Columna de acciones -->
+                    <div class="col-md-3">
+                        <div class="tour-actions text-center">
+                            <form action="{{ route('tours.addCarrito') }}" method="POST" class="mb-3">
                                 @csrf
                                 <input type="hidden" name="Id_Tour" value="{{ $respuesta['Id_Tour'] }}">
                                 <input type="hidden" name="Tipo_servicio" value="TOU">
@@ -46,52 +84,25 @@
                                 @if(isset($respuesta['Edad_menores']) && is_array($respuesta['Edad_menores']))
                                     <input type="hidden" name="Edad_menores" value="{{ json_encode($respuesta['Edad_menores']) }}">
                                 @endif
-                                <button type="submit" class="btn btn-success btn-sm px-3">Reservar</button>
+                                <button type="submit" class="btn btn-success btn-lg w-100 py-2 fw-bold">Reservar Ahora</button>
                             </form>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="fw-bold text-secondary">Duración</td>
-                        <td>{{ $respuesta['cantidad_dias_tour'] }} Días / {{ $respuesta['cantidad_noches_tour'] }} Noches</td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td class="fw-bold text-secondary">Precio Total</td>
-                        <td>${{ number_format($respuesta['Precio_Total'], 2) }}</td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td class="fw-bold text-secondary">Fechas</td>
-                        <td>Disponible: {{ $respuesta['Fecha_disponible'] }} | Salida: {{ $respuesta['Fecha_out'] }}</td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td class="fw-bold text-secondary">Foto del Tour</td>
-                        <td colspan="2" class="text-center">
-                            <div class="tour-thumb mx-auto">
-                                <img src="{{ $respuesta['Foto_tours'] }}" 
-                                     alt="Imagen del Tour" 
-                                     class="rounded-4 shadow-sm tour-image">
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="fw-bold text-secondary">Participantes</td>
-                        <td>{{ $respuesta['Cantidad_adultos'] }} Adultos / {{ $respuesta['Cantidad_menores'] }} Menores</td>
-                        <td></td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="3" class="text-center text-muted py-3">No hay resultados para mostrar.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                            
+                            <a href="#" data-bs-toggle="modal" 
+                               data-bs-target="#tourModal{{ $respuesta['Id_Tour'] }}" 
+                               class="btn btn-outline-primary btn-sm w-100">
+                                Ver Detalles
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div class="text-center text-muted py-5">
+                <i class="fas fa-search fa-3x mb-3"></i>
+                <p class="fs-5">No hay resultados para mostrar.</p>
+            </div>
+            @endforelse
+        </div>
     </div>
     @endif
 </div>
@@ -114,23 +125,29 @@
 @endforeach
 
 <style>
-/* 🎨 Ajuste visual estándar de imágenes principales */
-.tour-thumb {
-    width: 250px;         /* ancho fijo del contenedor */
-    height: 160px;        /* alto fijo del contenedor */
-    overflow: hidden;     /* oculta lo que se salga */
+/* 🎨 Estilos para tarjetas de tour */
+.tour-card {
+    transition: all 0.3s ease;
+}
+
+.tour-card:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+/* 🖼️ Contenedor de imagen estandarizado */
+.tour-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 12px;
-    background: #f8f9fa;  /* color de fondo neutro */
+    background: #f8f9fa;
 }
 
 .tour-image {
-    width: 250px;         
-    height: 160px;  
-    object-fit: cover;    /* mantiene proporción y recorta */
-    border-radius: 12px;
+    object-fit: cover;
     transition: transform 0.3s ease;
 }
 
@@ -138,6 +155,70 @@
     transform: scale(1.05);
 }
 
+/* 📝 Estilos para información del tour */
+.tour-title {
+    font-size: 1.5rem;
+    line-height: 1.3;
+}
+
+.tour-details {
+    margin-top: 1rem;
+}
+
+.detail-item {
+    margin-bottom: 0.5rem;
+}
+
+.detail-label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+}
+
+.detail-value {
+    display: block;
+    color: #495057;
+}
+
+/* 🖼️ Galería en modal */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 1.5rem 0;
+}
+
+.gallery img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    .tour-card {
+        padding: 1.5rem;
+    }
+    
+    .tour-image-container {
+        height: 180px;
+        margin-bottom: 1rem;
+    }
+    
+    .tour-title {
+        font-size: 1.3rem;
+    }
+    
+    .tour-actions .btn {
+        margin-bottom: 0.5rem;
+    }
+}
 </style>
 
 <script>
@@ -146,7 +227,14 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', function () {
             const tourId = this.getAttribute('data-bs-target').replace('#tourModal', '');
             const modalBody = document.getElementById(`tour-info-${tourId}`);
-            modalBody.innerHTML = `<p class="text-center text-muted">Cargando información...</p>`;
+            modalBody.innerHTML = `
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <p class="text-muted mt-2">Cargando información...</p>
+                </div>
+            `;
 
             fetch(`/tours/info/${tourId}`)
                 .then(response => response.json())
@@ -154,34 +242,94 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.success) {
                         const tour = data.tour;
                         modalBody.innerHTML = `
-                            <h3 class="text-center text-primary fw-bold mb-3">${tour.Nombre_tour}</h3>
-                            <p class="text-center text-muted">
-                                ${tour.pais.Nombre_Pais} · ${tour.ciudad.Nombre_Ciudad} · ${tour.zona.Nombre_Zona}
-                            </p>
-                            <div class="gallery">
-                                <img src="${tour.Foto_tours}" alt="Foto principal">
-                                ${tour.fotos_tours && tour.fotos_tours.length > 0 
-                                    ? tour.fotos_tours.map(foto => `<img src="${foto.url_foto_tour}" alt="${foto.nombre_foto_tour}">`).join('') 
-                                    : ''}
-                            </div>
-                            <div class="mt-4">
-                                <p><strong>Recojo del Hotel:</strong> ${tour.Recojo_hotel ? 'Sí' : 'No'}</p>
-                                <p><strong>Punto de Encuentro:</strong> ${tour.Punto_encuentro}</p>
-                                <p><strong>Horario:</strong> ${tour.Horario_inicio} - ${tour.Hora_fin}</p>
-                                <p><strong>Duración:</strong> ${tour.cantidad_dias_tour} días / ${tour.cantidad_noches_tour} noches</p>
-                                <p><strong>Descripción:</strong> ${tour.Detalle_tour}</p>
-                                <p><strong>Entrega de Agua:</strong> ${tour.Entregan_agua ? 'Sí' : 'No'}</p>
-                                <p><strong>Accesible para Discapacitados:</strong> ${tour.Para_discapacitados ? 'Sí' : 'No'}</p>
-                                <p><strong>Incluye Baño:</strong> ${tour.Con_bano ? 'Sí' : 'No'}</p>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3 class="text-primary fw-bold mb-3">${tour.Nombre_tour}</h3>
+                                    <p class="text-muted mb-4">
+                                        <i class="fas fa-map-marker-alt me-2"></i>
+                                        ${tour.pais.Nombre_Pais} · ${tour.ciudad.Nombre_Ciudad} · ${tour.zona.Nombre_Zona}
+                                    </p>
+                                    
+                                    <div class="tour-features mb-4">
+                                        <div class="row g-3">
+                                            <div class="col-sm-6">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-calendar-alt text-primary me-2"></i>
+                                                    <span><strong>Duración:</strong> ${tour.cantidad_dias_tour} días / ${tour.cantidad_noches_tour} noches</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-clock text-primary me-2"></i>
+                                                    <span><strong>Horario:</strong> ${tour.Horario_inicio} - ${tour.Hora_fin}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-hotel text-primary me-2"></i>
+                                                    <span><strong>Recojo del Hotel:</strong> ${tour.Recojo_hotel ? 'Sí' : 'No'}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-map-pin text-primary me-2"></i>
+                                                    <span><strong>Punto de Encuentro:</strong> ${tour.Punto_encuentro}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tour-description">
+                                        <h5 class="fw-bold mb-3">Descripción</h5>
+                                        <p class="text-justify">${tour.Detalle_tour}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <div class="additional-info">
+                                        <h5 class="fw-bold mb-3">Información Adicional</h5>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="fas ${tour.Entregan_agua ? 'fa-check text-success' : 'fa-times text-danger'} me-2"></i>
+                                                Entrega de Agua
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas ${tour.Para_discapacitados ? 'fa-check text-success' : 'fa-times text-danger'} me-2"></i>
+                                                Accesible para Discapacitados
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas ${tour.Con_bano ? 'fa-check text-success' : 'fa-times text-danger'} me-2"></i>
+                                                Incluye Baño
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="gallery mt-4">
+                                        <img src="${tour.Foto_tours}" alt="Foto principal" class="mb-2">
+                                        ${tour.fotos_tours && tour.fotos_tours.length > 0 
+                                            ? tour.fotos_tours.map(foto => `<img src="${foto.url_foto_tour}" alt="Foto del tour">`).join('') 
+                                            : ''}
+                                    </div>
+                                </div>
                             </div>
                         `;
                     } else {
-                        modalBody.innerHTML = `<p class="text-danger text-center">${data.message}</p>`;
+                        modalBody.innerHTML = `
+                            <div class="alert alert-danger text-center">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                ${data.message}
+                            </div>
+                        `;
                     }
                 })
                 .catch(error => {
                     console.error('Error al cargar la información del tour:', error);
-                    modalBody.innerHTML = `<p class="text-danger text-center">Hubo un error al obtener la información del tour.</p>`;
+                    modalBody.innerHTML = `
+                        <div class="alert alert-danger text-center">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Hubo un error al obtener la información del tour.
+                        </div>
+                    `;
                 });
         });
     });
