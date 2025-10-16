@@ -127,8 +127,8 @@
 }
 
 .tour-image {
-    width: 100%;
-    height: 100%;
+    width: 250px;         
+    height: 160px;  
     object-fit: cover;    /* mantiene proporción y recorta */
     border-radius: 12px;
     transition: transform 0.3s ease;
