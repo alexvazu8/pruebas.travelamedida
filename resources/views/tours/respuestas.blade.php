@@ -116,30 +116,28 @@
 <style>
 /* 🎨 Ajuste visual estándar de imágenes principales */
 .tour-thumb {
-    width: 260px;           /* ancho fijo */
-    height: 170px;          /* alto fijo */
-    overflow: hidden;
-    border-radius: 1rem;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
-    margin: 0 auto;
+    width: 250px;         /* ancho fijo del contenedor */
+    height: 160px;        /* alto fijo del contenedor */
+    overflow: hidden;     /* oculta lo que se salga */
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: #f8f9fa; /* fondo neutro para coherencia */
+    align-items: center;
+    border-radius: 12px;
+    background: #f8f9fa;  /* color de fondo neutro */
 }
 
 .tour-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;       /* recorta sin deformar */
-    object-position: center; /* centra la imagen */
-    transition: transform .5s ease, box-shadow .4s ease;
+    object-fit: cover;    /* mantiene proporción y recorta */
+    border-radius: 12px;
+    transition: transform 0.3s ease;
 }
 
 .tour-image:hover {
-    transform: scale(1.07);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transform: scale(1.05);
 }
+
 </style>
 
 <script>
