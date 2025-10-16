@@ -42,7 +42,7 @@
                                     <div class="col-sm-6">
                                         <div class="detail-item">
                                             <span class="detail-label fw-bold text-secondary">Precio Total:</span>
-                                            <span class="detail-value text-success fw-bold">${{ number_format($respuesta['Precio_Total'], 2) }}</span>
+                                            <span class="detail-value text-success fw-bold">{{ number_format($respuesta['Precio_Total'], 2) }}USD</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
