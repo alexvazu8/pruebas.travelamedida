@@ -16,7 +16,7 @@ class ReservaController extends Controller
 
 /**
  * @OA\Post(
- *     path="/reservas/confirmar",
+ *     path="/reserva/confirmar",
  *     summary="Confirmar una nueva reserva",
  *     description="Crea una nueva reserva con los datos proporcionados y asigna un localizador único.",
  *     tags={"Reservas"},
