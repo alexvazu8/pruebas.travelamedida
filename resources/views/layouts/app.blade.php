@@ -52,8 +52,8 @@
             <div class="container">
                 <!-- Logo -->
                 <a class="navbar-brand d-flex align-items-center fw-bold" href="{{ url('/') }}" aria-label="{{ config('app.name', 'Laravel') }} - Inicio">
-                    <div class="logo-container bg-white rounded-3 p-2 shadow-sm me-2" style="height: 80px; width: 100px; display: flex; align-items: center; justify-content: center;">
-                        <img src="{{ asset('travel.svg') }}" alt="" style="height: 50px; width: auto;" class="d-block">
+                    <div class="logo-container bg-white rounded-3 p-2 shadow-sm me-2" style="height: 90px; width: 110px; display: flex; align-items: center; justify-content: center;">
+                        <img src="{{ asset('travel.svg') }}" alt="" style="height: 75px; width: auto;" class="d-block">
                     </div>
                   
                 </a>
