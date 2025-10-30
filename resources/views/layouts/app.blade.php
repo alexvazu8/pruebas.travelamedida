@@ -177,12 +177,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="navbarDropdown">
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center py-2" href="{{ route('profile') }}">
-                                            <i class="fas fa-user-circle me-2 text-muted" aria-hidden="true"></i>
-                                            {{ __('Perfil') }}
-                                        </a>
-                                    </li>
+
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <a class="dropdown-item d-flex align-items-center py-2 text-danger" 
