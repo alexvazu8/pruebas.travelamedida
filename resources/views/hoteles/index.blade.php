@@ -59,17 +59,17 @@
             habitacionDiv.classList.add('habitacion', 'mb-4');
             habitacionDiv.id = `habitacion_${habitacionId}`;
             habitacionDiv.innerHTML = `
-                <h5>{{ __('Habitacion') }}${habitacionId}</h5>
+                <h5>{{ __('Habitacion') }} ${habitacionId}</h5>
 
                 <!-- Cantidad de Adultos -->
                 <div class="form-group">
-                    <label for="Cantidad_adultos_${habitacionId}">Cantidad de Adultos:</label>
+                    <label for="Cantidad_adultos_${habitacionId}">{{ __('Cantidad_adultos') }}</label>
                     <input type="number" class="form-control" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
                 </div>
 
                 <!-- Cantidad de Menores -->
                 <div class="form-group">
-                    <label for="Cantidad_menores_${habitacionId}">Cantidad de Menores:</label>
+                    <label for="Cantidad_menores_${habitacionId}">{{ __('Cantidad_menores') }}</label>
                     <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
                 </div>
 
@@ -107,7 +107,7 @@
                 const edadInput = document.createElement('div');
                 edadInput.classList.add('form-group');
                 edadInput.innerHTML = `
-                    <label for="Edad_menor_${habitacionId}_${i}">Edad Menor ${i}:</label>
+                    <label for="Edad_menor_${habitacionId}_${i}">{{ __('Edad_menor') }} ${i}:</label>
                     <input type="number" class="form-control" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" required>
                 `;
                 edadesMenoresContainer.appendChild(edadInput);
