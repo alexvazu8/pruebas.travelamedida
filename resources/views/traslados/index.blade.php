@@ -57,7 +57,7 @@
 
             <!-- Zona Origen -->
             <div class="form-group">
-                <label for="Zona_Origen_id">{{ __('Zona_destino') }}</label>
+                <label for="Zona_Origen_id">{{ __('Zona_origen') }}</label>
                 <select name="Zona_Origen_id" id="Zona_Origen_id" class="form-control" required>
                     <option value="">Selecciona una zona</option>
                 </select>
