@@ -244,6 +244,7 @@
     "You are logged in!": "Tem sessão iniciada!",
     "You are receiving this email because we received a password reset request for your account.": "Recebeu esse e-mail porque foi solicitada a redefinição da palavra-passe da sua conta.",
     "Titulo_disponibilidad_hoteles":"Pesquisar disponibilidade de Alojamento",
+    "Fecha_disponibilidad":"Data de disponibilidade:",    
     "Fecha_desde":"Data de:",
     "Fecha_hasta":"Data até:",
     "Ciudad_hotel":"Alojamento Cidade:",

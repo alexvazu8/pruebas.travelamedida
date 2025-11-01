@@ -9,7 +9,7 @@
         <form action="{{ route('traslados.obtener') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="Fecha_disponible">Fecha de Disponibilidad</label>
+                <label for="Fecha_disponible">{{ __('Fecha_disponibilidad') }}</label>
                 <input type="date"  id="Fecha_disponible" name="Fecha_disponible" class="form-control  bg-light text-dark"  value="{{ old('Fecha_disponible') }}" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}"  onfocus="this.showPicker && this.showPicker()" required>
                 @error('Fecha_disponible')
                     <span class="text-danger">{{ $message }}</span>
