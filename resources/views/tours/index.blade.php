@@ -71,7 +71,7 @@
                 for (let i = 1; i <= cantidadMenores; i++) {
                     const label = document.createElement('label');
                     label.setAttribute('for', `Edad_menor_${i}`);
-                    label.textContent = `Edad del menor ${i}`;
+                    label.textContent = `{{ __('Edad_menor') }} ${i}`;
                     label.classList.add('mt-2');
 
                     const input = document.createElement('input');
@@ -79,7 +79,7 @@
                     input.id = `Edad_menor_${i}`;
                     input.name = `Edad_menores[${i}]`;
                     input.classList.add('form-control');
-                    input.placeholder = `Edad del menor ${i}`;
+                    input.placeholder = `{{ __('Edad_menor') }} ${i}`;
                     input.min = 1;
                     input.max = 17;
                     input.required = true;
