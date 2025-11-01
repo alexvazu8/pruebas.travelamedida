@@ -42,7 +42,7 @@
             Fin del comentario de Pais-->
 
             <div class="form-group">
-                <label for="Ciudad_Id_Ciudad">Ciudad</label>
+                <label for="Ciudad_Id_Ciudad">{{ __('Ciudad') }}</label>
                 <select name="Ciudad_Id_Ciudad" id="Ciudad_Id_Ciudad" class="form-control select2-ciudades" required>
                 <option value="">Selecciona una ciudad</option>
                 @foreach($ciudades as $ciudad)
@@ -57,7 +57,7 @@
 
             <!-- Zona Origen -->
             <div class="form-group">
-                <label for="Zona_Origen_id">Zona de Origen</label>
+                <label for="Zona_Origen_id">{{ __('Zona_destino') }}</label>
                 <select name="Zona_Origen_id" id="Zona_Origen_id" class="form-control" required>
                     <option value="">Selecciona una zona</option>
                 </select>
@@ -67,7 +67,7 @@
             </div>
 
             <div class="form-group">
-                <label for="Zona_Destino_id">Zona de Destino</label>
+                <label for="Zona_Destino_id">{{ __('Zona_destino') }}</label>
                 <select name="Zona_Destino_id" id="Zona_Destino_id" class="form-control" required>
                     <option value="">Selecciona una zona destino</option>
                 </select>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="form-group">
-                <label for="hora_servicio">Hora de Servicio</label>
+                <label for="hora_servicio">{{ __('Hora_servicio') }}</label>
                 <input type="time" id="hora_servicio" name="hora_servicio" class="form-control" value="{{ old('hora_servicio') }}" required>
                 @error('hora_servicio')
                     <span class="text-danger">{{ $message }}</span>
@@ -85,7 +85,7 @@
             </div>
 
             <div class="form-group">
-                <label for="Cantidad_adultos">Cantidad de Adultos</label>
+                <label for="Cantidad_adultos">{{ __('Cantidad_adultos') }}</label>
                 <input type="number" id="Cantidad_adultos" name="Cantidad_adultos" class="form-control" value="{{ old('Cantidad_adultos') }}" min="0" max="9" required  oninput="this.value = Math.min(9, this.value)">
                 @error('Cantidad_adultos')
                     <span class="text-danger">{{ $message }}</span>
@@ -93,7 +93,7 @@
             </div>
 
             <div class="form-group">
-                <label for="Cantidad_menores">Cantidad de Menores</label>
+                <label for="Cantidad_menores">{{ __('Cantidad_menores') }}</label>
                 <input type="number" id="Cantidad_menores" name="Cantidad_menores" class="form-control" min="0" max="5"  required  oninput="this.value = Math.min(5, this.value)">
                 @error('Cantidad_menores')
                     <span class="text-danger">{{ $message }}</span>
@@ -101,7 +101,7 @@
             </div>           
 
             <div id="edadMenoresContainer" class="form-group" style="display: none;">
-                <label for="Edad_menores">Edad de los Menores</label>
+                <label for="Edad_menores">{{ __('Edades_menores') }}</label>
                 <div id="edadMenoresInputs"></div>
 
             </div>
@@ -130,14 +130,14 @@
                 for (let i = 1; i <= cantidadMenores; i++) {
                     const label = document.createElement('label');
                     label.setAttribute('for', `Edad_menor_${i}`);
-                    label.textContent = `Edad del menor ${i}`;
+                    label.textContent = `{{ __('Edad_menor') }} ${i}`;
 
                     const input = document.createElement('input');
                     input.type = 'number';
                     input.id = `Edad_menor_${i}`;
                     input.name = `Edad_menores[${i}]`;
                     input.classList.add('form-control');
-                    input.placeholder = `Edad del menor ${i}`;
+                    input.placeholder = `{{ __('Edad_menor') }} ${i}`;
 
                     // Crea el contenedor para el error
                     const errorContainer = document.createElement('div');
