@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Buscar Disponibilidad de Hoteles</h1>
+    <h1>{{ __('Titulo_disponibilidad_hoteles') }}</h1>
     <form action="{{ route('hoteles.obtener') }}" method="POST">
         @csrf
 
