@@ -11,7 +11,8 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=Nunito:300,400,600,700&display=swap" rel="stylesheet">
+    
     <!-- Vinculando el archivo CSS -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <!-- Select2 CSS -->
@@ -68,8 +69,9 @@
                         @endauth
                     </ul>
 
+                    <!-- Right Side Menu -->
                     <ul class="navbar-nav ms-auto align-items-lg-center">
-                         <!-- Language Selector -->
+                        <!-- Language Selector -->
                         <li class="nav-item dropdown me-3">
                             <a id="idiomaDropdown" class="nav-link dropdown-toggle d-flex align-items-center text-white" 
                                href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -98,35 +100,51 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link text-white hover:text-accent" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <li class="nav-item me-2">
+                                    <a class="btn btn-outline-light btn-sm rounded-pill px-3" href="{{ route('login') }}">
+                                        <i class="fas fa-sign-in-alt me-1" aria-hidden="true"></i>
+                                        {{ __('Login') }}
+                                    </a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link text-neutral text-white hover:text-accent" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a  class="btn btn-outline-light btn-sm rounded-pill px-3" href="{{ route('register') }}">
+                                        <i class="fas fa-user-plus me-1" aria-hidden="true"></i>
+                                        {{ __('Registro') }}
+                                    </a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white hover:text-accent" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center text-white" 
+                                   href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" v-pre>
+                                    <div class="avatar-sm bg-white rounded-circle d-flex align-items-center justify-content-center me-2">
+                                        <i class="fas fa-user text-primary" aria-hidden="true"></i>
+                                    </div>
+                                    <span class="d-none d-md-inline">{{ Str::limit(Auth::user()->name, 15) }}</span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end bg-primary" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item text-neutral hover:text-accent" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="navbarDropdown">
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center py-2 text-danger" 
+                                           href="{{ route('logout') }}"
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="fas fa-sign-out-alt me-2" aria-hidden="true"></i>
+                                            {{ __('Cerrar Sesión') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         @endguest
                     </ul>
@@ -139,49 +157,102 @@
                 @yield('content')
             </div>
         </main>
-<!-- Footer Bootstrap desde cero: Empresa a la izquierda, Legal a la derecha -->
-<footer class="bg-primary text-white py-5 mt-5">
-    <div class="container">
-        <div class="row">
-            <!-- Columna: Empresa -->
-            <div class="col-12 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-accent border-bottom border-accent pb-2 mb-3">{{ __('Empresa') }}</h5>
-                <ul class="list-unstyled text-light">
-                    <li>
-                        <a href="/nosotros" class="text-light text-decoration-none">{{ __('Nosotros') }}</a>
-                    </li>
-                    <li class="mt-2 d-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2 text-accent" viewBox="0 0 16 16">
-                            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592z"/>
-                        </svg>
-                        <span>+591 72220016</span>
-                    </li>
-                </ul>
+        <!-- Footer -->
+        <footer class="bg-dark text-white mt-auto">
+            <div class="container py-5">
+                <div class="row g-4">
+                    <!-- Company Information -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="logo-container bg-white rounded-2 p-1 me-3" style="height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">
+                                <img src="{{ asset('travel.svg') }}" alt="" style="height: 35px; width: auto;" class="d-block">
+                            </div>
+                            <h5 class="mb-0 text-accent fw-bold">{{ config('app.name', 'Laravel') }}</h5>
+                        </div>
+                        <p class="text-light mb-3">{{ __('Tu partner de confianza para experiencias de viaje inolvidables.') }}</p>
+                        <div class="d-flex align-items-center text-light">
+                            <i class="fas fa-phone-alt text-accent me-2" aria-hidden="true"></i>
+                            <span>+591 72220016</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="col-lg-2 col-md-6">
+                        <h6 class="text-accent mb-3 fw-semibold">{{ __('Empresa') }}</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="/nosotros" class="text-light text-decoration-none transition-all d-inline-flex align-items-center">
+                                    <i class="fas fa-chevron-right small me-1 text-accent" aria-hidden="true"></i>
+                                    {{ __('Nosotros') }}
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <!-- Legal -->
+                    <div class="col-lg-2 col-md-6">
+                        <h6 class="text-accent mb-3 fw-semibold">{{ __('Legal') }}</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="/terminos" class="text-light text-decoration-none transition-all d-inline-flex align-items-center">
+                                    <i class="fas fa-chevron-right small me-1 text-accent" aria-hidden="true"></i>
+                                    {{ __('Términos') }}
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="/privacidad" class="text-light text-decoration-none transition-all d-inline-flex align-items-center">
+                                    <i class="fas fa-chevron-right small me-1 text-accent" aria-hidden="true"></i>
+                                    {{ __('Privacidad') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="my-4 border-secondary">
+
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="mb-0 small text-light">
+                            &copy; {{ date('Y') }} VISION MUNDO PY. {{ __('Todos los derechos reservados.') }}
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="d-flex justify-content-center justify-content-md-end align-items-center gap-3">
+                            <svg width="86" height="30" viewBox="0 0 80 24" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="compactCard" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#3B82F6" />
+                                        <stop offset="100%" stop-color="#8B5CF6" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Tarjeta -->
+                                <g transform="translate(8, 4)">
+                                    <rect x="0" y="0" width="24" height="16" rx="3" fill="url(#compactCard)"/>
+                                    <rect x="4" y="6" width="6" height="4" rx="1" fill="#FFD700"/>
+                                    <rect x="12" y="6" width="8" height="1.5" rx="0.5" fill="white"/>
+                                    <rect x="12" y="8" width="6" height="1.5" rx="0.5" fill="white" fill-opacity="0.7"/>
+                                    <text x="12" y="14" font-family="Arial" font-size="4" fill="white" text-anchor="middle">CARD</text>
+                                </g>
+                                
+                                <!-- USDT -->
+                                <g transform="translate(40, 4)">
+                                    <circle cx="12" cy="8" r="8" fill="#26A17B"/>
+                                    <text x="12" y="11" font-family="Arial" font-size="8" font-weight="bold" fill="white" text-anchor="middle">$</text>
+                                    <text x="12" y="19" font-family="Arial" font-size="4" fill="#1F2937" text-anchor="middle">USDT</text>
+                                </g>
+                            </svg>
+                            <span class="badge bg-success rounded-pill">
+                                <i class="fas fa-lock me-1" aria-hidden="true"></i>
+                                {{ __('Sitio Seguro') }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Columna: Legal -->
-            <div class="col-12 col-md-6 text-md-end">
-                <h5 class="text-accent border-bottom border-accent pb-2 mb-3">{{ __('Legal') }}</h5>
-                <ul class="list-unstyled text-light">
-                    <li>
-                        <a href="/terminos" class="text-light text-decoration-none">{{ __('Terminos') }}</a>
-                    </li>
-                    <li class="mt-2">
-                        <a href="/privacidad" class="text-light text-decoration-none">{{ __('Privacidad') }}</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <hr class="border-gray-600 my-4">
-
-        <div class="text-center small">
-            &copy; {{ date('Y') }} VISION MUNDO PY.
-        </div>
-    </div>
-</footer>
-
-
+        </footer>
     </div>
     @vite(['resources/js/app.js']) {{-- JavaScript aquí si depende del DOM --}}
     @yield('scripts')
