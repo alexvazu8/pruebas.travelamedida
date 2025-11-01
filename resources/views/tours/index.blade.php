@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-5">
-    <h2 class="mb-4">Reservar un Tour</h2>
+    <h2 class="mb-4">{{ __('Buscar_tour') }}</h2>
     <form id="form-tour" action="{{ route('tours.obtener') }}" method="POST">
         @csrf   
         <!-- Tipo de Servicio -->   
@@ -11,13 +11,13 @@
 
         <!-- Fecha Disponible -->
         <div class="mb-3">
-            <label for="Fecha_disponible" class="form-label">Fecha Disponible</label>
+            <label for="Fecha_disponible" class="form-label">{{ __('Fecha_desde') }}</label>
             <input type="date" id="Fecha_disponible" name="Fecha_disponible" class="form-control" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" required>
         </div>
 
         <!-- Ciudad -->
         <div class="mb-3">
-            <label for="Ciudad_Id_Ciudad" class="form-label">Ciudad</label>
+            <label for="Ciudad_Id_Ciudad" class="form-label">{{ __('Ciudad') }}</label>
             <select id="Ciudad_Id_Ciudad" name="Ciudad_Id_Ciudad" class="form-select select2-ciudades" required>
                 <option value="">Selecciona una ciudad</option>
                 @foreach($ciudades as $ciudad)
@@ -28,19 +28,19 @@
 
         <!-- Cantidad de Adultos -->
         <div class="mb-3">
-            <label for="Cantidad_adultos" class="form-label">Cantidad de Adultos</label>
+            <label for="Cantidad_adultos" class="form-label">{{ __('Cantidad_adultos') }}</label>
             <input type="number" id="Cantidad_adultos" name="Cantidad_adultos" class="form-control" min="1" value="1" required>
         </div>
 
         <!-- Cantidad de Menores -->
         <div class="mb-3">
-            <label for="Cantidad_menores" class="form-label">Cantidad de Menores</label>
+            <label for="Cantidad_menores" class="form-label">{{ __('Cantidad_menores') }}</label>
             <input type="number" id="Cantidad_menores" name="Cantidad_menores" class="form-control" min="0" value="0" required>
         </div>
 
         <!-- Edades de Menores -->
         <div id="edadMenoresContainer" class="mb-3" style="display: none;">
-            <label class="form-label">Edades de los Menores</label>
+            <label class="form-label">{{ __('Edades_menores') }}</label>
             <div id="edadMenoresInputs"></div>
         </div>
 
