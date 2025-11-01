@@ -8,19 +8,19 @@
 
         <!-- Fecha Desde -->
         <div class="form-group">
-            <label for="Fecha_desde">Fecha Desde:</label>
+            <label for="Fecha_desde">{{ __('Fecha_desde') }}</label>
             <input type="date" class="form-control" id="Fecha_desde" name="Fecha_desde" min="{{ now()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()"  required onchange="const nextDay = new Date(this.value); nextDay.setDate(nextDay.getDate() + 1); document.getElementById('Fecha_hasta').min = nextDay.toISOString().split('T')[0]; document.getElementById('Fecha_hasta').value = nextDay.toISOString().split('T')[0]">
         </div>
 
         <!-- Fecha Hasta -->
         <div class="form-group">
-            <label for="Fecha_hasta">Fecha Hasta:</label>
+            <label for="Fecha_hasta">{{ __('Fecha_hasta') }}</label>
             <input type="date" class="form-control" id="Fecha_hasta" name="Fecha_hasta" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" required>
         </div>
 
         <!-- Ciudad del Hotel -->
         <div class="form-group">
-            <label for="Id_Ciudad_Hotel">Ciudad del Hotel:</label>
+            <label for="Id_Ciudad_Hotel">{{ __('Ciudad_hotel') }}</label>
             <select class="form-control select2-ciudades" id="Id_Ciudad_Hotel" name="Id_Ciudad_Hotel" required>
                 <option value="">Selecciona una ciudad</option>
                 @foreach($ciudades as $ciudad)
@@ -35,7 +35,7 @@
 
         <!-- Número de Habitaciones -->
         <div class="form-group">
-            <label for="Numero_Habitaciones">Número de Habitaciones:</label>
+            <label for="Numero_Habitaciones">{{ __('Numero_habitaciones') }}</label>
             <input type="number" class="form-control" id="Numero_Habitaciones" name="Numero_Habitaciones" min="1" max="3" value="1" required>
         </div>
 
@@ -45,7 +45,7 @@
         </div>
 
         <!-- Botón de Buscar -->
-        <button type="submit" class="btn btn-primary mt-4">Buscar</button>
+        <button type="submit" class="btn btn-primary mt-4">{{ __('Search') }}</button>
     </form>
 </div>
 
