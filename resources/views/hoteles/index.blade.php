@@ -59,7 +59,7 @@
             habitacionDiv.classList.add('habitacion', 'mb-4');
             habitacionDiv.id = `habitacion_${habitacionId}`;
             habitacionDiv.innerHTML = `
-                <h5>Habitación ${habitacionId}</h5>
+                <h5>{{ __('Habitacion') }}${habitacionId}</h5>
 
                 <!-- Cantidad de Adultos -->
                 <div class="form-group">
