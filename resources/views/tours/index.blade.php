@@ -12,7 +12,7 @@
         <!-- Fila horizontal para los campos principales -->
         <div class="row g-3 align-items-end">
             <!-- Ciudad -->
-            <div class="col-md-2 col-sm-5">
+            <div class="col-md-3 col-sm-6">
                 <label for="Ciudad_Id_Ciudad" class="form-label">{{ __('Ciudad') }}</label>
                 <select id="Ciudad_Id_Ciudad" name="Ciudad_Id_Ciudad" class="form-select select2-ciudades" required>
                     <option value="">{{ __('Select_ciudad') }}</option>
