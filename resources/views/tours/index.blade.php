@@ -156,7 +156,8 @@
         $selectCiudades.select2({
             placeholder: "{{ __('Select_ciudad') }}",
             allowClear: true,
-            width: '100%'
+            width: '100%',
+            height: '38px'
         });
 
         // Esto enfoca el campo de búsqueda automáticamente al abrir el select2
