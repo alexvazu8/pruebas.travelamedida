@@ -30,7 +30,7 @@
                 <input type="date" id="Fecha_disponible" name="Fecha_disponible" class="form-control" 
                        min="{{ now()->addDay()->format('Y-m-d') }}" 
                        max="{{ now()->addDays(365)->format('Y-m-d') }}" 
-                       onfocus="this.showPicker && this.showPicker()" required>
+                       onclick="this.showPicker && this.showPicker()" onfocus="this.showPicker && this.showPicker()" required>
             </div>
 
             <!-- Cantidad de Adultos -->
