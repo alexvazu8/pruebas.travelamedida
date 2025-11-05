@@ -14,7 +14,7 @@
             <!-- Ciudad -->
             <div class="col-md-3 col-sm-6">
                 <label for="Ciudad_Id_Ciudad" class="form-label">{{ __('Ciudad') }}</label>
-                <select id="Ciudad_Id_Ciudad" name="Ciudad_Id_Ciudad" class="form-select select2-ciudades" required>
+                <select id="Ciudad_Id_Ciudad" name="Ciudad_Id_Ciudad" class="form-select select2-ciudades" required style="height: 38px;">
                     <option value="">{{ __('Select_ciudad') }}</option>
                     @foreach($ciudades as $ciudad)
                         <option value="{{ $ciudad->id_ciudad }}"  @if(old('Ciudad_Id_Ciudad') == $ciudad->id_ciudad) selected @endif>
@@ -60,6 +60,41 @@
         </div>
     </form>
 </div>
+
+<style>
+    /* Forzar estilos de Bootstrap en Select2 */
+    .select2-container .select2-selection--single {
+        height: 38px !important;
+        border: 1px solid #ced4da !important;
+        border-radius: 0.375rem !important;
+        padding: 0.375rem 0.75rem !important;
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 24px !important;
+        padding-left: 0 !important;
+        color: #212529 !important;
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 36px !important;
+    }
+    
+    .select2-container--default .select2-selection--single {
+        background-color: #fff !important;
+    }
+    
+    .select2-container--focus .select2-selection--single {
+        border-color: #86b7fe !important;
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+    }
+    
+    /* Asegurar que el dropdown también tenga bordes redondeados */
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #0d6efd !important;
+    }
+</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
