@@ -47,7 +47,7 @@
 
             <!-- Botón de Enviar -->
             <div class="col-md-2 col-sm-4">
-                <button type="submit" class="btn btn-primary w-100">Reservar</button>
+                <button type="submit" class="btn btn-primary w-100">{{ __('Boton_buscar') }}</button>
             </div>
         </div>
 
