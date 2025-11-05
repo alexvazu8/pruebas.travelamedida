@@ -535,3 +535,14 @@
   
   .select2-container--classic.select2-container--open .select2-dropdown {
     border-color: #5897fb; }
+
+  /* Limpiar estilos conflictivos del theme original */
+.select2-container--default .select2-selection--single {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+    background-color: transparent !important;
+    border: none !important;
+}
