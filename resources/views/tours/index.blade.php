@@ -15,7 +15,7 @@
             <div class="col-md-3 col-sm-6">
                 <label for="Ciudad_Id_Ciudad" class="form-label">{{ __('Ciudad') }}</label>
                 <select id="Ciudad_Id_Ciudad" name="Ciudad_Id_Ciudad" class="form-select select2-ciudades" required>
-                    <option value="">Selecciona una ciudad</option>
+                    <option value="">{{ __('Select_ciudad') }}</option>
                     @foreach($ciudades as $ciudad)
                         <option value="{{ $ciudad->id_ciudad }}"  @if(old('Ciudad_Id_Ciudad') == $ciudad->id_ciudad) selected @endif>
                             {{ $ciudad->nombre_ciudad }} {{ $ciudad->pais->Nombre_Pais }}
