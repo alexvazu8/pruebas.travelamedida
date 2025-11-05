@@ -139,7 +139,7 @@
             };
 
             console.log('Datos del formulario:', datosFormulario);
-            alert('Reserva realizada con éxito!');
+            //alert('Reserva realizada con éxito!');
             
             // EL FORMULARIO SE ENVIARÁ AUTOMÁTICAMENTE DESPUÉS DEL ALERT
             // No necesitas hacer nada más
