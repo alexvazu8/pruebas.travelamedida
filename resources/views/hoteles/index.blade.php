@@ -5,19 +5,7 @@
     <h1>{{ __('Titulo_disponibilidad_hoteles') }}</h1>
     <form action="{{ route('hoteles.obtener') }}" method="POST">
         @csrf
-
-        <!-- Fecha Desde -->
-        <div class="form-group">
-            <label for="Fecha_desde">{{ __('Fecha_desde') }}</label>
-            <input type="date" class="form-control" id="Fecha_desde" name="Fecha_desde" min="{{ now()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()"  required onchange="const nextDay = new Date(this.value); nextDay.setDate(nextDay.getDate() + 1); document.getElementById('Fecha_hasta').min = nextDay.toISOString().split('T')[0]; document.getElementById('Fecha_hasta').value = nextDay.toISOString().split('T')[0]">
-        </div>
-
-        <!-- Fecha Hasta -->
-        <div class="form-group">
-            <label for="Fecha_hasta">{{ __('Fecha_hasta') }}</label>
-            <input type="date" class="form-control" id="Fecha_hasta" name="Fecha_hasta" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" required>
-        </div>
-
+        
         <!-- Ciudad del Hotel -->
         <div class="form-group">
             <label for="Id_Ciudad_Hotel">{{ __('Ciudad_hotel') }}</label>
@@ -32,6 +20,17 @@
             </select>
         </div>
 
+        <!-- Fecha Desde -->
+        <div class="form-group">
+            <label for="Fecha_desde">{{ __('Fecha_desde') }}</label>
+            <input type="date" class="form-control" id="Fecha_desde" name="Fecha_desde" min="{{ now()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()"  required onchange="const nextDay = new Date(this.value); nextDay.setDate(nextDay.getDate() + 1); document.getElementById('Fecha_hasta').min = nextDay.toISOString().split('T')[0]; document.getElementById('Fecha_hasta').value = nextDay.toISOString().split('T')[0]">
+        </div>
+
+        <!-- Fecha Hasta -->
+        <div class="form-group">
+            <label for="Fecha_hasta">{{ __('Fecha_hasta') }}</label>
+            <input type="date" class="form-control" id="Fecha_hasta" name="Fecha_hasta" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" required>
+        </div>
 
         <!-- Número de Habitaciones -->
         <div class="form-group">
@@ -138,7 +137,7 @@
         const $selectCiudades = $('.select2-ciudades');
 
         $selectCiudades.select2({
-            placeholder: "Selecciona una ciudad",
+            placeholder: "{{ __('Select_ciudad') }}",
             allowClear: true,
             width: '100%'
         });
