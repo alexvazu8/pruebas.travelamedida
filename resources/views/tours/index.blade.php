@@ -12,7 +12,7 @@
         <!-- Fila horizontal para los campos principales -->
         <div class="row g-3 align-items-end">
             <!-- Ciudad -->
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-5">
                 <label for="Ciudad_Id_Ciudad" class="form-label">{{ __('Ciudad') }}</label>
                 <select id="Ciudad_Id_Ciudad" name="Ciudad_Id_Ciudad" class="form-select select2-ciudades" required>
                     <option value="">{{ __('Select_ciudad') }}</option>
@@ -25,22 +25,22 @@
             </div>
 
             <!-- Fecha Disponible -->
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-2 col-sm-4">
                 <label for="Fecha_disponible" class="form-label">{{ __('Fecha_desde') }}</label>
-                <input type="date" id="Fecha_disponible" name="Fecha_disponible" class="form-control form-control-sm w-auto" 
+                <input type="date" id="Fecha_disponible" name="Fecha_disponible" class="form-control" 
                        min="{{ now()->addDay()->format('Y-m-d') }}" 
                        max="{{ now()->addDays(365)->format('Y-m-d') }}" 
                        onclick="this.showPicker && this.showPicker()" onfocus="this.showPicker && this.showPicker()" required>
             </div>
 
             <!-- Cantidad de Adultos -->
-            <div class="col-md-2 col-sm-4">
+            <div class="col-md-1 col-sm-3">
                 <label for="Cantidad_adultos" class="form-label">{{ __('Cantidad_adultos') }}</label>
                 <input type="number" id="Cantidad_adultos" name="Cantidad_adultos" class="form-control" min="1" value="1" required>
             </div>
 
             <!-- Cantidad de Menores -->
-            <div class="col-md-2 col-sm-4">
+            <div class="col-md-1 col-sm-3">
                 <label for="Cantidad_menores" class="form-label">{{ __('Cantidad_menores') }}</label>
                 <input type="number" id="Cantidad_menores" name="Cantidad_menores" class="form-control" min="0" value="0" required>
             </div>
