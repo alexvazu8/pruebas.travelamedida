@@ -29,7 +29,7 @@
         <!-- Fecha Hasta -->
         <div class="form-group">
             <label for="Fecha_hasta">{{ __('Fecha_hasta') }}</label>
-            <input type="date" class="form-control" id="Fecha_hasta" name="Fecha_hasta" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" required>
+            <input type="date" class="form-control" id="Fecha_hasta" name="Fecha_hasta" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" onclick="this.showPicker && this.showPicker()" required>
         </div>
 
         <!-- Número de Habitaciones -->
