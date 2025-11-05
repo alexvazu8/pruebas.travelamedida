@@ -27,7 +27,7 @@
             <!-- Fecha Disponible -->
             <div class="col-md-3 col-sm-6">
                 <label for="Fecha_disponible" class="form-label">{{ __('Fecha_desde') }}</label>
-                <input type="date" id="Fecha_disponible" name="Fecha_disponible" class="form-control" 
+                <input type="date" id="Fecha_disponible" name="Fecha_disponible" class="form-control form-control-sm w-auto" 
                        min="{{ now()->addDay()->format('Y-m-d') }}" 
                        max="{{ now()->addDays(365)->format('Y-m-d') }}" 
                        onclick="this.showPicker && this.showPicker()" onfocus="this.showPicker && this.showPicker()" required>
