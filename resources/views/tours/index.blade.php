@@ -173,21 +173,5 @@
     });
 </script>
 
-<style>
-/* Asegurar que Select2 tenga la misma altura que los inputs de Bootstrap */
-.select2-container .select2-selection--single {
-    height: 38px !important;
-    border: 1px solid #ced4da !important;
-    border-radius: 0.375rem !important;
-}
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 36px !important;
-    padding-left: 12px !important;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 36px !important;
-}
-</style>
 @endsection
