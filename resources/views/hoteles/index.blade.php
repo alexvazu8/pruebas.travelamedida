@@ -6,45 +6,49 @@
     <form action="{{ route('hoteles.obtener') }}" method="POST">
         @csrf
         
-        <!-- Ciudad del Hotel -->
-        <div class="form-group">
-            <label for="Id_Ciudad_Hotel">{{ __('Ciudad_hotel') }}</label>
-            <select class="form-control select2-ciudades" id="Id_Ciudad_Hotel" name="Id_Ciudad_Hotel" required>
-                <option value="">Selecciona una ciudad</option>
-                @foreach($ciudades as $ciudad)
-                    <option value="{{ $ciudad->id_ciudad }}"
-                        @if(old('Id_Ciudad_Hotel') == $ciudad->id_ciudad) selected @endif>
-                        {{ $ciudad->nombre_ciudad }} {{ $ciudad->pais->Nombre_Pais }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        <div class="row">
+            <!-- Ciudad del Hotel -->
+            <div class="form-group col-md-3">
+                <label for="Id_Ciudad_Hotel">{{ __('Ciudad_hotel') }}</label>
+                <select class="form-control select2-ciudades" id="Id_Ciudad_Hotel" name="Id_Ciudad_Hotel" required>
+                    <option value="">Selecciona una ciudad</option>
+                    @foreach($ciudades as $ciudad)
+                        <option value="{{ $ciudad->id_ciudad }}"
+                            @if(old('Id_Ciudad_Hotel') == $ciudad->id_ciudad) selected @endif>
+                            {{ $ciudad->nombre_ciudad }} {{ $ciudad->pais->Nombre_Pais }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-        <!-- Fecha Desde -->
-        <div class="form-group">
-            <label for="Fecha_desde">{{ __('Fecha_desde') }}</label>
-            <input type="date" class="form-control" id="Fecha_desde" name="Fecha_desde" min="{{ now()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" onclick="this.showPicker && this.showPicker()"  required onchange="const nextDay = new Date(this.value); nextDay.setDate(nextDay.getDate() + 1); document.getElementById('Fecha_hasta').min = nextDay.toISOString().split('T')[0]; document.getElementById('Fecha_hasta').value = nextDay.toISOString().split('T')[0]">
-        </div>
+            <!-- Fecha Desde -->
+            <div class="form-group col-md-2">
+                <label for="Fecha_desde">{{ __('Fecha_desde') }}</label>
+                <input type="date" class="form-control" id="Fecha_desde" name="Fecha_desde" min="{{ now()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" onclick="this.showPicker && this.showPicker()" required onchange="const nextDay = new Date(this.value); nextDay.setDate(nextDay.getDate() + 1); document.getElementById('Fecha_hasta').min = nextDay.toISOString().split('T')[0]; document.getElementById('Fecha_hasta').value = nextDay.toISOString().split('T')[0]">
+            </div>
 
-        <!-- Fecha Hasta -->
-        <div class="form-group">
-            <label for="Fecha_hasta">{{ __('Fecha_hasta') }}</label>
-            <input type="date" class="form-control" id="Fecha_hasta" name="Fecha_hasta" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" onclick="this.showPicker && this.showPicker()" required>
-        </div>
+            <!-- Fecha Hasta -->
+            <div class="form-group col-md-2">
+                <label for="Fecha_hasta">{{ __('Fecha_hasta') }}</label>
+                <input type="date" class="form-control" id="Fecha_hasta" name="Fecha_hasta" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" onclick="this.showPicker && this.showPicker()" required>
+            </div>
 
-        <!-- Número de Habitaciones -->
-        <div class="form-group">
-            <label for="Numero_Habitaciones">{{ __('Numero_habitaciones') }}</label>
-            <input type="number" class="form-control" id="Numero_Habitaciones" name="Numero_Habitaciones" min="1" max="3" value="1" required>
+            <!-- Número de Habitaciones -->
+            <div class="form-group col-md-2">
+                <label for="Numero_Habitaciones">{{ __('Numero_habitaciones') }}</label>
+                <input type="number" class="form-control" id="Numero_Habitaciones" name="Numero_Habitaciones" min="1" max="3" value="1" required>
+            </div>
+
+            <!-- Botón de Buscar -->
+            <div class="form-group col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">{{ __('Search') }}</button>
+            </div>
         </div>
 
         <!-- Contenedor dinámico de habitaciones -->
-        <div id="habitaciones-container">
+        <div id="habitaciones-container" class="mt-4">
             <!-- Se generan dinámicamente habitaciones aquí -->
         </div>
-
-        <!-- Botón de Buscar -->
-        <button type="submit" class="btn btn-primary mt-4">{{ __('Search') }}</button>
     </form>
 </div>
 
@@ -55,21 +59,22 @@
 
         function crearHabitacion(habitacionId) {
             const habitacionDiv = document.createElement('div');
-            habitacionDiv.classList.add('habitacion', 'mb-4');
+            habitacionDiv.classList.add('habitacion', 'mb-4', 'p-3', 'border', 'rounded');
             habitacionDiv.id = `habitacion_${habitacionId}`;
             habitacionDiv.innerHTML = `
                 <h5>{{ __('Habitacion') }} ${habitacionId}</h5>
+                <div class="row">
+                    <!-- Cantidad de Adultos -->
+                    <div class="form-group col-md-6">
+                        <label for="Cantidad_adultos_${habitacionId}">{{ __('Cantidad_adultos') }}</label>
+                        <input type="number" class="form-control" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
+                    </div>
 
-                <!-- Cantidad de Adultos -->
-                <div class="form-group">
-                    <label for="Cantidad_adultos_${habitacionId}">{{ __('Cantidad_adultos') }}</label>
-                    <input type="number" class="form-control" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
-                </div>
-
-                <!-- Cantidad de Menores -->
-                <div class="form-group">
-                    <label for="Cantidad_menores_${habitacionId}">{{ __('Cantidad_menores') }}</label>
-                    <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
+                    <!-- Cantidad de Menores -->
+                    <div class="form-group col-md-6">
+                        <label for="Cantidad_menores_${habitacionId}">{{ __('Cantidad_menores') }}</label>
+                        <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
+                    </div>
                 </div>
 
                 <!-- Edad de los Menores -->
@@ -102,14 +107,22 @@
             }
 
             edadesMenoresContainer.innerHTML = '';
-            for (let i = 1; i <= cantidadMenores; i++) {
-                const edadInput = document.createElement('div');
-                edadInput.classList.add('form-group');
-                edadInput.innerHTML = `
-                    <label for="Edad_menor_${habitacionId}_${i}">{{ __('Edad_menor') }} ${i}:</label>
-                    <input type="number" class="form-control" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" required>
-                `;
-                edadesMenoresContainer.appendChild(edadInput);
+            
+            if (cantidadMenores > 0) {
+                const edadesRow = document.createElement('div');
+                edadesRow.classList.add('row');
+                edadesRow.innerHTML = '<div class="col-12"><label class="mb-2">{{ __('Edades_menores') }}:</label></div>';
+                
+                for (let i = 1; i <= cantidadMenores; i++) {
+                    const edadCol = document.createElement('div');
+                    edadCol.classList.add('form-group', 'col-md-3', 'col-sm-6');
+                    edadCol.innerHTML = `
+                        <label for="Edad_menor_${habitacionId}_${i}">{{ __('Edad_menor') }} ${i}</label>
+                        <input type="number" class="form-control" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" required>
+                    `;
+                    edadesRow.appendChild(edadCol);
+                }
+                edadesMenoresContainer.appendChild(edadesRow);
             }
         }
 
@@ -150,6 +163,5 @@
             }
         });
     });
-
 </script>
 @endsection
