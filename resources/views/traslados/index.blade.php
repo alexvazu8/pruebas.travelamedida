@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">{{ __('Titulo_disponibilidad_traslados') }}ados</h1>
+    <h1 class="mb-4">{{ __('Titulo_disponibilidad_traslados') }}</h1>
 
     <!-- Formulario para obtener la disponibilidad -->
     <form action="{{ route('traslados.obtener') }}" method="POST" class="bg-white p-4 rounded shadow-sm">
@@ -41,7 +41,7 @@
 
             <!-- Tipo Servicio -->
             <div class="form-group col-md-4">
-                <label for="Tipo_servicio_transfer" class="form-label fw-semibold">Tipo de Servicio</label>
+                <label for="Tipo_servicio_transfer" class="form-label fw-semibold">{{ __('Tipo_servicio') }}</label>
                 <select name="Tipo_servicio_transfer" id="Tipo_servicio_transfer" class="form-control border-primary-subtle" required>
                     <option value="IN" {{ old('Tipo_servicio_transfer') == 'IN' ? 'selected' : '' }}>🛬 Ingreso (Aeropuerto - Hotel)</option>
                     <option value="OUT" {{ old('Tipo_servicio_transfer') == 'OUT' ? 'selected' : '' }}>🛫 Salida (Hotel - Aeropuerto)</option>
