@@ -2,18 +2,44 @@
 
 @section('content')
 <div class="container">
-    <h1>Disponibilidad de Traslados</h1>
+    <h1 class="mb-4">Disponibilidad de Traslados</h1>
 
     <!-- Formulario para obtener la disponibilidad -->
-    <form action="{{ route('traslados.obtener') }}" method="POST">
+    <form action="{{ route('traslados.obtener') }}" method="POST" class="bg-white p-4 rounded shadow-sm">
         @csrf
         
         <!-- Primera fila: Fecha, Tipo Servicio, Ciudad -->
-        <div class="row">
+        <div class="row mb-4 pb-3 border-bottom">
+            <div class="col-12 mb-3">
+                <h5 class="text-primary"><i class="fas fa-calendar-alt me-2"></i>Información Principal</h5>
+            </div>
+            
+            <!-- Fecha -->
+            <div class="form-group col-md-4">
+                <label for="Fecha_disponible" class="form-label fw-semibold">{{ __('Fecha_disponibilidad') }}</label>
+                <input type="date" id="Fecha_disponible" name="Fecha_disponible" class="form-control border-primary-subtle" value="{{ old('Fecha_disponible') }}" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" onclick="this.showPicker && this.showPicker()" required>
+                @error('Fecha_disponible')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Tipo Servicio -->
+            <div class="form-group col-md-4">
+                <label for="Tipo_servicio_transfer" class="form-label fw-semibold">Tipo de Servicio</label>
+                <select name="Tipo_servicio_transfer" id="Tipo_servicio_transfer" class="form-control border-primary-subtle" required>
+                    <option value="IN" {{ old('Tipo_servicio_transfer') == 'IN' ? 'selected' : '' }}>🛬 Ingreso (Aeropuerto - Hotel)</option>
+                    <option value="OUT" {{ old('Tipo_servicio_transfer') == 'OUT' ? 'selected' : '' }}>🛫 Salida (Hotel - Aeropuerto)</option>
+                    <option value="HTH" {{ old('Tipo_servicio_transfer') == 'HTH' ? 'selected' : '' }}>🏨 Hotel a Hotel</option>
+                </select>
+                @error('Tipo_servicio_transfer')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
+            </div>
+
             <!-- Ciudad -->
             <div class="form-group col-md-4">
-                <label for="Ciudad_Id_Ciudad">{{ __('Ciudad') }}</label>
-                <select name="Ciudad_Id_Ciudad" id="Ciudad_Id_Ciudad" class="form-control select2-ciudades" required>
+                <label for="Ciudad_Id_Ciudad" class="form-label fw-semibold">{{ __('Ciudad') }}</label>
+                <select name="Ciudad_Id_Ciudad" id="Ciudad_Id_Ciudad" class="form-control select2-ciudades border-primary-subtle" required>
                     <option value="">Selecciona una ciudad</option>
                     @foreach($ciudades as $ciudad)
                         <option value="{{ $ciudad->id_ciudad }}" @if(old('Ciudad_Id_Ciudad') == $ciudad->id_ciudad) selected @endif>
@@ -22,99 +48,115 @@
                     @endforeach
                 </select>
                 @error('Ciudad_Id_Ciudad')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <!-- Fecha -->
-            <div class="form-group col-md-4">
-                <label for="Fecha_disponible">{{ __('Fecha_disponibilidad') }}</label>
-                <input type="date" id="Fecha_disponible" name="Fecha_disponible" class="form-control bg-light text-dark" value="{{ old('Fecha_disponible') }}" min="{{ now()->addDay()->format('Y-m-d') }}" max="{{ now()->addDays(365)->format('Y-m-d') }}" onfocus="this.showPicker && this.showPicker()" onclick="this.showPicker && this.showPicker()" required>
-                @error('Fecha_disponible')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <!-- Tipo Servicio -->
-            <div class="form-group col-md-4">
-                <label for="Tipo_servicio_transfer">IN/OUT/Hotel a Hotel</label>
-                <select name="Tipo_servicio_transfer" id="Tipo_servicio_transfer" class="form-control" required>
-                    <option value="IN" {{ old('Tipo_servicio_transfer') == 'IN' ? 'selected' : '' }}>Ingreso</option>
-                    <option value="OUT" {{ old('Tipo_servicio_transfer') == 'OUT' ? 'selected' : '' }}>Salida</option>
-                    <option value="HTH" {{ old('Tipo_servicio_transfer') == 'HTH' ? 'selected' : '' }}>De Hotel a Hotel</option>
-                </select>
-                @error('Tipo_servicio_transfer')
-                    <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>
 
         <!-- Segunda fila: Zona Origen, Zona Destino, Hora Servicio -->
-        <div class="row">
+        <div class="row mb-4 pb-3 border-bottom">
+            <div class="col-12 mb-3">
+                <h5 class="text-primary"><i class="fas fa-route me-2"></i>Ruta del Servicio</h5>
+            </div>
+            
             <!-- Zona Origen -->
             <div class="form-group col-md-4">
-                <label for="Zona_Origen_id">{{ __('Zona_origen') }}</label>
-                <select name="Zona_Origen_id" id="Zona_Origen_id" class="form-control" required>
+                <label for="Zona_Origen_id" class="form-label fw-semibold">{{ __('Zona_origen') }}</label>
+                <select name="Zona_Origen_id" id="Zona_Origen_id" class="form-control border-primary-subtle" required>
                     <option value="">Selecciona una zona</option>
                 </select>
                 @error('Zona_Origen_id')
-                    <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
 
             <!-- Zona Destino -->
             <div class="form-group col-md-4">
-                <label for="Zona_Destino_id">{{ __('Zona_destino') }}</label>
-                <select name="Zona_Destino_id" id="Zona_Destino_id" class="form-control" required>
+                <label for="Zona_Destino_id" class="form-label fw-semibold">{{ __('Zona_destino') }}</label>
+                <select name="Zona_Destino_id" id="Zona_Destino_id" class="form-control border-primary-subtle" required>
                     <option value="">Selecciona una zona destino</option>
                 </select>
                 @error('Zona_Destino_id')
-                    <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
 
             <!-- Hora Servicio -->
             <div class="form-group col-md-4">
-                <label for="hora_servicio">{{ __('Hora_servicio') }}</label>
-                <input type="time" id="hora_servicio" name="hora_servicio" class="form-control" value="{{ old('hora_servicio') }}" required>
+                <label for="hora_servicio" class="form-label fw-semibold">{{ __('Hora_servicio') }}</label>
+                <input type="time" id="hora_servicio" name="hora_servicio" class="form-control border-primary-subtle" value="{{ old('hora_servicio') }}" required>
                 @error('hora_servicio')
-                    <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>
 
-        <!-- Tercera fila: Adultos, Menores, Botón -->
-        <div class="row">
+        <!-- Tercera fila: Pasajeros -->
+        <div class="row mb-4">
+            <div class="col-12 mb-3">
+                <h5 class="text-primary"><i class="fas fa-users me-2"></i>Información de Pasajeros</h5>
+            </div>
+            
             <!-- Cantidad Adultos -->
             <div class="form-group col-md-3">
-                <label for="Cantidad_adultos">{{ __('Cantidad_adultos') }}</label>
-                <input type="number" id="Cantidad_adultos" name="Cantidad_adultos" class="form-control" value="{{ old('Cantidad_adultos') }}" min="0" max="9" required oninput="this.value = Math.min(9, this.value)">
+                <label for="Cantidad_adultos" class="form-label fw-semibold">
+                    <i class="fas fa-user me-1"></i>{{ __('Cantidad_adultos') }}
+                </label>
+                <input type="number" id="Cantidad_adultos" name="Cantidad_adultos" class="form-control border-primary-subtle" value="{{ old('Cantidad_adultos', 1) }}" min="1" max="9" required oninput="this.value = Math.min(9, Math.max(1, this.value))">
                 @error('Cantidad_adultos')
-                    <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
 
             <!-- Cantidad Menores -->
             <div class="form-group col-md-3">
-                <label for="Cantidad_menores">{{ __('Cantidad_menores') }}</label>
-                <input type="number" id="Cantidad_menores" name="Cantidad_menores" class="form-control" min="0" max="5" required oninput="this.value = Math.min(5, this.value)">
+                <label for="Cantidad_menores" class="form-label fw-semibold">
+                    <i class="fas fa-child me-1"></i>{{ __('Cantidad_menores') }}
+                </label>
+                <input type="number" id="Cantidad_menores" name="Cantidad_menores" class="form-control border-primary-subtle" value="{{ old('Cantidad_menores', 0) }}" min="0" max="5" required oninput="this.value = Math.min(5, this.value)">
                 @error('Cantidad_menores')
-                    <span class="text-danger">{{ $message }}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
 
-            <!-- Edades Menores (ocupa el espacio restante) -->
+            <!-- Edades Menores -->
             <div id="edadMenoresContainer" class="form-group col-md-4" style="display: none;">
-                <label for="Edad_menores">{{ __('Edades_menores') }}</label>
-                <div id="edadMenoresInputs" class="row"></div>
+                <label class="form-label fw-semibold">
+                    <i class="fas fa-birthday-cake me-1"></i>{{ __('Edades_menores') }}
+                </label>
+                <div id="edadMenoresInputs" class="row g-2"></div>
             </div>
 
             <!-- Botón -->
             <div class="form-group col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">Obtener Disponibilidad</button>
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                    <i class="fas fa-search me-2"></i>Buscar
+                </button>
             </div>
         </div>
     </form>
 </div>
+
+<style>
+.form-label {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.form-control {
+    border-radius: 0.375rem;
+    transition: all 0.2s ease-in-out;
+}
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+}
+.border-bottom {
+    border-color: #e9ecef !important;
+}
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -124,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Actualiza los campos de edad según la cantidad de menores
     cantidadMenoresInput.addEventListener('input', function() {
-        const cantidadMenores = parseInt(cantidadMenoresInput.value);
+        const cantidadMenores = parseInt(cantidadMenoresInput.value) || 0;
 
         // Limpia los campos anteriores
         edadMenoresInputs.innerHTML = '';
@@ -136,19 +178,21 @@ document.addEventListener('DOMContentLoaded', function() {
             // Agrega los campos de edad para cada menor
             for (let i = 1; i <= cantidadMenores; i++) {
                 const colDiv = document.createElement('div');
-                colDiv.classList.add('col-6', 'col-md-12', 'mb-2');
+                colDiv.classList.add('col-6', 'col-md-6');
                 
-                const label = document.createElement('label');
-                label.setAttribute('for', `Edad_menor_${i}`);
-                label.textContent = `{{ __('Edad_menor') }} ${i}`;
-                label.classList.add('small', 'mb-1');
-
+                const inputGroup = document.createElement('div');
+                inputGroup.classList.add('input-group', 'input-group-sm');
+                
+                const span = document.createElement('span');
+                span.classList.add('input-group-text', 'bg-light');
+                span.textContent = `Menor ${i}`;
+                
                 const input = document.createElement('input');
                 input.type = 'number';
                 input.id = `Edad_menor_${i}`;
                 input.name = `Edad_menores[${i}]`;
-                input.classList.add('form-control', 'form-control-sm');
-                input.placeholder = `Edad ${i}`;
+                input.classList.add('form-control');
+                input.placeholder = 'Edad';
                 input.min = "0";
                 input.max = "17";
                 input.required = true;
@@ -156,11 +200,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Crea el contenedor para el error
                 const errorContainer = document.createElement('div');
                 errorContainer.id = `error_Edad_menor_${i}`;
-                errorContainer.classList.add('text-danger', 'small');
+                errorContainer.classList.add('text-danger', 'small', 'mt-1');
                 
                 // Agrega los elementos al contenedor
-                colDiv.appendChild(label);
-                colDiv.appendChild(input);
+                inputGroup.appendChild(span);
+                inputGroup.appendChild(input);
+                colDiv.appendChild(inputGroup);
                 colDiv.appendChild(errorContainer);
                 
                 // Agrega la columna al contenedor principal
@@ -234,6 +279,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error al cargar las zonas de destino:', error);
             });
     });
+
+    // Trigger inicial para cargar zonas si hay valores pre-seleccionados
+    if (ciudadSelect.value) {
+        cargarZonas();
+    }
 });
 </script>
 
@@ -247,7 +297,7 @@ $(document).ready(function() {
     const $selectCiudades = $('.select2-ciudades');
 
     $selectCiudades.select2({
-        placeholder: "{{ __('Select_ciudad') }}",
+        placeholder: "Selecciona una ciudad",
         allowClear: true,
         width: '100%'
     });
@@ -291,7 +341,6 @@ $(document).ready(function() {
             });
     });
 
-    // También rehaz lo mismo para Tipo de servicio si es necesario
     $('#Tipo_servicio_transfer').on('change', function () {
         $('#Ciudad_Id_Ciudad').trigger('change');
     });
@@ -301,7 +350,7 @@ $(document).ready(function() {
 {{-- Mostrar errores después de que el formulario sea enviado --}}
 @foreach(range(1, old('Cantidad_menores', 0)) as $i)
     @error("Edad_menores.$i")
-        <span class="text-danger">{{ $message }}</span>
+        <span class="text-danger small">{{ $message }}</span>
     @enderror
 @endforeach
 @endsection
