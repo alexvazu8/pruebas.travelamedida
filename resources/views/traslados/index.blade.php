@@ -296,7 +296,7 @@ $(document).ready(function() {
     const $selectCiudades = $('.select2-ciudades');
 
     $selectCiudades.select2({
-        placeholder: "Selecciona una ciudad",
+        placeholder: "{{ __('Select_ciudad') }}",
         allowClear: true,
         width: '100%'
     });
