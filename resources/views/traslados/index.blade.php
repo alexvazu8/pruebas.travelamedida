@@ -129,7 +129,7 @@
             <!-- Botón -->
             <div class="form-group col-md-2 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
-                    <i class="fas fa-search me-2"></i>Buscar
+                    <i class="fas fa-search me-2"></i>{{ __('Boton_buscar') }}
                 </button>
             </div>
         </div>
