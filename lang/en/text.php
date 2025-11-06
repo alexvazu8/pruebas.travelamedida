@@ -102,7 +102,7 @@ return [
         'Detalle_flexible' => 'Cancellation according to each service’s policy',
         'Detalle_soporte' => 'Multilingual assistance whenever you need it',
         'Destinos_populares' => 'Popular destinations',
-        'Dicen_los_clientes' => 'Lo que dicen nuestros clientes',
+        'Dicen_los_clientes' => 'What our customers say',
         'Viajo_a' => 'I traveled to',
         'Login_google' => 'Google Login',
 ];
