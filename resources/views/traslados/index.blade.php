@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">Disponibilidad de Traslados</h1>
+    <h1 class="mb-4">{{ __('Titulo_disponibilidad_traslados') }}ados</h1>
 
     <!-- Formulario para obtener la disponibilidad -->
     <form action="{{ route('traslados.obtener') }}" method="POST" class="bg-white p-4 rounded shadow-sm">
