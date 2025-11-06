@@ -13,7 +13,23 @@
             <div class="col-12 mb-3">
                 <h5 class="text-primary"><i class="fas fa-calendar-alt me-2"></i>Información Principal</h5>
             </div>
-            
+
+            <!-- Ciudad -->
+            <div class="form-group col-md-4">
+                <label for="Ciudad_Id_Ciudad" class="form-label fw-semibold">{{ __('Ciudad') }}</label>
+                <select name="Ciudad_Id_Ciudad" id="Ciudad_Id_Ciudad" class="form-control select2-ciudades border-primary-subtle" required>
+                    <option value="">Selecciona una ciudad</option>
+                    @foreach($ciudades as $ciudad)
+                        <option value="{{ $ciudad->id_ciudad }}" @if(old('Ciudad_Id_Ciudad') == $ciudad->id_ciudad) selected @endif>
+                            {{ $ciudad->nombre_ciudad }} {{ $ciudad->pais->Nombre_Pais }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('Ciudad_Id_Ciudad')
+                    <span class="text-danger small">{{ $message }}</span>
+                @enderror
+            </div>
+
             <!-- Fecha -->
             <div class="form-group col-md-4">
                 <label for="Fecha_disponible" class="form-label fw-semibold">{{ __('Fecha_disponibilidad') }}</label>
@@ -35,24 +51,7 @@
                     <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
-
-            <!-- Ciudad -->
-            <div class="form-group col-md-4">
-                <label for="Ciudad_Id_Ciudad" class="form-label fw-semibold">{{ __('Ciudad') }}</label>
-                <select name="Ciudad_Id_Ciudad" id="Ciudad_Id_Ciudad" class="form-control select2-ciudades border-primary-subtle" required>
-                    <option value="">Selecciona una ciudad</option>
-                    @foreach($ciudades as $ciudad)
-                        <option value="{{ $ciudad->id_ciudad }}" @if(old('Ciudad_Id_Ciudad') == $ciudad->id_ciudad) selected @endif>
-                            {{ $ciudad->nombre_ciudad }} {{ $ciudad->pais->Nombre_Pais }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('Ciudad_Id_Ciudad')
-                    <span class="text-danger small">{{ $message }}</span>
-                @enderror
-            </div>
         </div>
-
         <!-- Segunda fila: Zona Origen, Zona Destino, Hora Servicio -->
         <div class="row mb-4 pb-3 border-bottom">
             <div class="col-12 mb-3">
