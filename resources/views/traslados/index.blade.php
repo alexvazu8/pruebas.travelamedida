@@ -62,7 +62,7 @@
             <div class="form-group col-md-4">
                 <label for="Zona_Origen_id" class="form-label fw-semibold">{{ __('Zona_origen') }}</label>
                 <select name="Zona_Origen_id" id="Zona_Origen_id" class="form-control border-primary-subtle" required>
-                    <option value="">Selecciona una zona</option>
+                    <option value="">{{ __('Zona_origen') }}</option>
                 </select>
                 @error('Zona_Origen_id')
                     <span class="text-danger small">{{ $message }}</span>
@@ -73,7 +73,7 @@
             <div class="form-group col-md-4">
                 <label for="Zona_Destino_id" class="form-label fw-semibold">{{ __('Zona_destino') }}</label>
                 <select name="Zona_Destino_id" id="Zona_Destino_id" class="form-control border-primary-subtle" required>
-                    <option value="">Selecciona una zona destino</option>
+                    <option value="">{{ __('Zona_destino') }}</option>
                 </select>
                 @error('Zona_Destino_id')
                     <span class="text-danger small">{{ $message }}</span>
