@@ -249,6 +249,8 @@
     "Ingreso":"In",
     "Salida":"Out",
     "Hotel_hotel":"accommodation to accommodation",
+    "Titulo_ruta":"service route",
+    "Titulo_pasajeros":"Passenger Information",
     "Fecha_disponibilidad":"Availability date:",
     "Fecha_desde":"Date from:",
     "Fecha_hasta":"Fecha until:",

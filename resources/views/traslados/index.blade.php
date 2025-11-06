@@ -52,7 +52,7 @@
         <!-- Segunda fila: Zona Origen, Zona Destino, Hora Servicio -->
         <div class="row mb-4 pb-3 border-bottom">
             <div class="col-12 mb-3">
-                <h5 class="text-primary"><i class="fas fa-route me-2"></i>Ruta del Servicio</h5>
+                <h5 class="text-primary"><i class="fas fa-route me-2"></i>{{ __('Titulo_ruta') }}</h5>
             </div>
             
             <!-- Zona Origen -->
@@ -90,7 +90,7 @@
         <!-- Tercera fila: Pasajeros -->
         <div class="row mb-4">
             <div class="col-12 mb-3">
-                <h5 class="text-primary"><i class="fas fa-users me-2"></i>Información de Pasajeros</h5>
+                <h5 class="text-primary"><i class="fas fa-users me-2"></i>{{ __('Titulo_pasajeros') }}</h5>
             </div>
             
             <!-- Cantidad Adultos -->

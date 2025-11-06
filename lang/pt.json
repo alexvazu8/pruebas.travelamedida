@@ -249,6 +249,8 @@
     "Ingreso":"Renda",
     "Salida":"Saída",
     "Hotel_hotel":"Acomodação para acomodação",
+    "Titulo_ruta":"rota de serviço",
+    "Titulo_pasajeros":"Informações ao passageiro",
     "Fecha_disponibilidad":"Data de disponibilidade:",    
     "Fecha_desde":"Data de:",
     "Fecha_hasta":"Data até:",
