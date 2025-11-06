@@ -43,9 +43,9 @@
             <div class="form-group col-md-4">
                 <label for="Tipo_servicio_transfer" class="form-label fw-semibold">{{ __('Tipo_servicio') }}</label>
                 <select name="Tipo_servicio_transfer" id="Tipo_servicio_transfer" class="form-control border-primary-subtle" required>
-                    <option value="IN" {{ old('Tipo_servicio_transfer') == 'IN' ? 'selected' : '' }}>🛬 Ingreso (Aeropuerto - Hotel)</option>
-                    <option value="OUT" {{ old('Tipo_servicio_transfer') == 'OUT' ? 'selected' : '' }}>🛫 Salida (Hotel - Aeropuerto)</option>
-                    <option value="HTH" {{ old('Tipo_servicio_transfer') == 'HTH' ? 'selected' : '' }}>🏨 Hotel a Hotel</option>
+                    <option value="IN" {{ old('Tipo_servicio_transfer') == 'IN' ? 'selected' : '' }}>🛬 {{ __('Ingreso') }} (Aeropuerto - Hotel)</option>
+                    <option value="OUT" {{ old('Tipo_servicio_transfer') == 'OUT' ? 'selected' : '' }}>🛫 {{ __('Salida') }} (Hotel - Aeropuerto)</option>
+                    <option value="HTH" {{ old('Tipo_servicio_transfer') == 'HTH' ? 'selected' : '' }}>🏨{{ __('Hotel_hotel') }}</option>
                 </select>
                 @error('Tipo_servicio_transfer')
                     <span class="text-danger small">{{ $message }}</span>
