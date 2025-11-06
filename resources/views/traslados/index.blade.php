@@ -10,9 +10,6 @@
         
         <!-- Primera fila: Fecha, Tipo Servicio, Ciudad -->
         <div class="row mb-4 pb-3 border-bottom">
-            <div class="col-12 mb-3">
-                <h5 class="text-primary"><i class="fas fa-calendar-alt me-2"></i>Información Principal</h5>
-            </div>
 
             <!-- Ciudad -->
             <div class="form-group col-md-4">
