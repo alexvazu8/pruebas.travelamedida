@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="container">
-    <h1>Respuestas del Traslado</h1>
+    <h1>{{ __('Respuestas_traslado') }}</h1>
     @php
     //print_r($respuestas);
     @endphp
     @if(empty($respuestas))
-    <p>No hay respuestas para mostrar</p>
+    <p>{{ __('No_hay_respuesta') }}   </p>
     <a href="{{ url('/traslados') }}" class="btn btn-primary btn-lg mx-2">Traslados</a>
     @else
         @if(isset($respuestas['error']))
