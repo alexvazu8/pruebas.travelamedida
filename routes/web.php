@@ -31,18 +31,18 @@ Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallba
 //traslados
 Route::get('/traslados', [TrasladosController::class, 'index'])->name('traslados.index');
 //Route::post('/traslados/obtener', [TrasladosController::class, 'obtenerDisponibilidad'])->name('traslados.obtener');
-Route::match(['get', 'post'], '/traslados/obtener', [TrasladosController::class, 'obtenerDisponibilidad'])->name('traslados.obtener')->middleware('auth');
+Route::match(['get', 'post'], '/traslados/obtener', [TrasladosController::class, 'obtenerDisponibilidad'])->name('traslados.obtener');//->middleware('auth');
 Route::get('/traslados/zonas-origen/{idciudad}/{tipo_servicio_transfer}', [TrasladosController::class, 'getZonasOrigen']);
 Route::get('/traslados/zonas-destino/{idzona}', [TrasladosController::class, 'getZonasDestinoPorOrigen']);
 
 //hoteles
 Route::get('/hoteles', [HotelesController::class, 'index'])->name('hoteles.index');
-Route::match(['get', 'post'],'/hoteles/obtener', [HotelesController::class, 'obtenerDisponibilidad'])->name('hoteles.obtener')->middleware('auth');
+Route::match(['get', 'post'],'/hoteles/obtener', [HotelesController::class, 'obtenerDisponibilidad'])->name('hoteles.obtener');//->middleware('auth');
 Route::get('/hoteles/info/{id}', [HotelesController::class, 'hotelInfo'])->name('hoteles.info');
 
 //tours
 Route::get('/tours', [ToursController::class, 'index'])->name('tours.index');
-Route::match(['get', 'post'],'/tours/obtener', [ToursController::class, 'obtenerDisponibilidad'])->name('tours.obtener')->middleware('auth');
+Route::match(['get', 'post'],'/tours/obtener', [ToursController::class, 'obtenerDisponibilidad'])->name('tours.obtener');//->middleware('auth');
 Route::get('/tours/info/{id}', [ToursController::class, 'tourInfo'])->name('tour.info');
 
 
