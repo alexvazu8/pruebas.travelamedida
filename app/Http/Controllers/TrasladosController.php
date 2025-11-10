@@ -70,7 +70,7 @@ class TrasladosController extends Controller
     public function obtenerDisponibilidad(Request $request)
     {   // print_r($request->all());
         dd($request);
-        $request['Fecha_disponible'] = Carbon::createFromFormat('Y-m-d', $request->Fecha_disponible)->format('d/m/Y');
+        
             // Reglas base
         $rules = [
             'Tipo_servicio_transfer' => 'required|string|in:IN,OUT,HTH',
@@ -102,6 +102,7 @@ class TrasladosController extends Controller
 
         // Validar los datos
         $validated = $request->validate($rules, $messages);
+        $request['Fecha_disponible'] = Carbon::createFromFormat('Y-m-d', $request->Fecha_disponible)->format('d/m/Y');
         $fechaDisponibilidad = Carbon::createFromFormat('d/m/Y', $request->Fecha_disponible)->format('Y-m-d');
        
          $request['Fecha_disponible']=$fechaDisponibilidad;
