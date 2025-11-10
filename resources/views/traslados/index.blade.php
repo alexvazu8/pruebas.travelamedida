@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 data.zonas.forEach(zona => {
                     const option = document.createElement('option');
                     option.value = zona.Id_Zona;
-                    option.textContent = `Zona ${zona.nombre_zona}`;
+                    option.textContent = ` ${zona.nombre_zona}`;
                     zonaDestinoSelect.appendChild(option);
                 });
             })
