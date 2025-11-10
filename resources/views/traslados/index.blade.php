@@ -327,7 +327,7 @@ $(document).ready(function() {
                     $('#Zona_Origen_id').append(
                         $('<option>', {
                             value: zona.Id_Zona,
-                            text: `Zona ${zona.nombre_zona}`
+                            text: `${zona.nombre_zona}`
                         })
                     );
                 });
