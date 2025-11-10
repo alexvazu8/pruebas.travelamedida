@@ -69,7 +69,7 @@ class TrasladosController extends Controller
      */
     public function obtenerDisponibilidad(Request $request)
     {   // print_r($request->all());
-        dd($request);
+        //dd($request);
         
             // Reglas base
         $rules = [
