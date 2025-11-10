@@ -49,9 +49,9 @@ Route::get('/tours/info/{id}', [ToursController::class, 'tourInfo'])->name('tour
 Route::get('/carritos/show', [CarritosController::class, 'show'])->name('carritos.show')->middleware('auth');
 Route::delete('/carritos/borrar', [CarritosController::class, 'borrar'])->name('carritos.borrar')->middleware('auth');
 
-Route::post('/traslados/addCarrito', [TrasladosController::class, 'addCarritoTraslados'])->name('traslados.addCarrito');
-Route::post('/hoteles/addCarrito', [HotelesController::class, 'addCarritoHotel'])->name('hoteles.addCarrito')->middleware('guardaPost');
-Route::post('/tours/addCarrito', [ToursController::class, 'addCarritoTours'])->name('tours.addCarrito');
+Route::post('/traslados/addCarrito', [TrasladosController::class, 'addCarritoTraslados'])->name('traslados.addCarrito')->middleware('auth');
+Route::post('/hoteles/addCarrito', [HotelesController::class, 'addCarritoHotel'])->name('hoteles.addCarrito')->middleware('guardaPost')->middleware('auth');
+Route::post('/tours/addCarrito', [ToursController::class, 'addCarritoTours'])->name('tours.addCarrito')->middleware('auth');
 
 Route::post('/reservas/confirmar', [ReservasController::class, 'confirmar'])->name('reservas.confirmar')->middleware(['auth','verifyPayment']);
 Route::get('/reservas/showReserva/{loc}', [ReservasController::class, 'showReserva'])->name('reservas.showReserva')->middleware('auth');
