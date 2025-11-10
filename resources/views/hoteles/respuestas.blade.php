@@ -267,6 +267,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Inicializar el mapa
                         const mapContainer = document.getElementById(`map-container-${hotelId}`);
                         mapContainer.innerHTML = ''; // Limpiar contenedor
+                        // Verificar si ya existe un mapa en ese div y destruirlo
+                        if (mapContainer._leaflet_id) {
+                            mapContainer._leaflet_id = null; // reset Leaflet container
+                        }
 
                         const map = L.map(`map-container-${hotelId}`).setView(
                             [hotel.Latitud, hotel.Longitud], 
