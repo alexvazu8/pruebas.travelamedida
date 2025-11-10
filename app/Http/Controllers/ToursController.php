@@ -40,8 +40,9 @@ class ToursController extends Controller
             $jsonResponse= response()->json($response->json());
             $data = json_decode($jsonResponse->getContent(), true);
 
-             //dd($data);
-            return view('tours.respuestas', ['respuestas' => $data]);
+            dd($data);
+            return view('tours.errorRespuestas', ['respuestas' => $data]);
+           //  return view('tours.respuestas', ['respuestas' => $data]);
         } else {
             $jsonResponse= response()->json($response->json());
             //print_r(response()->json($jsonResponse));
