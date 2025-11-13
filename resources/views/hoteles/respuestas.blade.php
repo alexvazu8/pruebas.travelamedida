@@ -101,10 +101,18 @@
                                         @endforeach
 
                                         {{-- Monto Total y Enviar --}}
-                                        <div class="card-footer text-end bg-light d-flex justify-content-between align-items-center">
-                                            <h5 class="mb-0 me-3"><strong>Total:</strong> $<span class="total-acumulado" id="totalAcumulado-{{ $hotel['Id_Hotel'] }}">0.00</span></h5>
-                                            <button type="submit" class="btn btn-primary px-4">Enviar al Carrito</button>
+                                        <div class="card-footer text-end bg-light">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div class="text-start">
+                                                    <h5 class="mb-1"><strong>Total:</strong> $<span class="total-acumulado" id="totalAcumulado-{{ $hotel['Id_Hotel'] }}">0.00</span></h5>
+                                                    <div class="penalidades-info" id="penalidades-{{ $hotel['Id_Hotel'] }}">
+                                                        {{-- Penalidades aparecerán aquí --}}
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary px-4">Enviar al Carrito</button>
+                                            </div>
                                         </div>
+
                                     </div>
                                 @else
                                     <div class="alert alert-info mt-3">
@@ -158,19 +166,39 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========== FUNCIONALIDAD PARA LOS TOTALES ==========
     function actualizarTotalPorHotel(hotelId) {
         let totalAcumulado = 0;
+        let penalidadesHTML = '';
         
-        // Seleccionar solo los radios del hotel específico
         document.querySelectorAll(`.habitacion-radio[data-hotel-id="${hotelId}"]:checked`).forEach(radio => {
             totalAcumulado += parseFloat(radio.getAttribute('data-total'));
             
-            // Actualizar el monto del grupo específico
             const index = radio.getAttribute('data-index');
             document.getElementById(`totalMonto${hotelId}_${index}`).textContent = 
                 parseFloat(radio.getAttribute('data-total')).toFixed(2);
+            
+            const habitacionData = JSON.parse(radio.value);
+            
+            if (habitacionData.penalidades && habitacionData.penalidades.length > 0) {
+                penalidadesHTML = '<small class="text-muted">';
+                
+                // Solo mostrar la penalidad más relevante (la primera)
+                const primeraPenalidad = habitacionData.penalidades[0];
+                penalidadesHTML += `
+                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                    Cancelación: ${primeraPenalidad.desde_noches_antes}-${primeraPenalidad.hasta_noches_antes} noches antes = ${primeraPenalidad.porcentaje_penalidad_por_noche}
+                `;
+                
+                if (habitacionData.penalidades.length > 1) {
+                    penalidadesHTML += ` <span class="text-info">(+${habitacionData.penalidades.length - 1} más)</span>`;
+                }
+                
+                penalidadesHTML += '</small>';
+            } else {
+                penalidadesHTML = '<small class="text-success"><i class="fas fa-check-circle"></i> Política flexible</small>';
+            }
         });
         
-        // Actualizar el total acumulado del hotel
         document.getElementById(`totalAcumulado-${hotelId}`).textContent = totalAcumulado.toFixed(2);
+        document.getElementById(`penalidades-${hotelId}`).innerHTML = penalidadesHTML;
     }
 
     // Inicializar todos los formularios
