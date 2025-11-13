@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 penalidadesHTML += '</small>';
             } else {
-                penalidadesHTML = '<small class="text-success"><i class="fas fa-check-circle"></i> Política flexible</small>';
+                penalidadesHTML = '<small class="text-success"><i class="fas fa-check-circle"></i> Política flexible</br>Cancelaciones sin penalidad, existe un 5% de cargo por el metodo de pago.</small>';
             }
         });
         
