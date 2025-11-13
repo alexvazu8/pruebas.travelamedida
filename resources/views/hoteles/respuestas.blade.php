@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 penalidadesHTML += `
                     <i class="fas fa-exclamation-triangle text-warning"></i>
                     Cancelación: De ${primeraPenalidad.desde_noches_antes}-${primeraPenalidad.hasta_noches_antes} noches antes = ${primeraPenalidad.porcentaje_penalidad_por_noche} de penalidad.
-                    </br>Antes, sin penalidad, existe un 5% de cargo por el metodo de pago.
+                    </br>Cancelación: Antes de ${primeraPenalidad.desde_noches_antes} noches, sin penalidad, existe un 5% de cargo por el metodo de pago.
                 `;
                 
                 if (habitacionData.penalidades.length > 1) {
