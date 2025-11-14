@@ -40,7 +40,16 @@
                 
                 <!-- Contenedor dinámico de habitaciones (oculto inicialmente) -->
                 <div id="habitaciones-container" class="position-absolute mt-1" style="display: none; z-index: 1000;">
-                    <!-- Se generan dinámicamente habitaciones aquí -->
+                    <!-- Header con botón cerrar -->
+                    <div class="habitaciones-header d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="mb-0 text-dark">Configuración de Habitaciones</h6>
+                        <button type="button" id="cerrar-habitaciones" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="habitaciones-content">
+                        <!-- Se generan dinámicamente habitaciones aquí -->
+                    </div>
                 </div>
             </div>
 
@@ -53,12 +62,43 @@
 </div>
 
 <style>
+#habitaciones-container {
+    background: #ffffff;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    padding: 12px;
+    width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.habitaciones-header {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 8px;
+}
+
+.habitaciones-header h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+#cerrar-habitaciones {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .habitacion-compacta {
     background: #f8f9fa;
-    border: 1px solid #dee2e6;
+    border: 1px solid #ced4da;
     border-radius: 6px;
     padding: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .habitacion-header {
@@ -105,35 +145,6 @@
     border: 1px solid #ced4da;
 }
 
-#cerrar-habitaciones {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    font-size: 0.65rem;
-    padding: 1px 4px;
-    z-index: 1001;
-    background: #6c757d;
-    border: 1px solid #6c757d;
-    color: white;
-}
-
-#cerrar-habitaciones:hover {
-    background: #5a6268;
-    border-color: #545b62;
-}
-
-#habitaciones-container {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border: 1px solid #adb5bd;
-    border-radius: 8px;
-    padding: 12px;
-    width: 300px;
-    max-height: 400px;
-    overflow-y: auto;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    backdrop-filter: blur(10px);
-}
-
 /* Mejorar el scroll */
 #habitaciones-container::-webkit-scrollbar {
     width: 6px;
@@ -169,7 +180,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const habitacionesContainer = document.getElementById('habitaciones-container');
+        const habitacionesContent = document.getElementById('habitaciones-content');
         const habitacionesInput = document.getElementById('Numero_Habitaciones');
+        const cerrarBtn = document.getElementById('cerrar-habitaciones');
 
         function crearHabitacion(habitacionId) {
             const habitacionDiv = document.createElement('div');
@@ -196,22 +209,12 @@
                     <!-- Campos dinámicos de edades -->
                 </div>
             `;
-            habitacionesContainer.appendChild(habitacionDiv);
+            habitacionesContent.appendChild(habitacionDiv);
         }
 
         function actualizarHabitaciones() {
-            // Limpiar todas las habitaciones existentes
-            habitacionesContainer.innerHTML = '';
-            
-            // Agregar botón cerrar
-            const cerrarBtn = document.createElement('button');
-            cerrarBtn.type = 'button';
-            cerrarBtn.id = 'cerrar-habitaciones';
-            cerrarBtn.className = 'btn btn-sm btn-light';
-            cerrarBtn.innerHTML = '<i class="fas fa-times"></i>';
-            cerrarBtn.title = 'Cerrar';
-            cerrarBtn.addEventListener('click', ocultarHabitaciones);
-            habitacionesContainer.appendChild(cerrarBtn);
+            // Limpiar solo el contenido de las habitaciones
+            habitacionesContent.innerHTML = '';
             
             const numeroHabitaciones = parseInt(habitacionesInput.value) || 1;
             
@@ -232,7 +235,7 @@
 
         function mostrarHabitaciones() {
             // Si ya hay habitaciones creadas, solo mostrar
-            const habitacionesExistentes = habitacionesContainer.querySelectorAll('.habitacion-compacta');
+            const habitacionesExistentes = habitacionesContent.querySelectorAll('.habitacion-compacta');
             if (habitacionesExistentes.length > 0) {
                 habitacionesContainer.style.display = 'block';
             } else {
@@ -285,6 +288,9 @@
             mostrarHabitaciones();
         });
 
+        // Ocultar al hacer clic en el botón cerrar
+        cerrarBtn.addEventListener('click', ocultarHabitaciones);
+
         // Ocultar al hacer clic fuera del contenedor
         document.addEventListener('click', function(e) {
             if (!habitacionesContainer.contains(e.target) && 
@@ -294,7 +300,7 @@
             }
         });
 
-        habitacionesContainer.addEventListener('input', function (e) {
+        habitacionesContent.addEventListener('input', function (e) {
             if (e.target.classList.contains('cantidad-menores')) {
                 const habitacionId = e.target.id.split('_')[2];
                 actualizarEdadesMenores(habitacionId);
