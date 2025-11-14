@@ -46,42 +46,88 @@
         </div>
 
         <!-- Contenedor dinámico de habitaciones (oculto inicialmente) -->
-        <div id="habitaciones-container" class="mt-4" style="display: none;">
-            <!-- Header con título y botón cerrar -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0">{{ __('Configuracion_habitaciones') }}</h5>
-                <button type="button" id="cerrar-habitaciones" class="btn btn-sm btn-outline-secondary">
-                    <i class="fas fa-times"></i> {{ __('Cerrar') }}
-                </button>
-            </div>
-            
+        <div id="habitaciones-container" class="mt-2" style="display: none; position: relative;">
             <!-- Se generan dinámicamente habitaciones aquí -->
         </div>
     </form>
 </div>
 
+<style>
+.habitacion-compacta {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.habitacion-header {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #495057;
+}
+
+.habitacion-campos .form-group {
+    margin-bottom: 8px;
+}
+
+.habitacion-campos label {
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+}
+
+.habitacion-campos .form-control {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    height: 32px;
+}
+
+.edades-compactas .form-group {
+    margin-bottom: 6px;
+}
+
+.edades-compactas label {
+    font-size: 0.75rem;
+}
+
+.edades-compactas .form-control {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    height: 28px;
+}
+
+#cerrar-habitaciones {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    z-index: 10;
+}
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const habitacionesContainer = document.getElementById('habitaciones-container');
         const habitacionesInput = document.getElementById('Numero_Habitaciones');
-        const cerrarBtn = document.getElementById('cerrar-habitaciones');
 
         function crearHabitacion(habitacionId) {
             const habitacionDiv = document.createElement('div');
-            habitacionDiv.classList.add('habitacion', 'mb-4', 'p-3', 'border', 'rounded');
+            habitacionDiv.classList.add('habitacion-compacta');
             habitacionDiv.id = `habitacion_${habitacionId}`;
             habitacionDiv.innerHTML = `
-                <h5>{{ __('Habitacion') }} ${habitacionId}</h5>
-                <div class="row">
+                <div class="habitacion-header">{{ __('Habitacion') }} ${habitacionId}</div>
+                <div class="row habitacion-campos">
                     <!-- Cantidad de Adultos -->
                     <div class="form-group col-md-6">
-                        <label for="Cantidad_adultos_${habitacionId}">{{ __('Cantidad_adultos') }}</label>
+                        <label for="Cantidad_adultos_${habitacionId}">{{ __('Adultos') }}</label>
                         <input type="number" class="form-control" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
                     </div>
 
                     <!-- Cantidad de Menores -->
                     <div class="form-group col-md-6">
-                        <label for="Cantidad_menores_${habitacionId}">{{ __('Cantidad_menores') }}</label>
+                        <label for="Cantidad_menores_${habitacionId}">{{ __('Menores') }}</label>
                         <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
                     </div>
                 </div>
@@ -95,9 +141,17 @@
         }
 
         function actualizarHabitaciones() {
-            // Limpiar solo las habitaciones, mantener el header
-            const habitacionesExistentes = habitacionesContainer.querySelectorAll('.habitacion');
-            habitacionesExistentes.forEach(habitacion => habitacion.remove());
+            // Limpiar todas las habitaciones existentes
+            habitacionesContainer.innerHTML = '';
+            
+            // Agregar botón cerrar
+            const cerrarBtn = document.createElement('button');
+            cerrarBtn.type = 'button';
+            cerrarBtn.id = 'cerrar-habitaciones';
+            cerrarBtn.className = 'btn btn-sm btn-outline-secondary';
+            cerrarBtn.innerHTML = '<i class="fas fa-times"></i>';
+            cerrarBtn.addEventListener('click', ocultarHabitaciones);
+            habitacionesContainer.appendChild(cerrarBtn);
             
             const numeroHabitaciones = parseInt(habitacionesInput.value) || 1;
             
@@ -108,6 +162,13 @@
             // Mostrar el contenedor si hay al menos una habitación
             if (numeroHabitaciones > 0) {
                 habitacionesContainer.style.display = 'block';
+                
+                // Posicionar debajo del campo de habitaciones
+                const habitacionesField = document.getElementById('Numero_Habitaciones');
+                const rect = habitacionesField.getBoundingClientRect();
+                habitacionesContainer.style.width = (rect.width + 100) + 'px'; // Un poco más ancho que el campo
+                habitacionesContainer.style.left = rect.left + 'px';
+                habitacionesContainer.style.top = (rect.bottom + 5) + 'px';
             }
         }
 
@@ -118,9 +179,16 @@
 
         function mostrarHabitaciones() {
             // Si ya hay habitaciones creadas, solo mostrar
-            const habitacionesExistentes = habitacionesContainer.querySelectorAll('.habitacion');
+            const habitacionesExistentes = habitacionesContainer.querySelectorAll('.habitacion-compacta');
             if (habitacionesExistentes.length > 0) {
                 habitacionesContainer.style.display = 'block';
+                
+                // Re-posicionar
+                const habitacionesField = document.getElementById('Numero_Habitaciones');
+                const rect = habitacionesField.getBoundingClientRect();
+                habitacionesContainer.style.width = (rect.width + 100) + 'px';
+                habitacionesContainer.style.left = rect.left + 'px';
+                habitacionesContainer.style.top = (rect.bottom + 5) + 'px';
             } else {
                 // Si no hay habitaciones, crear las que correspondan al valor actual
                 actualizarHabitaciones();
@@ -143,14 +211,14 @@
             
             if (cantidadMenores > 0) {
                 const edadesRow = document.createElement('div');
-                edadesRow.classList.add('row');
-                edadesRow.innerHTML = '<div class="col-12"><label class="mb-2">{{ __('Edades_menores') }}:</label></div>';
+                edadesRow.classList.add('row', 'edades-compactas', 'mt-2');
+                edadesRow.innerHTML = '<div class="col-12"><label class="mb-1" style="font-size: 0.75rem;">{{ __('Edades_menores') }}:</label></div>';
                 
                 for (let i = 1; i <= cantidadMenores; i++) {
                     const edadCol = document.createElement('div');
-                    edadCol.classList.add('form-group', 'col-md-3', 'col-sm-6');
+                    edadCol.classList.add('form-group', 'col-6', 'col-sm-3');
                     edadCol.innerHTML = `
-                        <label for="Edad_menor_${habitacionId}_${i}">{{ __('Edad_menor') }} ${i}</label>
+                        <label for="Edad_menor_${habitacionId}_${i}" style="font-size: 0.7rem;">Menor ${i}</label>
                         <input type="number" class="form-control" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" required>
                     `;
                     edadesRow.appendChild(edadCol);
@@ -168,8 +236,14 @@
         // También mostrar al hacer clic en el label
         document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', mostrarHabitaciones);
 
-        // Ocultar habitaciones al hacer clic en el botón cerrar
-        cerrarBtn.addEventListener('click', ocultarHabitaciones);
+        // Ocultar al hacer clic fuera del contenedor
+        document.addEventListener('click', function(e) {
+            if (!habitacionesContainer.contains(e.target) && 
+                e.target !== habitacionesInput && 
+                e.target !== document.querySelector('label[for="Numero_Habitaciones"]')) {
+                ocultarHabitaciones();
+            }
+        });
 
         habitacionesContainer.addEventListener('input', function (e) {
             if (e.target.classList.contains('cantidad-menores')) {
