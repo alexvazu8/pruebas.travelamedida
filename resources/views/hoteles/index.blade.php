@@ -45,8 +45,8 @@
             </div>
         </div>
 
-        <!-- Contenedor dinámico de habitaciones -->
-        <div id="habitaciones-container" class="mt-4">
+        <!-- Contenedor dinámico de habitaciones (oculto inicialmente) -->
+        <div id="habitaciones-container" class="mt-4" style="display: none;">
             <!-- Se generan dinámicamente habitaciones aquí -->
         </div>
     </form>
@@ -92,6 +92,13 @@
             for (let i = 1; i <= Math.min(numeroHabitaciones, 3); i++) {
                 crearHabitacion(i);
             }
+            
+            // Mostrar el contenedor si hay al menos una habitación
+            if (numeroHabitaciones > 0) {
+                habitacionesContainer.style.display = 'block';
+            } else {
+                habitacionesContainer.style.display = 'none';
+            }
         }
 
         function actualizarEdadesMenores(habitacionId) {
@@ -126,7 +133,22 @@
             }
         }
 
+        // Mostrar/ocultar habitaciones al hacer clic en el input
+        habitacionesInput.addEventListener('focus', function() {
+            if (habitacionesContainer.style.display === 'none') {
+                actualizarHabitaciones();
+            }
+        });
+
+        // Actualizar habitaciones cuando cambia el valor
         habitacionesInput.addEventListener('input', actualizarHabitaciones);
+
+        // También mostrar al hacer clic en el label (por si acaso)
+        document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', function() {
+            if (habitacionesContainer.style.display === 'none') {
+                actualizarHabitaciones();
+            }
+        });
 
         habitacionesContainer.addEventListener('input', function (e) {
             if (e.target.classList.contains('cantidad-menores')) {
@@ -135,8 +157,8 @@
             }
         });
 
-        // Inicializar con una habitación por defecto
-        actualizarHabitaciones();
+        // Inicializar con una habitación por defecto (pero oculta)
+        // La sección se mostrará cuando el usuario interactúe con el campo
     });
 </script>
 
