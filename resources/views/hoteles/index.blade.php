@@ -108,15 +108,23 @@
             // Mostrar el contenedor si hay al menos una habitación
             if (numeroHabitaciones > 0) {
                 habitacionesContainer.style.display = 'block';
-            } else {
-                habitacionesContainer.style.display = 'none';
             }
         }
 
         function ocultarHabitaciones() {
+            // Solo ocultar el contenedor, NO modificar los valores
             habitacionesContainer.style.display = 'none';
-            // Restablecer el valor a 1 cuando se cierra
-            habitacionesInput.value = 1;
+        }
+
+        function mostrarHabitaciones() {
+            // Si ya hay habitaciones creadas, solo mostrar
+            const habitacionesExistentes = habitacionesContainer.querySelectorAll('.habitacion');
+            if (habitacionesExistentes.length > 0) {
+                habitacionesContainer.style.display = 'block';
+            } else {
+                // Si no hay habitaciones, crear las que correspondan al valor actual
+                actualizarHabitaciones();
+            }
         }
 
         function actualizarEdadesMenores(habitacionId) {
@@ -152,21 +160,13 @@
         }
 
         // Mostrar habitaciones al hacer clic en el input
-        habitacionesInput.addEventListener('focus', function() {
-            if (habitacionesContainer.style.display === 'none') {
-                actualizarHabitaciones();
-            }
-        });
+        habitacionesInput.addEventListener('focus', mostrarHabitaciones);
 
         // Actualizar habitaciones cuando cambia el valor
         habitacionesInput.addEventListener('input', actualizarHabitaciones);
 
         // También mostrar al hacer clic en el label
-        document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', function() {
-            if (habitacionesContainer.style.display === 'none') {
-                actualizarHabitaciones();
-            }
-        });
+        document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', mostrarHabitaciones);
 
         // Ocultar habitaciones al hacer clic en el botón cerrar
         cerrarBtn.addEventListener('click', ocultarHabitaciones);
