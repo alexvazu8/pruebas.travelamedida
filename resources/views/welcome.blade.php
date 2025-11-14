@@ -19,10 +19,7 @@
                 </a>
 
                 <a href="{{ url('/tours') }}" class="btn btn-outline-info btn-hero">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 20l-5.447-2.724A2 2 0 013 15.382V6.618a2 2 0 011.553-1.894L9 2m0 18l6-3m-6 3v-18m6 15l5.447-2.724A2 2 0 0021 15.382V6.618a2 2 0 00-1.553-1.894L15 2m0 18v-18" />
-                    </svg>
+                     <i class="fas fa-map-marked-alt me-2 fa-lg"></i>
                     {{ __('Tours') }}
                 </a>
 
