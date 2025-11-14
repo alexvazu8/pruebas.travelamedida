@@ -34,9 +34,14 @@
             </div>
 
             <!-- Número de Habitaciones -->
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-2 position-relative">
                 <label for="Numero_Habitaciones">{{ __('Numero_habitaciones') }}</label>
                 <input type="number" class="form-control" id="Numero_Habitaciones" name="Numero_Habitaciones" min="1" max="3" value="1" required>
+                
+                <!-- Contenedor dinámico de habitaciones (oculto inicialmente) -->
+                <div id="habitaciones-container" class="position-absolute mt-1" style="display: none; z-index: 1000;">
+                    <!-- Se generan dinámicamente habitaciones aquí -->
+                </div>
             </div>
 
             <!-- Botón de Buscar -->
@@ -44,66 +49,77 @@
                 <button type="submit" class="btn btn-primary w-100">{{ __('Search') }}</button>
             </div>
         </div>
-
-        <!-- Contenedor dinámico de habitaciones (oculto inicialmente) -->
-        <div id="habitaciones-container" class="mt-2" style="display: none; position: relative;">
-            <!-- Se generan dinámicamente habitaciones aquí -->
-        </div>
     </form>
 </div>
 
 <style>
 .habitacion-compacta {
-    background: #f8f9fa;
+    background: #ffffff;
     border: 1px solid #dee2e6;
     border-radius: 6px;
-    padding: 12px;
-    margin-bottom: 8px;
+    padding: 10px;
+    margin-bottom: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .habitacion-header {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #495057;
 }
 
 .habitacion-campos .form-group {
-    margin-bottom: 8px;
-}
-
-.habitacion-campos label {
-    font-size: 0.8rem;
-    margin-bottom: 2px;
-}
-
-.habitacion-campos .form-control {
-    font-size: 0.85rem;
-    padding: 4px 8px;
-    height: 32px;
-}
-
-.edades-compactas .form-group {
     margin-bottom: 6px;
 }
 
-.edades-compactas label {
+.habitacion-campos label {
     font-size: 0.75rem;
+    margin-bottom: 2px;
+    font-weight: 500;
+}
+
+.habitacion-campos .form-control {
+    font-size: 0.8rem;
+    padding: 4px 6px;
+    height: 30px;
+}
+
+.edades-compactas .form-group {
+    margin-bottom: 4px;
+}
+
+.edades-compactas label {
+    font-size: 0.7rem;
+    font-weight: 500;
 }
 
 .edades-compactas .form-control {
-    font-size: 0.8rem;
-    padding: 2px 6px;
-    height: 28px;
+    font-size: 0.75rem;
+    padding: 2px 4px;
+    height: 26px;
 }
 
 #cerrar-habitaciones {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    z-index: 10;
+    top: 4px;
+    right: 4px;
+    font-size: 0.65rem;
+    padding: 1px 4px;
+    z-index: 1001;
+    background: white;
+    border: 1px solid #dee2e6;
+}
+
+#habitaciones-container {
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 8px;
+    width: 280px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 </style>
 
@@ -120,13 +136,13 @@
                 <div class="habitacion-header">{{ __('Habitacion') }} ${habitacionId}</div>
                 <div class="row habitacion-campos">
                     <!-- Cantidad de Adultos -->
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-6">
                         <label for="Cantidad_adultos_${habitacionId}">{{ __('Adultos') }}</label>
                         <input type="number" class="form-control" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
                     </div>
 
                     <!-- Cantidad de Menores -->
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-6">
                         <label for="Cantidad_menores_${habitacionId}">{{ __('Menores') }}</label>
                         <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
                     </div>
@@ -150,6 +166,7 @@
             cerrarBtn.id = 'cerrar-habitaciones';
             cerrarBtn.className = 'btn btn-sm btn-outline-secondary';
             cerrarBtn.innerHTML = '<i class="fas fa-times"></i>';
+            cerrarBtn.title = 'Cerrar';
             cerrarBtn.addEventListener('click', ocultarHabitaciones);
             habitacionesContainer.appendChild(cerrarBtn);
             
@@ -162,13 +179,6 @@
             // Mostrar el contenedor si hay al menos una habitación
             if (numeroHabitaciones > 0) {
                 habitacionesContainer.style.display = 'block';
-                
-                // Posicionar debajo del campo de habitaciones
-                const habitacionesField = document.getElementById('Numero_Habitaciones');
-                const rect = habitacionesField.getBoundingClientRect();
-                habitacionesContainer.style.width = (rect.width + 100) + 'px'; // Un poco más ancho que el campo
-                habitacionesContainer.style.left = rect.left + 'px';
-                habitacionesContainer.style.top = (rect.bottom + 5) + 'px';
             }
         }
 
@@ -182,13 +192,6 @@
             const habitacionesExistentes = habitacionesContainer.querySelectorAll('.habitacion-compacta');
             if (habitacionesExistentes.length > 0) {
                 habitacionesContainer.style.display = 'block';
-                
-                // Re-posicionar
-                const habitacionesField = document.getElementById('Numero_Habitaciones');
-                const rect = habitacionesField.getBoundingClientRect();
-                habitacionesContainer.style.width = (rect.width + 100) + 'px';
-                habitacionesContainer.style.left = rect.left + 'px';
-                habitacionesContainer.style.top = (rect.bottom + 5) + 'px';
             } else {
                 // Si no hay habitaciones, crear las que correspondan al valor actual
                 actualizarHabitaciones();
@@ -211,14 +214,14 @@
             
             if (cantidadMenores > 0) {
                 const edadesRow = document.createElement('div');
-                edadesRow.classList.add('row', 'edades-compactas', 'mt-2');
-                edadesRow.innerHTML = '<div class="col-12"><label class="mb-1" style="font-size: 0.75rem;">{{ __('Edades_menores') }}:</label></div>';
+                edadesRow.classList.add('row', 'edades-compactas', 'mt-1');
+                edadesRow.innerHTML = '<div class="col-12"><label class="mb-1" style="font-size: 0.7rem; font-weight: 500;">{{ __('Edades_menores') }}:</label></div>';
                 
                 for (let i = 1; i <= cantidadMenores; i++) {
                     const edadCol = document.createElement('div');
-                    edadCol.classList.add('form-group', 'col-6', 'col-sm-3');
+                    edadCol.classList.add('form-group', 'col-6');
                     edadCol.innerHTML = `
-                        <label for="Edad_menor_${habitacionId}_${i}" style="font-size: 0.7rem;">Menor ${i}</label>
+                        <label for="Edad_menor_${habitacionId}_${i}" style="font-size: 0.65rem;">Menor ${i}</label>
                         <input type="number" class="form-control" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" required>
                     `;
                     edadesRow.appendChild(edadCol);
@@ -234,7 +237,10 @@
         habitacionesInput.addEventListener('input', actualizarHabitaciones);
 
         // También mostrar al hacer clic en el label
-        document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', mostrarHabitaciones);
+        document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', function() {
+            habitacionesInput.focus();
+            mostrarHabitaciones();
+        });
 
         // Ocultar al hacer clic fuera del contenedor
         document.addEventListener('click', function(e) {
