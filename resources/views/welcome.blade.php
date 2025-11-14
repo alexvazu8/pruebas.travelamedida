@@ -17,16 +17,7 @@
                     {{ __('Traslados') }}
                 </a>
                 <a href="{{ url('/hoteles') }}" class="btn btn-secondary btn-hero">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <!-- Base de la cama -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17h18M3 17v4h18v-4"/>
-                        <!-- Cabecera -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13v4M5 13v4"/>
-                        <!-- Persona durmiendo (cabeza redonda) -->
-                        <circle cx="12" cy="12" r="2" stroke-width="1.5"/>
-                        <!-- Manta/cuerpo -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 12h4v5h-4z"/>
-                    </svg>
+                    <i class="fas fa-bed me-2"></i>
                     {{ __('Hoteles') }}
                 </a>
 
