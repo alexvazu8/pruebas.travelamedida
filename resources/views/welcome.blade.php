@@ -18,8 +18,14 @@
                 </a>
                 <a href="{{ url('/hoteles') }}" class="btn btn-secondary btn-hero">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M3 7v10h18V7M3 17v-4a2 2 0 012-2h4a2 2 0 012 2v4M7 11V7a2 2 0 012-2h6a2 2 0 012 2v4"/>
+                        <!-- Base de la cama -->
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17h18M3 17v4h18v-4"/>
+                        <!-- Cabecera -->
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13v4M5 13v4"/>
+                        <!-- Persona durmiendo (cabeza redonda) -->
+                        <circle cx="12" cy="12" r="2" stroke-width="1.5"/>
+                        <!-- Manta/cuerpo -->
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 12h4v5h-4z"/>
                     </svg>
                     {{ __('Hoteles') }}
                 </a>
