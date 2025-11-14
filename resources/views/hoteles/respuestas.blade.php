@@ -34,7 +34,7 @@
                             </h5>
                             
                             <span class="text-white">{{ $hotel['Nombre_Zona'] }}</span>
-                            <span class="text-warning">{{ str_repeat('⭐', $hotel['estrellas_id']) }}</span>
+                            <span class="text-warning">{{ str_repeat('⭐', $hotel['estrellas']) }}</span>
                         </div>
                     </div>
 
