@@ -17,8 +17,9 @@
                     {{ __('Traslados') }}
                 </a>
                 <a href="{{ url('/hoteles') }}" class="btn btn-secondary btn-hero">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <i class="fas fa-bed me-2"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 24px; height: 24px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M3 7v10m0 0h18M3 17v-4a2 2 0 012-2h4a2 2 0 012 2v4M7 11V7a2 2 0 012-2h6a2 2 0 012 2v4m4 0h2a2 2 0 012 2v4h-4v-4a2 2 0 00-2-2h-2"/>
                     </svg>
                     {{ __('Hoteles') }}
                 </a>
