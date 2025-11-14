@@ -58,6 +58,12 @@
                 <button type="submit" class="btn btn-primary w-100">{{ __('Search') }}</button>
             </div>
         </div>
+
+        <!-- Campos ocultos para la primera habitación (siempre activa) -->
+        <div style="display: none;">
+            <input type="number" name="habitaciones[1][Cantidad_adultos]" value="1" required>
+            <input type="number" name="habitaciones[1][Cantidad_menores]" value="0" required>
+        </div>
     </form>
 </div>
 
@@ -184,7 +190,21 @@
         const habitacionesInput = document.getElementById('Numero_Habitaciones');
         const cerrarBtn = document.getElementById('cerrar-habitaciones');
 
+        // Crear la primera habitación automáticamente al cargar la página
+        function inicializarPrimeraHabitacion() {
+            // Siempre crear al menos la habitación 1
+            crearHabitacion(1);
+            
+            // Mostrar el contenedor si no está visible
+            habitacionesContainer.style.display = 'block';
+        }
+
         function crearHabitacion(habitacionId) {
+            // Verificar si la habitación ya existe
+            if (document.getElementById(`habitacion_${habitacionId}`)) {
+                return;
+            }
+
             const habitacionDiv = document.createElement('div');
             habitacionDiv.classList.add('habitacion-compacta');
             habitacionDiv.id = `habitacion_${habitacionId}`;
@@ -213,19 +233,37 @@
         }
 
         function actualizarHabitaciones() {
-            // Limpiar solo el contenido de las habitaciones
-            habitacionesContent.innerHTML = '';
-            
             const numeroHabitaciones = parseInt(habitacionesInput.value) || 1;
             
-            for (let i = 1; i <= Math.min(numeroHabitaciones, 3); i++) {
-                crearHabitacion(i);
+            // Obtener habitaciones existentes
+            const habitacionesExistentes = habitacionesContent.querySelectorAll('.habitacion-compacta');
+            const numHabitacionesExistentes = habitacionesExistentes.length;
+            
+            if (numeroHabitaciones > numHabitacionesExistentes) {
+                // Agregar habitaciones faltantes
+                for (let i = numHabitacionesExistentes + 1; i <= numeroHabitaciones; i++) {
+                    crearHabitacion(i);
+                }
+            } else if (numeroHabitaciones < numHabitacionesExistentes) {
+                // Eliminar habitaciones sobrantes (pero mantener al menos 1)
+                for (let i = numHabitacionesExistentes; i > Math.max(numeroHabitaciones, 1); i--) {
+                    const habitacion = document.getElementById(`habitacion_${i}`);
+                    if (habitacion) {
+                        habitacion.remove();
+                    }
+                }
             }
             
-            // Mostrar el contenedor si hay al menos una habitación
-            if (numeroHabitaciones > 0) {
-                habitacionesContainer.style.display = 'block';
+            // Asegurar que siempre haya al menos 1 habitación
+            if (numeroHabitaciones < 1) {
+                habitacionesInput.value = 1;
+                if (!document.getElementById('habitacion_1')) {
+                    crearHabitacion(1);
+                }
             }
+            
+            // Mostrar el contenedor
+            habitacionesContainer.style.display = 'block';
         }
 
         function ocultarHabitaciones() {
@@ -234,13 +272,13 @@
         }
 
         function mostrarHabitaciones() {
-            // Si ya hay habitaciones creadas, solo mostrar
+            // Mostrar el contenedor
+            habitacionesContainer.style.display = 'block';
+            
+            // Asegurar que hay al menos una habitación
             const habitacionesExistentes = habitacionesContent.querySelectorAll('.habitacion-compacta');
-            if (habitacionesExistentes.length > 0) {
-                habitacionesContainer.style.display = 'block';
-            } else {
-                // Si no hay habitaciones, crear las que correspondan al valor actual
-                actualizarHabitaciones();
+            if (habitacionesExistentes.length === 0) {
+                crearHabitacion(1);
             }
         }
 
@@ -275,6 +313,9 @@
                 edadesMenoresContainer.appendChild(edadesRow);
             }
         }
+
+        // Inicializar la primera habitación al cargar la página
+        inicializarPrimeraHabitacion();
 
         // Mostrar habitaciones al hacer clic en el input
         habitacionesInput.addEventListener('focus', mostrarHabitaciones);
