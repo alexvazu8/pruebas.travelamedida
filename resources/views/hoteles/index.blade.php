@@ -47,6 +47,14 @@
 
         <!-- Contenedor dinámico de habitaciones (oculto inicialmente) -->
         <div id="habitaciones-container" class="mt-4" style="display: none;">
+            <!-- Header con título y botón cerrar -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">{{ __('Configuracion_habitaciones') }}</h5>
+                <button type="button" id="cerrar-habitaciones" class="btn btn-sm btn-outline-secondary">
+                    <i class="fas fa-times"></i> {{ __('Cerrar') }}
+                </button>
+            </div>
+            
             <!-- Se generan dinámicamente habitaciones aquí -->
         </div>
     </form>
@@ -56,6 +64,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const habitacionesContainer = document.getElementById('habitaciones-container');
         const habitacionesInput = document.getElementById('Numero_Habitaciones');
+        const cerrarBtn = document.getElementById('cerrar-habitaciones');
 
         function crearHabitacion(habitacionId) {
             const habitacionDiv = document.createElement('div');
@@ -86,7 +95,10 @@
         }
 
         function actualizarHabitaciones() {
-            habitacionesContainer.innerHTML = '';
+            // Limpiar solo las habitaciones, mantener el header
+            const habitacionesExistentes = habitacionesContainer.querySelectorAll('.habitacion');
+            habitacionesExistentes.forEach(habitacion => habitacion.remove());
+            
             const numeroHabitaciones = parseInt(habitacionesInput.value) || 1;
             
             for (let i = 1; i <= Math.min(numeroHabitaciones, 3); i++) {
@@ -99,6 +111,12 @@
             } else {
                 habitacionesContainer.style.display = 'none';
             }
+        }
+
+        function ocultarHabitaciones() {
+            habitacionesContainer.style.display = 'none';
+            // Restablecer el valor a 1 cuando se cierra
+            habitacionesInput.value = 1;
         }
 
         function actualizarEdadesMenores(habitacionId) {
@@ -133,7 +151,7 @@
             }
         }
 
-        // Mostrar/ocultar habitaciones al hacer clic en el input
+        // Mostrar habitaciones al hacer clic en el input
         habitacionesInput.addEventListener('focus', function() {
             if (habitacionesContainer.style.display === 'none') {
                 actualizarHabitaciones();
@@ -143,12 +161,15 @@
         // Actualizar habitaciones cuando cambia el valor
         habitacionesInput.addEventListener('input', actualizarHabitaciones);
 
-        // También mostrar al hacer clic en el label (por si acaso)
+        // También mostrar al hacer clic en el label
         document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', function() {
             if (habitacionesContainer.style.display === 'none') {
                 actualizarHabitaciones();
             }
         });
+
+        // Ocultar habitaciones al hacer clic en el botón cerrar
+        cerrarBtn.addEventListener('click', ocultarHabitaciones);
 
         habitacionesContainer.addEventListener('input', function (e) {
             if (e.target.classList.contains('cantidad-menores')) {
@@ -156,9 +177,6 @@
                 actualizarEdadesMenores(habitacionId);
             }
         });
-
-        // Inicializar con una habitación por defecto (pero oculta)
-        // La sección se mostrará cuando el usuario interactúe con el campo
     });
 </script>
 
@@ -186,4 +204,7 @@
         });
     });
 </script>
+
+<!-- Font Awesome para el icono (si no lo tienes incluido) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 @endsection
