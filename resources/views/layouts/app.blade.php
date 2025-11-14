@@ -43,13 +43,13 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link nav-btn border rounded text-white" href="{{ url('/traslados') }}">
-                                <i class="fas fa-shuttle-van me-2"></i>
+                                <i class="fas fa-car me-2"></i>
                                 {{ __('Traslados') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link nav-btn border rounded text-white" href="{{ url('/hoteles') }}">
-                                <i class="fas fa-hotel me-2"></i>
+                                <i class="fas fa-bed me-2"></i>
                                 {{ __('Hoteles') }}
                             </a>
                         </li>
