@@ -54,12 +54,11 @@
 
 <style>
 .habitacion-compacta {
-    background: #ffffff;
+    background: #f8f9fa;
     border: 1px solid #dee2e6;
     border-radius: 6px;
     padding: 10px;
     margin-bottom: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .habitacion-header {
@@ -77,12 +76,15 @@
     font-size: 0.75rem;
     margin-bottom: 2px;
     font-weight: 500;
+    color: #495057;
 }
 
 .habitacion-campos .form-control {
     font-size: 0.8rem;
     padding: 4px 6px;
     height: 30px;
+    background: #ffffff;
+    border: 1px solid #ced4da;
 }
 
 .edades-compactas .form-group {
@@ -92,12 +94,15 @@
 .edades-compactas label {
     font-size: 0.7rem;
     font-weight: 500;
+    color: #495057;
 }
 
 .edades-compactas .form-control {
     font-size: 0.75rem;
     padding: 2px 4px;
     height: 26px;
+    background: #ffffff;
+    border: 1px solid #ced4da;
 }
 
 #cerrar-habitaciones {
@@ -107,19 +112,57 @@
     font-size: 0.65rem;
     padding: 1px 4px;
     z-index: 1001;
-    background: white;
-    border: 1px solid #dee2e6;
+    background: #6c757d;
+    border: 1px solid #6c757d;
+    color: white;
+}
+
+#cerrar-habitaciones:hover {
+    background: #5a6268;
+    border-color: #545b62;
 }
 
 #habitaciones-container {
-    background: white;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    padding: 8px;
-    width: 280px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #adb5bd;
+    border-radius: 8px;
+    padding: 12px;
+    width: 300px;
     max-height: 400px;
     overflow-y: auto;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+}
+
+/* Mejorar el scroll */
+#habitaciones-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#habitaciones-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+#habitaciones-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+#habitaciones-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Efecto hover para las habitaciones */
+.habitacion-compacta:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+/* Estilo para los inputs cuando están en foco */
+.habitacion-campos .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 </style>
 
@@ -164,7 +207,7 @@
             const cerrarBtn = document.createElement('button');
             cerrarBtn.type = 'button';
             cerrarBtn.id = 'cerrar-habitaciones';
-            cerrarBtn.className = 'btn btn-sm btn-outline-secondary';
+            cerrarBtn.className = 'btn btn-sm btn-light';
             cerrarBtn.innerHTML = '<i class="fas fa-times"></i>';
             cerrarBtn.title = 'Cerrar';
             cerrarBtn.addEventListener('click', ocultarHabitaciones);
