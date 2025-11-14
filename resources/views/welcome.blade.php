@@ -10,10 +10,7 @@
             
             <div class="hero-actions">
                 <a href="{{ url('/traslados') }}" class="btn btn-primary btn-hero">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                        <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1v-1h.05a2.5 2.5 0 014.9 0H19a1 1 0 001-1v-2a1 1 0 00-.293-.707l-3-3A1 1 0 0016 7h-1V5a1 1 0 00-1-1H3z" />
-                    </svg>
+                    <i class="fas fa-car me-2 fa-lg"></i>
                     {{ __('Traslados') }}
                 </a>
                 <a href="{{ url('/hoteles') }}" class="btn btn-secondary btn-hero">
