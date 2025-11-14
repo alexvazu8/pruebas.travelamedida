@@ -13,6 +13,9 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito:300,400,600,700&display=swap" rel="stylesheet">
     
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- Vinculando el archivo CSS -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <!-- Select2 CSS -->
@@ -39,31 +42,34 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link border rounded text-white  hover:bg-danger" href="{{ url('/traslados') }}">{{ __('Traslados') }}</a>
+                            <a class="nav-link nav-btn border rounded text-white" href="{{ url('/traslados') }}">
+                                <i class="fas fa-shuttle-van me-2"></i>
+                                {{ __('Traslados') }}
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border rounded text-white  hover:text-neutral" href="{{ url('/hoteles') }}">{{ __('Hoteles') }}</a>
+                            <a class="nav-link nav-btn border rounded text-white" href="{{ url('/hoteles') }}">
+                                <i class="fas fa-hotel me-2"></i>
+                                {{ __('Hoteles') }}
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link border rounded  text-white hover:text-accent" href="{{ url('/tours') }}">{{ __('Tours') }}</a>
+                            <a class="nav-link nav-btn border rounded text-white" href="{{ url('/tours') }}">
+                                <i class="fas fa-map-marked-alt me-2"></i>
+                                {{ __('Tours') }}
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white hover:text-accent" href="{{ url('/carritos/show') }}">
-                                <i class="fas fa-shopping-cart">{{ __('Carrito') }}</i> <!-- Ícono de carrito -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-1.29 9.09a2 2 0 0 1-1.98 1.91H7.27a2 2 0 0 1-1.98-1.91L3 3zm5.5 14a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0zm8 0a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0z"/>
-                                </svg>
-
+                            <a class="nav-link text-white d-flex align-items-center" href="{{ url('/carritos/show') }}">
+                                <i class="fas fa-shopping-cart me-2"></i>
+                                {{ __('Carrito') }}
                             </a>
                         </li>
                         @auth
                         <li class="nav-item">
-                            <a class="nav-link text-white hover:text-accent" href="{{ url('/reservas') }}">
-                                <i class="fas fa-shopping-cart">{{ __('Reservas') }}</i> <!-- Ícono de carrito -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                                    <path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
-                                    <path d="M9 7h6M9 11h6M9 15h4" />
-                                </svg>
+                            <a class="nav-link text-white d-flex align-items-center" href="{{ url('/reservas') }}">
+                                <i class="fas fa-calendar-check me-2"></i>
+                                {{ __('Reservas') }}
                             </a>
                         </li>
                         @endauth
