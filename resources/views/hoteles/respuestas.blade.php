@@ -33,7 +33,7 @@
                                    data-hotel-id="{{ $hotel['Id_Hotel'] }}">Info</a>
                             </h5>
                             
-                            <span class="text-warning">{{ $hotel['Nombre_Zona'] }}</span>
+                            <span class="text-white">{{ $hotel['Nombre_Zona'] }}</span>
                             <span class="text-warning">{{ str_repeat('⭐', $hotel['estrellas_id']) }}</span>
                         </div>
                     </div>
