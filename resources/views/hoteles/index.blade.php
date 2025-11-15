@@ -100,7 +100,7 @@
     /* Asegurar que no haya transparencia */
     opacity: 1 !important;
     /* Para evitar que herede transparencia */
-    background-color: transparent !important;
+   
 }
 
 .habitaciones-header {
