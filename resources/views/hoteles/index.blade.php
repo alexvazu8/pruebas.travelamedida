@@ -95,11 +95,10 @@
     top: 100%;
     left: 0;
     margin-top: 8px;
-    z-index: 9999;
+     /* ESTO ES LO MÁS IMPORTANTE */
+    z-index: 9999 !important;
     position: absolute;
-    /* Asegurar que no haya transparencia */
-    opacity: 1 !important;
-    /* Para evitar que herede transparencia */
+    /* Asegurar que esté por encima de TODO */
     background-color: #ffffff !important;
 }
 
