@@ -84,17 +84,23 @@
 
 <style>
 #habitaciones-container {
-    background: #ffffff;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
     border: 2px solid #dee2e6;
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: 10px;
+    padding: 15px;
     width: 320px;
     max-height: 400px;
     overflow-y: auto;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
     top: 100%;
     left: 0;
-    margin-top: 5px;
+    margin-top: 8px;
+    z-index: 9999;
+    position: absolute;
+    /* Asegurar que no haya transparencia */
+    opacity: 1 !important;
+    /* Para evitar que herede transparencia */
+    background-color: transparent !important;
 }
 
 .habitaciones-header {
