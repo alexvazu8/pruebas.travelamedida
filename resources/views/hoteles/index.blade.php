@@ -55,14 +55,14 @@
                                 <!-- Cantidad de Adultos -->
                                 <div class="form-group col-6">
                                     <label for="Cantidad_adultos_1">Adultos</label>
-                                    <input type="number" class="form-control" id="Cantidad_adultos_1" name="habitaciones[1][Cantidad_adultos]" min="1" max="4" value="1" required>
+                                    <input type="number" class="form-control no-vacio" id="Cantidad_adultos_1" name="habitaciones[1][Cantidad_adultos]" min="1" max="4" value="1" required>
                                     <div class="invalid-feedback">Por favor ingresa la cantidad de adultos</div>
                                 </div>
 
                                 <!-- Cantidad de Menores -->
                                 <div class="form-group col-6">
                                     <label for="Cantidad_menores_1">Menores</label>
-                                    <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_1" name="habitaciones[1][Cantidad_menores]" min="0" max="4" value="0" required>
+                                    <input type="number" class="form-control cantidad-menores no-vacio" id="Cantidad_menores_1" name="habitaciones[1][Cantidad_menores]" min="0" max="4" value="0" required>
                                     <div class="invalid-feedback">Por favor ingresa la cantidad de menores</div>
                                 </div>
                             </div>
@@ -229,6 +229,22 @@
         // Variable para controlar si hay errores de validación
         let tieneErrores = false;
 
+        // Función para prevenir valores vacíos en inputs numéricos
+        function prevenirValoresVacios(input) {
+            input.addEventListener('input', function() {
+                if (this.value === '' || this.value === null) {
+                    this.value = this.min || 0;
+                }
+            });
+            
+            input.addEventListener('blur', function() {
+                if (this.value === '' || this.value === null) {
+                    this.value = this.min || 0;
+                    this.classList.remove('is-invalid');
+                }
+            });
+        }
+
         // La primera habitación ya está en el HTML, así que no necesitamos crearla
 
         function crearHabitacion(habitacionId) {
@@ -246,14 +262,14 @@
                     <!-- Cantidad de Adultos -->
                     <div class="form-group col-6">
                         <label for="Cantidad_adultos_${habitacionId}">Adultos</label>
-                        <input type="number" class="form-control" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
+                        <input type="number" class="form-control no-vacio" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
                         <div class="invalid-feedback">Por favor ingresa la cantidad de adultos</div>
                     </div>
 
                     <!-- Cantidad de Menores -->
                     <div class="form-group col-6">
                         <label for="Cantidad_menores_${habitacionId}">Menores</label>
-                        <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
+                        <input type="number" class="form-control cantidad-menores no-vacio" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
                         <div class="invalid-feedback">Por favor ingresa la cantidad de menores</div>
                     </div>
                 </div>
@@ -264,6 +280,13 @@
                 </div>
             `;
             habitacionesContent.appendChild(habitacionDiv);
+            
+            // Aplicar prevención de valores vacíos a los nuevos inputs
+            const adultosInput = document.getElementById(`Cantidad_adultos_${habitacionId}`);
+            const menoresInput = document.getElementById(`Cantidad_menores_${habitacionId}`);
+            
+            if (adultosInput) prevenirValoresVacios(adultosInput);
+            if (menoresInput) prevenirValoresVacios(menoresInput);
         }
 
         function actualizarHabitaciones() {
@@ -325,10 +348,14 @@
                     edadCol.classList.add('form-group', 'col-6');
                     edadCol.innerHTML = `
                         <label for="Edad_menor_${habitacionId}_${i}" style="font-size: 0.65rem;">Menor ${i}</label>
-                        <input type="number" class="form-control" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" required>
+                        <input type="number" class="form-control no-vacio" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" value="0" required>
                         <div class="invalid-feedback" style="font-size: 0.65rem;">Por favor ingresa la edad del menor</div>
                     `;
                     edadesRow.appendChild(edadCol);
+                    
+                    // Aplicar prevención de valores vacíos al input de edad
+                    const edadInput = document.getElementById(`Edad_menor_${habitacionId}_${i}`);
+                    if (edadInput) prevenirValoresVacios(edadInput);
                 }
                 edadesMenoresContainer.appendChild(edadesRow);
             }
@@ -386,6 +413,12 @@
                 actualizarEdadesMenores(1);
             });
         }
+
+        // Aplicar prevención de valores vacíos a los inputs existentes de la primera habitación
+        const adultosInput1 = document.getElementById('Cantidad_adultos_1');
+        const menoresInput1 = document.getElementById('Cantidad_menores_1');
+        if (adultosInput1) prevenirValoresVacios(adultosInput1);
+        if (menoresInput1) prevenirValoresVacios(menoresInput1);
 
         // Actualizar habitaciones cuando cambia el valor
         habitacionesInput.addEventListener('input', actualizarHabitaciones);
