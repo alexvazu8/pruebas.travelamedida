@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>{{ __('Titulo_disponibilidad_hoteles') }}</h1>
-    <form action="{{ route('hoteles.obtener') }}" method="POST" id="form-busqueda">
+    <form action="{{ route('hoteles.obtener') }}" method="POST">
         @csrf
         
         <div class="row">
@@ -55,15 +55,13 @@
                                 <!-- Cantidad de Adultos -->
                                 <div class="form-group col-6">
                                     <label for="Cantidad_adultos_1">Adultos</label>
-                                    <input type="number" class="form-control no-vacio" id="Cantidad_adultos_1" name="habitaciones[1][Cantidad_adultos]" min="1" max="4" value="1" required>
-                                    <div class="invalid-feedback">Por favor ingresa la cantidad de adultos</div>
+                                    <input type="number" class="form-control" id="Cantidad_adultos_1" name="habitaciones[1][Cantidad_adultos]" min="1" max="4" value="1" required>
                                 </div>
 
                                 <!-- Cantidad de Menores -->
                                 <div class="form-group col-6">
                                     <label for="Cantidad_menores_1">Menores</label>
-                                    <input type="number" class="form-control cantidad-menores no-vacio" id="Cantidad_menores_1" name="habitaciones[1][Cantidad_menores]" min="0" max="4" value="0" required>
-                                    <div class="invalid-feedback">Por favor ingresa la cantidad de menores</div>
+                                    <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_1" name="habitaciones[1][Cantidad_menores]" min="0" max="4" value="0" required>
                                 </div>
                             </div>
 
@@ -153,21 +151,6 @@
     border: 1px solid #ced4da;
 }
 
-.habitacion-campos .form-control.is-invalid {
-    border-color: #dc3545;
-}
-
-.habitacion-campos .invalid-feedback {
-    display: none;
-    font-size: 0.7rem;
-    color: #dc3545;
-    margin-top: 2px;
-}
-
-.habitacion-campos .form-control.is-invalid ~ .invalid-feedback {
-    display: block;
-}
-
 .edades-compactas .form-group {
     margin-bottom: 4px;
 }
@@ -220,257 +203,194 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const habitacionesContainer = document.getElementById('habitaciones-container');
-        const habitacionesContent = document.getElementById('habitaciones-content');
-        const habitacionesInput = document.getElementById('Numero_Habitaciones');
-        const cerrarBtn = document.getElementById('cerrar-habitaciones');
-        const formBusqueda = document.getElementById('form-busqueda');
+    const habitacionesContainer = document.getElementById('habitaciones-container');
+    const habitacionesContent = document.getElementById('habitaciones-content');
+    const habitacionesInput = document.getElementById('Numero_Habitaciones');
+    const cerrarBtn = document.getElementById('cerrar-habitaciones');
 
-        // Variable para controlar si hay errores de validación
-        let tieneErrores = false;
+    // Función para configurar inputs numéricos que pongan 0 cuando están vacíos
+    function configurarInputsNumericos() {
+        const inputsNumericos = document.querySelectorAll(`
+            #Numero_Habitaciones,
+            [name*="Cantidad_adultos"],
+            [name*="Cantidad_menores"],
+            [name*="Edad_menores"]
+        `);
 
-        // Función para prevenir valores vacíos en inputs numéricos
-        function prevenirValoresVacios(input) {
-            input.addEventListener('input', function() {
-                if (this.value === '' || this.value === null) {
-                    this.value = this.min || 0;
-                }
-            });
-            
+        inputsNumericos.forEach(input => {
+            // Verificar si ya está vacío y poner 0
+            if (input.value === '') {
+                input.value = '0';
+            }
+
+            // Evento para cuando el input pierde el foco
             input.addEventListener('blur', function() {
-                if (this.value === '' || this.value === null) {
-                    this.value = this.min || 0;
-                    this.classList.remove('is-invalid');
+                if (this.value === '') {
+                    this.value = '0';
                 }
             });
+
+            // Evento para cuando cambia el valor (por si acaso)
+            input.addEventListener('input', function() {
+                if (this.value === '') {
+                    this.value = '0';
+                }
+            });
+        });
+    }
+
+    // La primera habitación ya está en el HTML, así que no necesitamos crearla
+
+    function crearHabitacion(habitacionId) {
+        // Verificar si la habitación ya existe
+        if (document.getElementById(`habitacion_${habitacionId}`)) {
+            return;
         }
 
-        // La primera habitación ya está en el HTML, así que no necesitamos crearla
-
-        function crearHabitacion(habitacionId) {
-            // Verificar si la habitación ya existe
-            if (document.getElementById(`habitacion_${habitacionId}`)) {
-                return;
-            }
-
-            const habitacionDiv = document.createElement('div');
-            habitacionDiv.classList.add('habitacion-compacta');
-            habitacionDiv.id = `habitacion_${habitacionId}`;
-            habitacionDiv.innerHTML = `
-                <div class="habitacion-header">Habitación ${habitacionId}</div>
-                <div class="row habitacion-campos">
-                    <!-- Cantidad de Adultos -->
-                    <div class="form-group col-6">
-                        <label for="Cantidad_adultos_${habitacionId}">Adultos</label>
-                        <input type="number" class="form-control no-vacio" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
-                        <div class="invalid-feedback">Por favor ingresa la cantidad de adultos</div>
-                    </div>
-
-                    <!-- Cantidad de Menores -->
-                    <div class="form-group col-6">
-                        <label for="Cantidad_menores_${habitacionId}">Menores</label>
-                        <input type="number" class="form-control cantidad-menores no-vacio" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
-                        <div class="invalid-feedback">Por favor ingresa la cantidad de menores</div>
-                    </div>
+        const habitacionDiv = document.createElement('div');
+        habitacionDiv.classList.add('habitacion-compacta');
+        habitacionDiv.id = `habitacion_${habitacionId}`;
+        habitacionDiv.innerHTML = `
+            <div class="habitacion-header">Habitación ${habitacionId}</div>
+            <div class="row habitacion-campos">
+                <!-- Cantidad de Adultos -->
+                <div class="form-group col-6">
+                    <label for="Cantidad_adultos_${habitacionId}">Adultos</label>
+                    <input type="number" class="form-control" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
                 </div>
 
-                <!-- Edad de los Menores -->
-                <div class="edades-menores-container" id="edades_menores_${habitacionId}">
-                    <!-- Campos dinámicos de edades -->
+                <!-- Cantidad de Menores -->
+                <div class="form-group col-6">
+                    <label for="Cantidad_menores_${habitacionId}">Menores</label>
+                    <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
                 </div>
-            `;
-            habitacionesContent.appendChild(habitacionDiv);
-            
-            // Aplicar prevención de valores vacíos a los nuevos inputs
-            const adultosInput = document.getElementById(`Cantidad_adultos_${habitacionId}`);
-            const menoresInput = document.getElementById(`Cantidad_menores_${habitacionId}`);
-            
-            if (adultosInput) prevenirValoresVacios(adultosInput);
-            if (menoresInput) prevenirValoresVacios(menoresInput);
-        }
+            </div>
 
-        function actualizarHabitaciones() {
-            const numeroHabitaciones = parseInt(habitacionesInput.value) || 1;
-            
-            // Obtener habitaciones existentes
-            const habitacionesExistentes = habitacionesContent.querySelectorAll('.habitacion-compacta');
-            const numHabitacionesExistentes = habitacionesExistentes.length;
-            
-            if (numeroHabitaciones > numHabitacionesExistentes) {
-                // Agregar habitaciones faltantes
-                for (let i = numHabitacionesExistentes + 1; i <= numeroHabitaciones; i++) {
-                    crearHabitacion(i);
-                }
-            } else if (numeroHabitaciones < numHabitacionesExistentes) {
-                // Eliminar habitaciones sobrantes (pero mantener al menos 1)
-                for (let i = numHabitacionesExistentes; i > Math.max(numeroHabitaciones, 1); i--) {
-                    const habitacion = document.getElementById(`habitacion_${i}`);
-                    if (habitacion) {
-                        habitacion.remove();
-                    }
+            <!-- Edad de los Menores -->
+            <div class="edades-menores-container" id="edades_menores_${habitacionId}">
+                <!-- Campos dinámicos de edades -->
+            </div>
+        `;
+        habitacionesContent.appendChild(habitacionDiv);
+        
+        // Configurar los inputs numéricos de esta nueva habitación
+        setTimeout(configurarInputsNumericos, 10);
+    }
+
+    function actualizarHabitaciones() {
+        const numeroHabitaciones = parseInt(habitacionesInput.value) || 1;
+        
+        // Obtener habitaciones existentes
+        const habitacionesExistentes = habitacionesContent.querySelectorAll('.habitacion-compacta');
+        const numHabitacionesExistentes = habitacionesExistentes.length;
+        
+        if (numeroHabitaciones > numHabitacionesExistentes) {
+            // Agregar habitaciones faltantes
+            for (let i = numHabitacionesExistentes + 1; i <= numeroHabitaciones; i++) {
+                crearHabitacion(i);
+            }
+        } else if (numeroHabitaciones < numHabitacionesExistentes) {
+            // Eliminar habitaciones sobrantes (pero mantener al menos 1)
+            for (let i = numHabitacionesExistentes; i > Math.max(numeroHabitaciones, 1); i--) {
+                const habitacion = document.getElementById(`habitacion_${i}`);
+                if (habitacion) {
+                    habitacion.remove();
                 }
             }
         }
+        
+        // Configurar inputs numéricos después de actualizar
+        setTimeout(configurarInputsNumericos, 10);
+    }
 
-        function ocultarHabitaciones() {
-            // Solo ocultar si no hay errores de validación
-            if (!tieneErrores) {
-                habitacionesContainer.style.display = 'none';
+    function ocultarHabitaciones() {
+        // Ocultar el contenedor
+        habitacionesContainer.style.display = 'none';
+    }
+
+    function mostrarHabitaciones() {
+        // Mostrar el contenedor
+        habitacionesContainer.style.display = 'block';
+    }
+
+    function actualizarEdadesMenores(habitacionId) {
+        const cantidadMenoresInput = document.getElementById(`Cantidad_menores_${habitacionId}`);
+        const edadesMenoresContainer = document.getElementById(`edades_menores_${habitacionId}`);
+        
+        let cantidadMenores = parseInt(cantidadMenoresInput.value) || 0;
+
+        // Limitar a un máximo de 4 menores
+        if (cantidadMenores > 4) {
+            cantidadMenores = 4;
+            cantidadMenoresInput.value = 4;
+        }
+
+        edadesMenoresContainer.innerHTML = '';
+        
+        if (cantidadMenores > 0) {
+            const edadesRow = document.createElement('div');
+            edadesRow.classList.add('row', 'edades-compactas', 'mt-1');
+            edadesRow.innerHTML = '<div class="col-12"><label class="mb-1" style="font-size: 0.7rem; font-weight: 500;">Edades menores:</label></div>';
+            
+            for (let i = 1; i <= cantidadMenores; i++) {
+                const edadCol = document.createElement('div');
+                edadCol.classList.add('form-group', 'col-6');
+                edadCol.innerHTML = `
+                    <label for="Edad_menor_${habitacionId}_${i}" style="font-size: 0.65rem;">Menor ${i}</label>
+                    <input type="number" class="form-control" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" value="0" required>
+                `;
+                edadesRow.appendChild(edadCol);
             }
+            edadesMenoresContainer.appendChild(edadesRow);
         }
+        
+        // Configurar los nuevos inputs de edades
+        setTimeout(configurarInputsNumericos, 10);
+    }
 
-        function mostrarHabitaciones() {
-            // Mostrar el contenedor
-            habitacionesContainer.style.display = 'block';
-        }
-
-        function actualizarEdadesMenores(habitacionId) {
-            const cantidadMenoresInput = document.getElementById(`Cantidad_menores_${habitacionId}`);
-            const edadesMenoresContainer = document.getElementById(`edades_menores_${habitacionId}`);
-            
-            let cantidadMenores = parseInt(cantidadMenoresInput.value) || 0;
-
-            // Limitar a un máximo de 4 menores
-            if (cantidadMenores > 4) {
-                cantidadMenores = 4;
-                cantidadMenoresInput.value = 4;
-            }
-
-            edadesMenoresContainer.innerHTML = '';
-            
-            if (cantidadMenores > 0) {
-                const edadesRow = document.createElement('div');
-                edadesRow.classList.add('row', 'edades-compactas', 'mt-1');
-                edadesRow.innerHTML = '<div class="col-12"><label class="mb-1" style="font-size: 0.7rem; font-weight: 500;">Edades menores:</label></div>';
-                
-                for (let i = 1; i <= cantidadMenores; i++) {
-                    const edadCol = document.createElement('div');
-                    edadCol.classList.add('form-group', 'col-6');
-                    edadCol.innerHTML = `
-                        <label for="Edad_menor_${habitacionId}_${i}" style="font-size: 0.65rem;">Menor ${i}</label>
-                        <input type="number" class="form-control no-vacio" id="Edad_menor_${habitacionId}_${i}" name="habitaciones[${habitacionId}][Edad_menores][${i}]" min="0" max="17" value="0" required>
-                        <div class="invalid-feedback" style="font-size: 0.65rem;">Por favor ingresa la edad del menor</div>
-                    `;
-                    edadesRow.appendChild(edadCol);
-                    
-                    // Aplicar prevención de valores vacíos al input de edad
-                    const edadInput = document.getElementById(`Edad_menor_${habitacionId}_${i}`);
-                    if (edadInput) prevenirValoresVacios(edadInput);
-                }
-                edadesMenoresContainer.appendChild(edadesRow);
-            }
-        }
-
-        function validarFormulario() {
-            let esValido = true;
-            tieneErrores = false;
-            
-            // Remover clases de error previas
-            const inputs = formBusqueda.querySelectorAll('.form-control');
-            inputs.forEach(input => {
-                input.classList.remove('is-invalid');
-            });
-            
-            // Validar campos de habitaciones
-            const habitaciones = habitacionesContent.querySelectorAll('.habitacion-compacta');
-            habitaciones.forEach(habitacion => {
-                const adultosInput = habitacion.querySelector('input[name*="[Cantidad_adultos]"]');
-                const menoresInput = habitacion.querySelector('input[name*="[Cantidad_menores]"]');
-                
-                if (!adultosInput.value || adultosInput.value < 1) {
-                    adultosInput.classList.add('is-invalid');
-                    esValido = false;
-                    tieneErrores = true;
-                }
-                
-                if (!menoresInput.value || menoresInput.value < 0) {
-                    menoresInput.classList.add('is-invalid');
-                    esValido = false;
-                    tieneErrores = true;
-                }
-                
-                // Validar edades de menores si hay menores
-                const cantidadMenores = parseInt(menoresInput.value) || 0;
-                if (cantidadMenores > 0) {
-                    for (let i = 1; i <= cantidadMenores; i++) {
-                        const edadInput = habitacion.querySelector(`input[name*="[Edad_menores][${i}]"]`);
-                        if (edadInput && (!edadInput.value || edadInput.value < 0 || edadInput.value > 17)) {
-                            edadInput.classList.add('is-invalid');
-                            esValido = false;
-                            tieneErrores = true;
-                        }
-                    }
-                }
-            });
-            
-            return esValido;
-        }
-
-        // Configurar eventos para la primera habitación existente
-        const cantidadMenoresInput1 = document.getElementById('Cantidad_menores_1');
-        if (cantidadMenoresInput1) {
-            cantidadMenoresInput1.addEventListener('input', function() {
-                actualizarEdadesMenores(1);
-            });
-        }
-
-        // Aplicar prevención de valores vacíos a los inputs existentes de la primera habitación
-        const adultosInput1 = document.getElementById('Cantidad_adultos_1');
-        const menoresInput1 = document.getElementById('Cantidad_menores_1');
-        if (adultosInput1) prevenirValoresVacios(adultosInput1);
-        if (menoresInput1) prevenirValoresVacios(menoresInput1);
-
-        // Actualizar habitaciones cuando cambia el valor
-        habitacionesInput.addEventListener('input', actualizarHabitaciones);
-
-        // Ocultar al hacer clic en el botón cerrar
-        cerrarBtn.addEventListener('click', function() {
-            tieneErrores = false;
-            ocultarHabitaciones();
+    // Configurar eventos para la primera habitación existente
+    const cantidadMenoresInput1 = document.getElementById('Cantidad_menores_1');
+    if (cantidadMenoresInput1) {
+        cantidadMenoresInput1.addEventListener('input', function() {
+            actualizarEdadesMenores(1);
         });
+    }
 
-        // Mostrar al hacer clic en el campo de número de habitaciones
-        habitacionesInput.addEventListener('focus', mostrarHabitaciones);
+    // Configurar todos los inputs numéricos inicialmente
+    configurarInputsNumericos();
 
-        // También mostrar al hacer clic en el label
-        document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', function() {
-            habitacionesInput.focus();
-            mostrarHabitaciones();
-        });
+    // Actualizar habitaciones cuando cambia el valor
+    habitacionesInput.addEventListener('input', actualizarHabitaciones);
 
-        // Ocultar al hacer clic fuera del contenedor
-        document.addEventListener('click', function(e) {
-            if (!habitacionesContainer.contains(e.target) && 
-                e.target !== habitacionesInput && 
-                e.target !== document.querySelector('label[for="Numero_Habitaciones"]')) {
-                ocultarHabitaciones();
-            }
-        });
+    // Ocultar al hacer clic en el botón cerrar
+    cerrarBtn.addEventListener('click', ocultarHabitaciones);
 
-        // Validar formulario antes de enviar
-        formBusqueda.addEventListener('submit', function(e) {
-            if (!validarFormulario()) {
-                e.preventDefault();
-                // Mostrar el contenedor de habitaciones si hay errores
-                mostrarHabitaciones();
-                
-                // Hacer scroll hasta el primer error
-                const primerError = formBusqueda.querySelector('.is-invalid');
-                if (primerError) {
-                    primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    primerError.focus();
-                }
-            }
-        });
+    // Mostrar al hacer clic en el campo de número de habitaciones
+    habitacionesInput.addEventListener('focus', mostrarHabitaciones);
 
-        // Delegación de eventos para los campos de menores dinámicos
-        habitacionesContent.addEventListener('input', function (e) {
-            if (e.target.classList.contains('cantidad-menores')) {
-                const habitacionId = e.target.id.split('_')[2];
-                actualizarEdadesMenores(habitacionId);
-            }
-        });
+    // También mostrar al hacer clic en el label
+    document.querySelector('label[for="Numero_Habitaciones"]').addEventListener('click', function() {
+        habitacionesInput.focus();
+        mostrarHabitaciones();
     });
+
+    // Ocultar al hacer clic fuera del contenedor
+    document.addEventListener('click', function(e) {
+        if (!habitacionesContainer.contains(e.target) && 
+            e.target !== habitacionesInput && 
+            e.target !== document.querySelector('label[for="Numero_Habitaciones"]')) {
+            ocultarHabitaciones();
+        }
+    });
+
+    // Delegación de eventos para los campos de menores dinámicos
+    habitacionesContent.addEventListener('input', function (e) {
+        if (e.target.classList.contains('cantidad-menores')) {
+            const habitacionId = e.target.id.split('_')[2];
+            actualizarEdadesMenores(habitacionId);
+        }
+    });
+});
 </script>
 
 <!-- jQuery (requerido por Select2) -->
