@@ -693,11 +693,11 @@ footer a:hover {
     color: #fff !important;
     cursor: pointer;
 
-    background: linear-gradient(135deg, #0a0f14, #0d1c24);
-    border: 1px solid rgba(0, 255, 180, 0.25);
+    background: linear-gradient(135deg, #1a2a32, #1e3a4a);
+    border: 1px solid rgba(0, 255, 180, 0.35);
 
-    box-shadow: 0 0 12px rgba(0, 255, 180, 0.15),
-                inset 0 0 12px rgba(0, 255, 180, 0.08);
+    box-shadow: 0 0 15px rgba(0, 255, 180, 0.2),
+                inset 0 0 15px rgba(0, 255, 180, 0.1);
 
     transition: all 0.25s ease;
     overflow: hidden;
@@ -706,10 +706,10 @@ footer a:hover {
 /* Hover */
 .btn-crypto:hover {
     transform: scale(1.04);
-    border-color: rgba(0, 255, 180, 0.5);
+    border-color: rgba(0, 255, 180, 0.6);
     box-shadow: 
-        0 0 20px rgba(0, 255, 180, 0.6),
-        inset 0 0 18px rgba(0, 255, 180, 0.25);
+        0 0 25px rgba(0, 255, 180, 0.7),
+        inset 0 0 20px rgba(0, 255, 180, 0.3);
 }
 
 /* Borde animado */
@@ -730,7 +730,7 @@ footer a:hover {
     background-size: 350% 350%;
     animation: borderGlow 6s linear infinite;
     z-index: -1;
-    opacity: 0.35;
+    opacity: 0.4;
 }
 
 @keyframes borderGlow {
@@ -750,11 +750,11 @@ footer a:hover {
     color: #fff !important;
     cursor: pointer;
 
-    background: linear-gradient(135deg, #0a140a, #0d240d);
-    border: 1px solid rgba(40, 167, 69, 0.25);
+    background: linear-gradient(135deg, #1a321a, #1e4a2e);
+    border: 1px solid rgba(72, 187, 120, 0.35);
 
-    box-shadow: 0 0 12px rgba(40, 167, 69, 0.15),
-                inset 0 0 12px rgba(40, 167, 69, 0.08);
+    box-shadow: 0 0 15px rgba(72, 187, 120, 0.2),
+                inset 0 0 15px rgba(72, 187, 120, 0.1);
 
     transition: all 0.25s ease;
     overflow: hidden;
@@ -763,10 +763,10 @@ footer a:hover {
 /* Hover */
 .btn-card:hover {
     transform: scale(1.04);
-    border-color: rgba(40, 167, 69, 0.5);
+    border-color: rgba(72, 187, 120, 0.6);
     box-shadow: 
-        0 0 20px rgba(40, 167, 69, 0.6),
-        inset 0 0 18px rgba(40, 167, 69, 0.25);
+        0 0 25px rgba(72, 187, 120, 0.7),
+        inset 0 0 20px rgba(72, 187, 120, 0.3);
 }
 
 /* Borde animado */
@@ -779,15 +779,15 @@ footer a:hover {
     height: calc(100% + 4px);
     border-radius: 16px;
     background: linear-gradient(120deg,
-        #28a745,
-        #20c997,
-        #17a2b8,
-        #28a745
+        #48bb78,
+        #38a169,
+        #2f855a,
+        #48bb78
     );
     background-size: 350% 350%;
     animation: borderGlow 6s linear infinite;
     z-index: -1;
-    opacity: 0.35;
+    opacity: 0.4;
 }
 
 @keyframes borderGlow {
