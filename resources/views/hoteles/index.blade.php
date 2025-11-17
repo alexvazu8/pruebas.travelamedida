@@ -39,7 +39,7 @@
                 <input type="number" class="form-control" id="Numero_Habitaciones" name="Numero_Habitaciones" min="1" max="3" value="1" required>
                 
                 <!-- Contenedor dinámico de habitaciones (VISIBLE inicialmente) -->
-                <div id="habitaciones-container2" class="position-absolute mt-1" style="z-index: 1000;">
+                <div id="habitaciones-container" class="position-absolute mt-1" style="z-index: 1000;">
                     <!-- Header con botón cerrar -->
                     <div class="habitaciones-header d-flex justify-content-between align-items-center mb-2">
                         <h6 class="mb-0 text-dark">Configuración de Habitaciones</h6>
@@ -83,7 +83,7 @@
 </div>
 
 <style>
-#habitaciones-container2 {
+#habitaciones-container {
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
     border: 2px solid #dee2e6;
     border-radius: 10px;
@@ -208,7 +208,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const habitacionesContainer = document.getElementById('habitaciones-container2');
+    const habitacionesContainer = document.getElementById('habitaciones-container');
     const habitacionesContent = document.getElementById('habitaciones-content');
     const habitacionesInput = document.getElementById('Numero_Habitaciones');
     const cerrarBtn = document.getElementById('cerrar-habitaciones');

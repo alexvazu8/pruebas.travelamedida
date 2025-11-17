@@ -681,3 +681,36 @@ footer a:hover {
         margin-right: 0.875rem;
     }
 }
+
+/* === Boton para pagar con Cryptos === */
+.btn-crypto {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    background: linear-gradient(135deg, #00f7ff, #7b2ff7);
+    background-size: 200% 200%;
+    animation: cryptoGlow 4s ease infinite;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.6),
+                0 0 24px rgba(123, 47, 247, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-crypto:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.9),
+                0 0 32px rgba(123, 47, 247, 0.8);
+}
+
+.btn-crypto:active {
+    transform: scale(0.96);
+}
+
+@keyframes cryptoGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
