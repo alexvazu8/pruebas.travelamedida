@@ -738,3 +738,60 @@ footer a:hover {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+
+/* === Boton para pagar con Tarjeta === */
+.btn-card {
+    position: relative;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff !important;
+    cursor: pointer;
+
+    background: linear-gradient(135deg, #0a140a, #0d240d);
+    border: 1px solid rgba(40, 167, 69, 0.25);
+
+    box-shadow: 0 0 12px rgba(40, 167, 69, 0.15),
+                inset 0 0 12px rgba(40, 167, 69, 0.08);
+
+    transition: all 0.25s ease;
+    overflow: hidden;
+}
+
+/* Hover */
+.btn-card:hover {
+    transform: scale(1.04);
+    border-color: rgba(40, 167, 69, 0.5);
+    box-shadow: 
+        0 0 20px rgba(40, 167, 69, 0.6),
+        inset 0 0 18px rgba(40, 167, 69, 0.25);
+}
+
+/* Borde animado */
+.btn-card::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    border-radius: 16px;
+    background: linear-gradient(120deg,
+        #28a745,
+        #20c997,
+        #17a2b8,
+        #28a745
+    );
+    background-size: 350% 350%;
+    animation: borderGlow 6s linear infinite;
+    z-index: -1;
+    opacity: 0.35;
+}
+
+@keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
