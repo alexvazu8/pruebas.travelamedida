@@ -97,7 +97,7 @@
     margin-top: 8px;
      /* ESTO ES LO MÁS IMPORTANTE */
     z-index: 9999 !important;
-    position: absolute;
+    position: fixed !important;
     /* Asegurar que esté por encima de TODO */
     background-color: #ffffff !important;
 }
