@@ -39,7 +39,7 @@
                 <input type="number" class="form-control" id="Numero_Habitaciones" name="Numero_Habitaciones" min="1" max="3" value="1" required>
                 
                 <!-- Contenedor dinámico de habitaciones (VISIBLE inicialmente) -->
-                <div id="habitaciones-container" class="position-absolute mt-1" style="z-index: 1000;">
+                <div id="habitaciones-container" class="position-absolute mt-1" style="z-index:1000; background:#fff; border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
                     <!-- Header con botón cerrar -->
                     <div class="habitaciones-header d-flex justify-content-between align-items-center mb-2">
                         <h6 class="mb-0 text-dark">Configuración de Habitaciones</h6>
