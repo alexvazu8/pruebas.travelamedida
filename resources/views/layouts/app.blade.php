@@ -140,15 +140,16 @@
 
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <a class="dropdown-item d-flex align-items-center py-2 text-danger" 
-                                           href="{{ route('logout') }}"
-                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="fas fa-sign-out-alt me-2" aria-hidden="true"></i>
-                                            {{ __('Cerrar Sesión') }}
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline w-100 m-0 p-0">
+                                                @csrf
+                                                <button type="submit" 
+                                                        class="dropdown-item d-flex align-items-center py-2 text-danger w-100 border-0 bg-transparent text-start">
+                                                    <i class="fas fa-sign-out-alt me-2" aria-hidden="true"></i>
+                                                    {{ __('Cerrar Sesión') }}
+                                                </button>
+                                            </form>
+                                        </div>
                                     </li>
                                 </ul>
                             </li>
