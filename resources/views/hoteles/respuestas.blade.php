@@ -186,8 +186,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const primeraPenalidad = habitacionData.penalidades[0];
                 penalidadesHTML += `
                     <i class="fas fa-exclamation-triangle text-warning"></i>
-                    Cancelación: De ${primeraPenalidad.desde_noches_antes}-${primeraPenalidad.hasta_noches_antes} noches antes = ${primeraPenalidad.porcentaje_penalidad_por_noche} de penalidad.
-                    </br>Cancelación: Antes de ${primeraPenalidad.desde_noches_antes} noches, sin penalidad, existe un 5% de cargo por el metodo de pago.
+                    Cancelaciones realizadas con menos de ${primeraPenalidad.desde_noches_antes} noches de anticipación tendrán una penalidad del ${primeraPenalidad.porcentaje_penalidad_por_noche}%.
+                    </br>Cancelaciones realizadas con más de ${primeraPenalidad.desde_noches_antes} noches de anticipación, no tendrán penalidad, pero se aplica un cargo del 5% por el método de pago.
                 `;
                 
                 if (habitacionData.penalidades.length > 1) {
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 penalidadesHTML += '</small>';
             } else {
-                penalidadesHTML = '<small class="text-success"><i class="fas fa-check-circle"></i> Política flexible</br>Cancelaciones sin penalidad, existe un 5% de cargo por el metodo de pago.</small>';
+                penalidadesHTML = '<small class="text-success"><i class="fas fa-check-circle"></i> Política flexible</br>Cancelaciones sin penalidad, pero se aplica un cargo del 5% por el metodo de pago.</small>';
             }
         });
         
