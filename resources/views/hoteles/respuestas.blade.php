@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const primeraPenalidad = habitacionData.penalidades[0];
                 penalidadesHTML += `
                     <i class="fas fa-exclamation-triangle text-warning"></i>
-                    Cancelaciones realizadas con menos de ${primeraPenalidad.desde_noches_antes} noches de anticipación tendrán una penalidad del ${primeraPenalidad.porcentaje_penalidad_por_noche}%.
+                    Cancelaciones realizadas con menos de ${primeraPenalidad.desde_noches_antes} noches de anticipación tendrán una penalidad del ${primeraPenalidad.porcentaje_penalidad_por_noche}.
                     </br>Cancelaciones realizadas con más de ${primeraPenalidad.desde_noches_antes} noches de anticipación, no tendrán penalidad, pero se aplica un cargo del 5% por el método de pago.
                 `;
                 
