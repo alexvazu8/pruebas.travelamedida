@@ -215,7 +215,7 @@
                                     <i class="fas fa-ban me-3 fs-4"></i>
                                     <div>
                                         <strong>{{ __('Confirmacion_final') }}</strong> {{ __('Confirmacion_final_texto1') }} <strong class="text-decoration-underline">{{ __('No_cancelable_no_rembolsable') }}</strong> 
-                                        bajo ninguna circunstancia.
+                                        {{ __('Bajo_ninguna_circunstancia') }}
                                     </div>
                                 </div>
                                 
