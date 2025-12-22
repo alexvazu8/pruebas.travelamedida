@@ -229,7 +229,7 @@
                                         </small>
                                     </div>
                                     <button type="submit" class="btn btn-success btn-lg px-4">
-                                        <i class="fas fa-check-circle me-2"></i> Confirmar Reserva
+                                        <i class="fas fa-check-circle me-2"></i> {{ __('Confirm') }}
                                     </button>
                                 </div>
                             </form>
