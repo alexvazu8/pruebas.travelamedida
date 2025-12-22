@@ -291,6 +291,7 @@
     "Legal":"Legal",
     "Nosotros":"Nosotros",
     "Termonos":"Términos",
-    "Privacidad":"Privacidad"
+    "Privacidad":"Privacidad",
+     "Máximo :max caracteres. Solo letras, números y espacios.": "Máximo :max caracteres. Solo letras, números y espacios."
 
 }
