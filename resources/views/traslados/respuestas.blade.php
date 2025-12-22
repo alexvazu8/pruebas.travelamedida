@@ -11,10 +11,9 @@
                 <div class="d-flex align-items-center">
                     <i class="fas fa-exclamation-triangle me-3 fs-4"></i>
                     <div>
-                        <strong><i class="fas fa-ban me-1"></i> Política de Cancelación:</strong> Este servicio 
-                        <span class="fw-bold text-danger">no es cancelable</span> y 
-                        <span class="fw-bold text-danger">no es reembolsable</span> una vez confirmada la reserva.
-                        Por favor, verifique todos los datos antes de proceder.
+                        <strong><i class="fas fa-ban me-1"></i> {{ __('Politica_cancelacion') }}</strong> Este servicio 
+                        <span class="fw-bold text-danger">{{ __('No_cancelable') }}</span> & 
+                        <span class="fw-bold text-danger">{{ __('No_rembolsable') }}</span> {{ __('Advertencia_politica') }}
                     </div>
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
