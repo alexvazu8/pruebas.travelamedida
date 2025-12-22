@@ -83,7 +83,7 @@
                         <div class="row mb-4">
                             <div class="col-12">
                                 <h5 class="text-primary mb-2">
-                                    <i class="fas fa-info-circle me-2"></i>Detalle del Servicio
+                                    <i class="fas fa-info-circle me-2"></i>{{ __("Detalle_servicio") }}
                                 </h5>
                                 <p class="ps-4">{{ $respuesta['Detalle_servicio'] }}</p>
                             </div>
@@ -94,7 +94,7 @@
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="fas fa-calendar-day text-primary me-2"></i>
-                                    <strong>Fecha Disponible:</strong>
+                                    <strong>{{__("Fecha_disponibilidad")}}</strong>
                                 </div>
                                 <p class="ps-4 mb-0">{{ $respuesta['Fecha_disponible'] }}</p>
                             </div>
@@ -102,7 +102,7 @@
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="fas fa-clock text-primary me-2"></i>
-                                    <strong>Hora de Servicio:</strong>
+                                    <strong>{{__("Hora_servicio")}}</strong>
                                 </div>
                                 <p class="ps-4 mb-0">{{ $respuesta['hora_servicio'] }}</p>
                             </div>
@@ -110,17 +110,17 @@
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="fas fa-users text-primary me-2"></i>
-                                    <strong>Pasajeros:</strong>
+                                    <strong>{{ __("Titulo_pasajeros") }}:</strong>
                                 </div>
                                 <p class="ps-4 mb-0">
-                                    {{ $respuesta['Cantidad_adultos'] }} Adultos / 
-                                    {{ $respuesta['Cantidad_menores'] }} Menores
+                                    {{__("Cantidad_adultos")}} {{ $respuesta['Cantidad_adultos'] }}  / 
+                                    {{__("Cantidad_menores")}} {{ $respuesta['Cantidad_menores'] }} 
                                 </p>
                                 
                                 @if(isset($respuesta['Edad_menores']) && count($respuesta['Edad_menores']) > 0)
                                     <div class="ps-4 mt-2">
                                         <small class="text-muted">
-                                            <strong>Edades menores:</strong>
+                                            <strong>{{ __("Edades_menores") }}</strong>
                                             @foreach ($respuesta['Edad_menores'] as $key => $edad)
                                                 {{ $edad }}@if(!$loop->last), @endif
                                             @endforeach
@@ -132,7 +132,7 @@
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="fas fa-car text-primary me-2"></i>
-                                    <strong>Vehículo:</strong>
+                                    <strong>{{ __("Vehiculo") }}</strong>
                                 </div>
                                 <div class="ps-4">
                                     <img src="{{ $respuesta['Foto_tipo_movilidad'] }}" 

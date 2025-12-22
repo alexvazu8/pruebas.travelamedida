@@ -293,7 +293,9 @@
     "Nosotros":"About us",
     "Termonos":"Terms",
     "Privacidad":"Privacy",
-    "Máximo :max caracteres. Solo letras, números y espacios.": "Maximum :max characters. Only letters, numbers and spaces."
+    "Máximo :max caracteres. Solo letras, números y espacios.": "Maximum :max characters. Only letters, numbers and spaces.",
+    "Vehiculo:":"Vehicle:",
+    "Detalle_servicio": "Service Details"
 
     
 }
