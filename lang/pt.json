@@ -281,6 +281,8 @@
     "Hora_servicio":" Horário de atendimento:",
     "Zona_origen":"Área de origem:",
     "Zona_destino":"Área de destino:",
+    "Lugar_origen":"Local de origem:",
+    "Lugar_destino":"Local de destino:",
     "Buscar_traslados":"Procurar traslados:",
     "Hoteles":"Alojamento",
     "Tours":"Atrações e passeios",

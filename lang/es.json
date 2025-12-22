@@ -280,6 +280,8 @@
     "Traslados":"Traslados",
     "Hora_servicio":"Hora de servicio:",
     "Zona_origen":"Zona de origen:",
+    "Lugar_origen":"Lugar de origen:",
+    "Lugar_destino":"Lugar de destino:",
     "Zona_destino":"Zona de destino:",
     "Buscar_traslados":"Buscar un traslados:",
     "Hoteles":"Alojamientos",

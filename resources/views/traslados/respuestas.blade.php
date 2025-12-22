@@ -173,7 +173,7 @@
                                 <div class="row g-3 mb-4">
                                     <div class="col-md-6">
                                         <label for="origen-{{ $index }}" class="form-label">
-                                            <i class="fas fa-map-pin me-1"></i> Origen (Hotel o Aeropuerto)
+                                            <i class="fas fa-map-pin me-1"></i> {{__("Lugar_origen")}} (Hotel o Aeropuerto)
                                         </label>
                                         <input type="text" 
                                                class="form-control @error('Lugar_Origen') is-invalid @enderror" 
@@ -192,7 +192,7 @@
                                     
                                     <div class="col-md-6">
                                         <label for="destino-{{ $index }}" class="form-label">
-                                            <i class="fas fa-flag me-1"></i> Destino (Hotel o Aeropuerto)
+                                            <i class="fas fa-flag me-1"></i> {{__("Lugar_destino")}} (Hotel o Aeropuerto)
                                         </label>
                                         <input type="text" 
                                                class="form-control @error('Lugar_Destino') is-invalid @enderror" 

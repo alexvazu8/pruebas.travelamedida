@@ -281,6 +281,8 @@
     "Hora_servicio":"Time of service:",
     "Zona_origen":"Area of ​​origin:",
     "Zona_destino":"Destination area:",
+    "Lugar_origen":"Pickup location:",
+    "Lugar_destino":"Drop-off location:",
     "Buscar_traslados":"Search transfers:",
     "Boton_buscar":"Search",
     "Hoteles":"Accommodation",
