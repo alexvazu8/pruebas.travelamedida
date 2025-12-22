@@ -241,7 +241,7 @@
                             <div class="col-12">
                                 <small class="text-muted">
                                     <i class="fas fa-exclamation-triangle me-1"></i>
-                                    <strong>Importante:</strong> El precio mostrado es final. No incluye propinas adicionales.
+                                    <strong>{{ __('Importante') }}</strong> {{ __('Texto_precio_explicado') }}
                                 </small>
                             </div>
                         </div>
