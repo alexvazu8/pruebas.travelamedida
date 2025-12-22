@@ -194,9 +194,6 @@
                                         <label for="destino-{{ $index }}" class="form-label">
                                             <i class="fas fa-flag me-1"></i> Destino (Hotel o Aeropuerto)
                                         </label>
-                                        @php
-                                            $maxLength = 35;     
-                                        @endphp
                                         <input type="text" 
                                                class="form-control @error('Lugar_Destino') is-invalid @enderror" 
                                                id="destino-{{ $index }}"
@@ -206,7 +203,7 @@
                                                required 
                                                maxlength="35" 
                                                oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
-                                        <div class="form-text">{{ __('Máximo :max caracteres. Solo letras, números y espacios.', ['max' => $maxLength])}}</div>
+                                        <div class="form-text">{{ __('Máximo :max caracteres. Solo letras, números y espacios.', ['max' => 35]) }}</div>
                                         @error('Lugar_Destino')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
