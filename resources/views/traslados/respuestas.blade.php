@@ -2,149 +2,287 @@
 
 @section('content')
 <div class="container">
-    <h1>{{ __('Respuestas_traslado') }}</h1>
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="mb-3">{{ __('Respuestas_traslado') }}</h1>
+            
+            <!-- Nota importante sobre cancelaciones -->
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle me-3 fs-4"></i>
+                    <div>
+                        <strong><i class="fas fa-ban me-1"></i> Política de Cancelación:</strong> Este servicio 
+                        <span class="fw-bold text-danger">no es cancelable</span> y 
+                        <span class="fw-bold text-danger">no es reembolsable</span> una vez confirmada la reserva.
+                        Por favor, verifique todos los datos antes de proceder.
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     @php
     //print_r($respuestas);
     @endphp
+    
     @if(empty($respuestas))
-    <p>{{ __('No_hay_respuesta') }}   </p>
-    <a href="{{ url('/traslados') }}" class="btn btn-primary btn-lg mx-2">Traslados</a>
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                <p class="fs-5 text-muted mb-4">{{ __('No_hay_respuesta') }}</p>
+                <a href="{{ url('/traslados') }}" class="btn btn-primary btn-lg px-4">
+                    <i class="fas fa-arrow-left me-2"></i> Volver a Traslados
+                </a>
+            </div>
+        </div>
     @else
         @if(isset($respuestas['error']))
-            {{$respuestas['error']}}
-            @if(isset($respuestas['validation_errors']))
-                @foreach ($respuestas['validation_errors'] as $error)
-                    @foreach ($error as $detelle_error)
-                        <p>{{ $detelle_error }}</p>
-                    @endforeach
-                @endforeach
-            @endif
-            <a href="{{ url('/traslados') }}" class="btn btn-primary btn-lg mx-2">Traslados</a>
-        @else
-            <!-- Tabla para mostrar los datos de las respuestas -->
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Campo</th>
-                        <th>Valor</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($respuestas as $index => $respuesta)
-                        <!-- Fila 1: Nombre del Servicio -->
-                        <tr class="{{ is_numeric($index) && $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Nombre Servicio</strong></td>
-                            <td>{{ $respuesta['Nombre_Servicio'] }}</td>
-                        </tr>
-
-                        <!-- Fila 2: Detalle del Servicio -->
-                        <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Detalle del Servicio</strong></td>
-                            <td colspan="2">{{ $respuesta['Detalle_servicio'] }}</td>
-                        </tr>
-
-                        <!-- Fila 3: Formulario con campos y botón -->
-                        <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Origen/Destino</strong></td>
-                            <td colspan="2">
-                                <form id="form-{{ $index }}" action="{{ route('traslados.addCarrito') }}" method="POST">
-                                    @csrf
-                                    <!-- Campos ocultos -->
-                                    <input type="hidden" name="Traslados_contrato_id" value="{{ $respuesta['Traslados_contrato_id'] }}">
-                                    <input type="hidden" name="Tipo_movilidad_id" value="{{ $respuesta['Tipo_movilidad_id'] }}">
-                                    <input type="hidden" name="Id_servicio_traslado" value="{{ $respuesta['Id_servicio_traslado'] }}">
-                                    <input type="hidden" name="Fecha_disponible" value="{{ $respuesta['Fecha_disponible'] }}">
-                                    <input type="hidden" name="Tipo_servicio" value="{{ $respuesta['Tipo_servicio'] }}">
-                                    <input type="hidden" name="Tipo_servicio_transfer" value="{{ $respuesta['Tipo_servicio_transfer'] }}">
-                                    <input type="hidden" name="hora_servicio" value="{{ $respuesta['hora_servicio'] }}">
-                                    <input type="hidden" name="Numero_adultos" value="{{ $respuesta['Cantidad_adultos'] }}">
-                                    <input type="hidden" name="Numero_menores" value="{{ $respuesta['Cantidad_menores'] }}">
-                                    
-                                    @if(isset($respuesta['Edad_menores']))
-                                        @foreach ($respuesta['Edad_menores'] as $key => $edad)
-                                            <input type="hidden" name="Edad_menores[{{ $key }}]" value="{{ $edad }}">
-                                        @endforeach
-                                    @endif
-
-                                    <!-- Campos visibles -->
-                                    <div class="row g-2 mb-3">
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control @error('Lugar_Origen') is-invalid @enderror" 
-                                                name="Lugar_Origen" placeholder="Nombre del Hotel o Aeropuerto" 
-                                                value="{{ old('Lugar_Origen') }}" required maxlength="35" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
-                                            @error('Lugar_Origen')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control @error('Lugar_Destino') is-invalid @enderror" 
-                                                name="Lugar_Destino" placeholder="Nombre del Hotel o Aeropuerto" 
-                                                value="{{ old('Lugar_Destino') }}" required maxlength="35" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
-                                            @error('Lugar_Destino')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <!-- Botón de confirmación DENTRO del formulario -->
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-check-circle"></i> Confirmar Reserva
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <!-- Fila 4: Precio Total -->
-                        <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Precio Total</strong></td>
-                            <td colspan="2">{{ number_format($respuesta['Precio_Total'], 2) }} USD</td>
-                        </tr>
-
-                        <!-- Fila 5: Fecha Disponible -->
-                        <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Fecha Disponible</strong></td>
-                            <td colspan="2">{{ $respuesta['Fecha_disponible'] }}</td>
-                        </tr>
-
-                        <!-- Fila 6: Hora de Servicio -->
-                        <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Hora Servicio</strong></td>
-                            <td colspan="2">{{ $respuesta['hora_servicio'] }}</td>
-                        </tr>
-
-                        <!-- Fila 7: Foto del Vehículo -->
-                        <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Vehículo</strong></td>
-                            <td colspan="2">
-                                <img src="{{ $respuesta['Foto_tipo_movilidad'] }}" alt="Vehículo" class="img-thumbnail" width="150">
-                            </td>
-                        </tr>
-
-                        <!-- Fila 8: Pasajeros -->
-                        <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Pasajeros</strong></td>
-                            <td colspan="2">
-                                {{ $respuesta['Cantidad_adultos'] }} Adultos / 
-                                {{ $respuesta['Cantidad_menores'] }} Menores
-                            </td>
-                        </tr>
-
-                        <!-- Fila 9: Edades de Menores (opcional) -->
-                        @if(isset($respuesta['Edad_menores']))
-                        <tr class="{{ $index % 2 == 0 ? 'bg-light' : 'bg-dark text-white' }}">
-                            <td><strong>Edades de Menores</strong></td>
-                            <td colspan="2">
-                                @foreach ($respuesta['Edad_menores'] as $key => $edad)
-                                    Menor {{ $key }}: {{ $edad }} años<br>
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <i class="fas fa-exclamation-circle me-2"></i> Error en la consulta
+                </div>
+                <div class="card-body">
+                    <p class="fs-5">{{ $respuestas['error'] }}</p>
+                    
+                    @if(isset($respuestas['validation_errors']))
+                        <div class="alert alert-danger mt-3">
+                            <h6 class="alert-heading"><i class="fas fa-times-circle me-1"></i> Errores de validación:</h6>
+                            <ul class="mb-0">
+                                @foreach ($respuestas['validation_errors'] as $error)
+                                    @foreach ($error as $detalle_error)
+                                        <li>{{ $detalle_error }}</li>
+                                    @endforeach
                                 @endforeach
-                            </td>
-                        </tr>
-                        @endif
-                    @endforeach
-                </tbody>
-            </table>
+                            </ul>
+                        </div>
+                    @endif
+                    
+                    <div class="mt-4">
+                        <a href="{{ url('/traslados') }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-left me-2"></i> Volver a Traslados
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @else
+            <!-- Tarjetas para cada respuesta en lugar de tabla -->
+            @foreach($respuestas as $index => $respuesta)
+                <div class="card shadow-sm mb-4 border-primary" id="traslado-{{ $index }}">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-car-side me-2"></i>
+                            <strong>{{ $respuesta['Nombre_Servicio'] }}</strong>
+                        </div>
+                        <span class="badge bg-light text-primary fs-6">
+                            {{ number_format($respuesta['Precio_Total'], 2) }} USD
+                        </span>
+                    </div>
+                    
+                    <div class="card-body">
+                        <!-- Detalle del servicio -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-2">
+                                    <i class="fas fa-info-circle me-2"></i>Detalle del Servicio
+                                </h5>
+                                <p class="ps-4">{{ $respuesta['Detalle_servicio'] }}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Información en columnas -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-calendar-day text-primary me-2"></i>
+                                    <strong>Fecha Disponible:</strong>
+                                </div>
+                                <p class="ps-4 mb-0">{{ $respuesta['Fecha_disponible'] }}</p>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-clock text-primary me-2"></i>
+                                    <strong>Hora de Servicio:</strong>
+                                </div>
+                                <p class="ps-4 mb-0">{{ $respuesta['hora_servicio'] }}</p>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-users text-primary me-2"></i>
+                                    <strong>Pasajeros:</strong>
+                                </div>
+                                <p class="ps-4 mb-0">
+                                    {{ $respuesta['Cantidad_adultos'] }} Adultos / 
+                                    {{ $respuesta['Cantidad_menores'] }} Menores
+                                </p>
+                                
+                                @if(isset($respuesta['Edad_menores']) && count($respuesta['Edad_menores']) > 0)
+                                    <div class="ps-4 mt-2">
+                                        <small class="text-muted">
+                                            <strong>Edades menores:</strong>
+                                            @foreach ($respuesta['Edad_menores'] as $key => $edad)
+                                                {{ $edad }}@if(!$loop->last), @endif
+                                            @endforeach
+                                        </small>
+                                    </div>
+                                @endif
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-car text-primary me-2"></i>
+                                    <strong>Vehículo:</strong>
+                                </div>
+                                <div class="ps-4">
+                                    <img src="{{ $respuesta['Foto_tipo_movilidad'] }}" 
+                                         alt="Vehículo para traslado" 
+                                         class="img-thumbnail" 
+                                         style="max-width: 200px;">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Formulario para origen/destino -->
+                        <div class="border-top pt-4">
+                            <h5 class="text-primary mb-3">
+                                <i class="fas fa-map-marker-alt me-2"></i>Completar Origen y Destino
+                            </h5>
+                            
+                            <form id="form-{{ $index }}" action="{{ route('traslados.addCarrito') }}" method="POST">
+                                @csrf
+                                
+                                <!-- Campos ocultos -->
+                                <input type="hidden" name="Traslados_contrato_id" value="{{ $respuesta['Traslados_contrato_id'] }}">
+                                <input type="hidden" name="Tipo_movilidad_id" value="{{ $respuesta['Tipo_movilidad_id'] }}">
+                                <input type="hidden" name="Id_servicio_traslado" value="{{ $respuesta['Id_servicio_traslado'] }}">
+                                <input type="hidden" name="Fecha_disponible" value="{{ $respuesta['Fecha_disponible'] }}">
+                                <input type="hidden" name="Tipo_servicio" value="{{ $respuesta['Tipo_servicio'] }}">
+                                <input type="hidden" name="Tipo_servicio_transfer" value="{{ $respuesta['Tipo_servicio_transfer'] }}">
+                                <input type="hidden" name="hora_servicio" value="{{ $respuesta['hora_servicio'] }}">
+                                <input type="hidden" name="Numero_adultos" value="{{ $respuesta['Cantidad_adultos'] }}">
+                                <input type="hidden" name="Numero_menores" value="{{ $respuesta['Cantidad_menores'] }}">
+                                
+                                @if(isset($respuesta['Edad_menores']))
+                                    @foreach ($respuesta['Edad_menores'] as $key => $edad)
+                                        <input type="hidden" name="Edad_menores[{{ $key }}]" value="{{ $edad }}">
+                                    @endforeach
+                                @endif
+                                
+                                <!-- Campos visibles -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="origen-{{ $index }}" class="form-label">
+                                            <i class="fas fa-map-pin me-1"></i> Origen (Hotel o Aeropuerto)
+                                        </label>
+                                        <input type="text" 
+                                               class="form-control @error('Lugar_Origen') is-invalid @enderror" 
+                                               id="origen-{{ $index }}"
+                                               name="Lugar_Origen" 
+                                               placeholder="Ej: Hotel Sol Caribe o Aeropuerto Internacional" 
+                                               value="{{ old('Lugar_Origen') }}" 
+                                               required 
+                                               maxlength="35" 
+                                               oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
+                                        <div class="form-text">Máximo 35 caracteres. Solo letras, números y espacios.</div>
+                                        @error('Lugar_Origen')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="destino-{{ $index }}" class="form-label">
+                                            <i class="fas fa-flag me-1"></i> Destino (Hotel o Aeropuerto)
+                                        </label>
+                                        <input type="text" 
+                                               class="form-control @error('Lugar_Destino') is-invalid @enderror" 
+                                               id="destino-{{ $index }}"
+                                               name="Lugar_Destino" 
+                                               placeholder="Ej: Aeropuerto Internacional o Hotel Playa Dorada" 
+                                               value="{{ old('Lugar_Destino') }}" 
+                                               required 
+                                               maxlength="35" 
+                                               oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
+                                        <div class="form-text">Máximo 35 caracteres. Solo letras, números y espacios.</div>
+                                        @error('Lugar_Destino')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                
+                                <!-- Recordatorio de no cancelación -->
+                                <div class="alert alert-danger d-flex align-items-center mb-4">
+                                    <i class="fas fa-ban me-3 fs-4"></i>
+                                    <div>
+                                        <strong>Confirmación final:</strong> Al hacer clic en "Confirmar Reserva", 
+                                        acepta que este servicio <strong class="text-decoration-underline">no es cancelable ni reembolsable</strong> 
+                                        bajo ninguna circunstancia.
+                                    </div>
+                                </div>
+                                
+                                <!-- Botón de confirmación -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-muted">
+                                        <small>
+                                            <i class="fas fa-check-circle text-success me-1"></i>
+                                            Verifique todos los datos antes de confirmar
+                                        </small>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-lg px-4">
+                                        <i class="fas fa-check-circle me-2"></i> Confirmar Reserva
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Pie de tarjeta con información adicional -->
+                    <div class="card-footer bg-light">
+                        <div class="row">
+                            <div class="col-12">
+                                <small class="text-muted">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>
+                                    <strong>Importante:</strong> El precio mostrado es final. No incluye propinas adicionales.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         @endif
     @endif
 </div>
+
+<!-- Estilos adicionales -->
+<style>
+    .card {
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .img-thumbnail {
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+    }
+    
+    .form-label {
+        font-weight: 500;
+        color: #495057;
+    }
+    
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        padding: 10px 30px;
+    }
+    
+    .btn-success:hover {
+        background: linear-gradient(135deg, #218838 0%, #1ba87e 100%);
+        transform: scale(1.05);
+    }
+</style>
 @endsection
