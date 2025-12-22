@@ -225,7 +225,7 @@
                                     <div class="text-muted">
                                         <small>
                                             <i class="fas fa-check-circle text-success me-1"></i>
-                                            Verifique todos los datos antes de confirmar
+                                            {{ __('Verifique_antes_de_confirmar') }}
                                         </small>
                                     </div>
                                     <button type="submit" class="btn btn-success btn-lg px-4">
