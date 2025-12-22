@@ -214,8 +214,7 @@
                                 <div class="alert alert-danger d-flex align-items-center mb-4">
                                     <i class="fas fa-ban me-3 fs-4"></i>
                                     <div>
-                                        <strong>Confirmación final:</strong> Al hacer clic en "Confirmar Reserva", 
-                                        acepta que este servicio <strong class="text-decoration-underline">no es cancelable ni reembolsable</strong> 
+                                        <strong>{{ __('Confirmacion_final') }}</strong> {{ __('Confirmacion_final_texto1') }} <strong class="text-decoration-underline">{{ __('No_cancelable_no_rembolsable') }}</strong> 
                                         bajo ninguna circunstancia.
                                     </div>
                                 </div>
