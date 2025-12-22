@@ -146,7 +146,7 @@
                         <!-- Formulario para origen/destino -->
                         <div class="border-top pt-4">
                             <h5 class="text-primary mb-3">
-                                <i class="fas fa-map-marker-alt me-2"></i>Completar Origen y Destino
+                                <i class="fas fa-map-marker-alt me-2"></i>{{ __("Completar_origen_destino") }}
                             </h5>
                             
                             <form id="form-{{ $index }}" action="{{ route('traslados.addCarrito') }}" method="POST">

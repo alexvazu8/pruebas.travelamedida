@@ -256,6 +256,7 @@
     "No_cancelable_no_rembolsable":"no es cancelable ni reembolsable",
     "Bajo_ninguna_circunstancia":"bajo ninguna circunstancia.",
     "Texto_precio_explicado":"El precio mostrado es final. No incluye propinas adicionales.",
+    "Completar_origen_destino":"Completar Origen y Destino",
     "Titulo_disponibilidad_hoteles":"Buscar Disponibilidad de Alojamiento",
     "Titulo_disponibilidad_traslados":"Disponibilidad de traslados",
     "Tipo_servicio":"Tipo de servicio",
@@ -292,6 +293,6 @@
     "Nosotros":"Nosotros",
     "Termonos":"Términos",
     "Privacidad":"Privacidad",
-     "Máximo :max caracteres. Solo letras, números y espacios.": "Máximo :max caracteres. Solo letras, números y espacios."
+    "Máximo :max caracteres. Solo letras, números y espacios.": "Máximo :max caracteres. Solo letras, números y espacios."
 
 }
