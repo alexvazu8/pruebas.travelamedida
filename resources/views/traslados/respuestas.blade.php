@@ -184,7 +184,7 @@
                                                required 
                                                maxlength="35" 
                                                oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s()áéíóúÁÉÍÓÚñÑ]/g, '')">
-                                        <div class="form-text">Máximo 35 caracteres. Solo letras, números y espacios.</div>
+                                        <div class="form-text">{{ __('Máximo :max caracteres. Solo letras, números y espacios.', ['max' => 35]) }}</div>
                                         @error('Lugar_Origen')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
