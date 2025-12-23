@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="detail-item">
-                                            <span class="detail-label fw-bold text-secondary">Precio Total:</span>
+                                            <span class="detail-label fw-bold text-secondary">{{__("Monto_total")}}:</span>
                                             <span class="detail-value text-success fw-bold">{{ number_format($respuesta['Precio_Total'], 2) }} USD</span>
                                         </div>
                                     </div>
@@ -49,14 +49,14 @@
                                         <div class="detail-item">
                                             <span class="detail-label fw-bold text-secondary">Fechas:</span>
                                             <span class="detail-value">
-                                                Disponible: {{ $respuesta['Fecha_disponible'] }}<br>
-                                                Salida: {{ $respuesta['Fecha_out'] }}
+                                                {{__("Ingreso")}}: {{ $respuesta['Fecha_disponible'] }}<br>
+                                                {{__("Salida")}}: {{ $respuesta['Fecha_out'] }}
                                             </span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="detail-item">
-                                            <span class="detail-label fw-bold text-secondary">Participantes:</span>
+                                            <span class="detail-label fw-bold text-secondary">{{__("Participantes")}}:</span>
                                             <span class="detail-value">
                                                 {{ $respuesta['Cantidad_adultos'] }} Adultos / {{ $respuesta['Cantidad_menores'] }} Menores
                                             </span>
