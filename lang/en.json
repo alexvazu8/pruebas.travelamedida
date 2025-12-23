@@ -324,7 +324,10 @@
     "Duracion":"Duration",
     "Horario":"Schedule",
     "Recojo_hotel":"Hotel pickup",
-    "Punto_encuentro":"Meeting point"
+    "Punto_encuentro":"Meeting point",
+    "Entrega_agua":"Water delivery",
+    "Accesible_discapacitados":"Accessible for Disabled",
+    "Incluye_bano":"Includes Bathroom"
 
     
 }

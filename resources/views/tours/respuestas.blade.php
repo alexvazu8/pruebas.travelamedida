@@ -194,15 +194,15 @@ document.addEventListener('DOMContentLoaded', function () {
                                         <ul class="list-unstyled">
                                             <li class="mb-2">
                                                 <i class="fas ${tour.Entregan_agua ? 'fa-check text-success' : 'fa-times text-danger'} me-2"></i>
-                                                Entrega de Agua
+                                                {{ __("Entrega_agua") }}
                                             </li>
                                             <li class="mb-2">
                                                 <i class="fas ${tour.Para_discapacitados ? 'fa-check text-success' : 'fa-times text-danger'} me-2"></i>
-                                                Accesible para Discapacitados
+                                                {{__("Accesible_discapacitados")}}
                                             </li>
                                             <li class="mb-2">
                                                 <i class="fas ${tour.Con_bano ? 'fa-check text-success' : 'fa-times text-danger'} me-2"></i>
-                                                Incluye Baño
+                                                {{__("Incluye_bano")}}
                                             </li>
                                         </ul>
                                     </div>

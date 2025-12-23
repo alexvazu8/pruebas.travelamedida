@@ -324,6 +324,11 @@
     "Duracion":"Duración",
     "Horario":"Horario",
     "Recojo_hotel":"Recojo del hotel",
-    "Punto_encuentro":"Punto de encuentro"
+    "Punto_encuentro":"Punto de encuentro",
+    "Entrega_agua":"Entrega de agua",
+    "Accesible_discapacitados":"Accesible para Discapacitados",
+    "Incluye_bano":"Incluye Baño"
+
+
 
 }
