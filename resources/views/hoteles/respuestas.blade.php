@@ -51,7 +51,7 @@
 
                             {{-- Información del Hotel --}}
                             <div class="col-md-8">
-                                <p><strong>Fecha In:</strong> {{ $hotel['Fecha_desde'] }} <strong>Fecha Out:</strong> {{ $hotel['Fecha_hasta'] }}</p>
+                                <p><strong>{{ __("Fecha_desde") }}:</strong> {{ $hotel['Fecha_desde'] }} <strong>{{ __("Fecha_hasta") }}:</strong> {{ $hotel['Fecha_hasta'] }}</p>
 
                                 {{-- Lista de Habitaciones --}}
                                 @if(isset($hotel['habitaciones']) && count($hotel['habitaciones']) > 0)
