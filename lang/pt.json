@@ -258,6 +258,7 @@
     "Texto_precio_explicado":"O preço mostrado é final. Não inclui gorjetas adicionais.",
     "Completar_origen_destino":"Completar Origem e Destino",
     "Titulo_disponibilidad_hoteles":"Pesquisar disponibilidade de Alojamento",
+    "Titulo_no_disponibilidad_hoteles":"Nenhum hotel disponível foi encontrado.",
     "Titulo_disponibilidad_traslados":"Disponibilidade de transferências",
     "Tipo_servicio":"Tipo de serviço",
     "Ingreso":"Renda",
@@ -298,6 +299,7 @@
     "Privacidad":"Privacidade",
     "Máximo :max caracteres. Solo letras, números y espacios.": "Máximo de :max caracteres. Apenas letras, números e espaços.",
     "Vehiculo":"Veículo:",
-    "Detalle_servicio": "Detalhe do Serviço"
+    "Detalle_servicio": "Detalhe do Serviço",
+    "Direccion":"Endereço"
     
 }

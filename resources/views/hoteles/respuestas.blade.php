@@ -152,7 +152,7 @@
         @endforeach
     @else
         <div class="alert alert-info">
-            No se encontraron hoteles disponibles.
+           {{ __("Titulo_no_disponibilidad_hoteles") }} 
         </div>
     @endif
 </div>
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         let modalContent = `
                             <h5>${hotel.Nombre_Hotel} ${'⭐'.repeat(hotel.estrellas.estrellas)}</h5>
                             <p>${hotel.ciudad.Nombre_Ciudad}, ${hotel.pais.Nombre_Pais}</p>
-                            <p><strong>Dirección:</strong> ${hotel.Direccion_Hotel}</p>
+                            <p><strong>{{ __("Direccion") }}:</strong> ${hotel.Direccion_Hotel}</p>
                             <p><strong>Descripción:</strong> ${hotel.Descripcion_Hotel}</p>
 
                             <h5 class="mt-4">Fotos del Hotel</h5>

@@ -258,6 +258,7 @@
     "Texto_precio_explicado":"El precio mostrado es final. No incluye propinas adicionales.",
     "Completar_origen_destino":"Completar Origen y Destino",
     "Titulo_disponibilidad_hoteles":"Buscar Disponibilidad de Alojamiento",
+    "Titulo_no_disponibilidad_hoteles":"No se encontraron hoteles disponibles.",
     "Titulo_disponibilidad_traslados":"Disponibilidad de traslados",
     "Tipo_servicio":"Tipo de servicio",
     "Ingreso":"Ingreso",
@@ -298,6 +299,7 @@
     "Privacidad":"Privacidad",
     "Máximo :max caracteres. Solo letras, números y espacios.": "Máximo :max caracteres. Solo letras, números y espacios.",
     "Vehiculo":"Vehículo:",
-    "Detalle_servicio": "Detalle del Servicio"
+    "Detalle_servicio": "Detalle del Servicio",
+    "Direccion":"Dirección"
 
 }

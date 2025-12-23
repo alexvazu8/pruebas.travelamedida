@@ -258,6 +258,7 @@
     "Texto_precio_explicado":"The price shown is final. It does not include additional tips.",
     "Completar_origen_destino":"Complete Origin and Destination",
     "Titulo_disponibilidad_hoteles":"Search Accommodation Availability",
+    "Titulo_no_disponibilidad_hoteles":"No available hotels were found.",
     "Titulo_disponibilidad_traslados":"Availability of transfers",
     "Tipo_servicio":"Type of service",
     "Ingreso":"In",
@@ -298,7 +299,8 @@
     "Privacidad":"Privacy",
     "Máximo :max caracteres. Solo letras, números y espacios.": "Maximum :max characters. Only letters, numbers and spaces.",
     "Vehiculo":"Vehicle:",
-    "Detalle_servicio": "Service Details"
+    "Detalle_servicio": "Service Details",
+    "Direccion":"Address"
 
     
 }
