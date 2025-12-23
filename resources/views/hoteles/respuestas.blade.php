@@ -67,9 +67,9 @@
                                                         aria-controls="collapseHabitacion{{ $hotel['Id_Hotel'] }}_{{ $index }}">
                                                     <span class="fw-bold">{{__("Monto_total")}}: $<span id="totalMonto{{ $hotel['Id_Hotel'] }}_{{ $index }}">{{ number_format($grupoHabitaciones[0]['Total'], 2) }}</span></span>
                                                     / {{ __("Habitaciones") }}: {{ $grupoHabitaciones[0]['Cantidad_habitaciones'] }} 
-                                                    / Noches: {{ $grupoHabitaciones[0]['Cantidad_Noches'] }}
-                                                    / {{ $grupoHabitaciones[0]['Cantidad_Adultos'] }} adultos, {{ $grupoHabitaciones[0]['Cantidad_Menores'] }} menores
-                                                    / Detalle...
+                                                    / {{__("Noches")}}: {{ $grupoHabitaciones[0]['Cantidad_Noches'] }}
+                                                    / {{ $grupoHabitaciones[0]['Cantidad_Adultos'] }} {{__("Cantidad_adultos")}}, {{ $grupoHabitaciones[0]['Cantidad_Menores'] }} {{__("Cantidad_menores")}}
+                                                    / {{ __("Details") }}...
                                                 </button>
 
                                                 {{-- Detalle de Habitaciones --}}
