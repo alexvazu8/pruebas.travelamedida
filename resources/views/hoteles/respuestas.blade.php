@@ -30,7 +30,7 @@
                                 <a href="#" class="text-white ms-2 hotel-info-link" 
                                    data-bs-toggle="modal" 
                                    data-bs-target="#hotelModal{{ $hotel['Id_Hotel'] }}"
-                                   data-hotel-id="{{ $hotel['Id_Hotel'] }}">Info</a>
+                                   data-hotel-id="{{ $hotel['Id_Hotel'] }}">{{ __("Informacion_completa") }}</a>
                             </h5>
                             
                             <span class="text-white">{{ $hotel['Nombre_Zona'] }}</span>
