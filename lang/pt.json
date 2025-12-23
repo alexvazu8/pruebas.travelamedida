@@ -308,6 +308,8 @@
     "Facilidades_servicios":"Facilidades e Serviços",
     "No_Facilidades_servicios":"Não há serviços registrados",
     "Monto_total":"Valor Total",
-    "Noches":"Noites"
+    "Total":"Total",
+    "Noches":"Noites",
+    "Enviar_carrito":"Adicionar ao Carrinho"
     
 }

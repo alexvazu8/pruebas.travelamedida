@@ -90,10 +90,10 @@
                                                                     required>
                                                                 <label for="habitacion_{{ $hotel['Id_Hotel'] }}_{{ $habitacion['Id_tipo_habitacion_hotels'] }}" class="form-check-label">
                                                                     <strong>{{ $habitacion['Nombre_Habitacion'] }} {{ $habitacion['Nombre_Regimen'] }}</strong><br>
-                                                                    {{ $habitacion['Cantidad_habitaciones'] }} habitaciones<br>
-                                                                    {{ $habitacion['Cantidad_Adultos'] }} adultos, {{ $habitacion['Cantidad_Menores'] }} menores<br>
-                                                                    {{ $habitacion['Cantidad_Noches'] }} noches<br>
-                                                                    <span class="text-success">${{ number_format($habitacion['Total'], 2) }} total</span>
+                                                                    {{ $habitacion['Cantidad_habitaciones'] }} {{__("Habitaciones")}}<br>
+                                                                    {{ $habitacion['Cantidad_Adultos'] }} {{__("Cantidad_adultos")}}, {{ $habitacion['Cantidad_Menores'] }} {{__("Cantidad_menores")}}<br>
+                                                                    {{ $habitacion['Cantidad_Noches'] }} {{__("Noches")}}<br>
+                                                                    <span class="text-success">${{ number_format($habitacion['Total'], 2) }} {{__("Total")}}</span>
                                                                 </label>
                                                             </div>
                                                         @endforeach
@@ -111,7 +111,7 @@
                                                         {{-- Penalidades aparecerán aquí --}}
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary px-4">Enviar al Carrito</button>
+                                                <button type="submit" class="btn btn-primary px-4">{{__("Enviar_carrito")}}</button>
                                             </div>
                                         </div>
 

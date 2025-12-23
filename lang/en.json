@@ -308,7 +308,9 @@
     "Facilidades_servicios":"Amenities and Services",
     "No_Facilidades_servicios":"No registered services",
     "Monto_total":"Total Amount",
-    "Noches":"Nights"
+    "Total":"Total",
+    "Noches":"Nights",
+    "Enviar_carrito":"Add to Cart"
 
     
 }
