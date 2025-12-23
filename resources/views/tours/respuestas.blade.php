@@ -183,14 +183,14 @@ document.addEventListener('DOMContentLoaded', function () {
                                     </div>
                                     
                                     <div class="tour-description">
-                                        <h5 class="fw-bold mb-3">Descripción</h5>
+                                        <h5 class="fw-bold mb-3">{{__("Descripcion")}}</h5>
                                         <p class="text-justify">${tour.Detalle_tour}</p>
                                     </div>
                                 </div>
                                 
                                 <div class="col-md-4">
                                     <div class="additional-info">
-                                        <h5 class="fw-bold mb-3">Información Adicional</h5>
+                                        <h5 class="fw-bold mb-3">{{__("Informacion_adicional")}}</h5>
                                         <ul class="list-unstyled">
                                             <li class="mb-2">
                                                 <i class="fas ${tour.Entregan_agua ? 'fa-check text-success' : 'fa-times text-danger'} me-2"></i>
