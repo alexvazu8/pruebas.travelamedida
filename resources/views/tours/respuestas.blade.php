@@ -36,7 +36,7 @@
                                     <div class="col-sm-6">
                                         <div class="detail-item">
                                             <span class="detail-label fw-bold text-secondary">Duración:</span>
-                                            <span class="detail-value">{{ $respuesta['cantidad_dias_tour'] }} Días / {{ $respuesta['cantidad_noches_tour'] }} Noches</span>
+                                            <span class="detail-value">{{ $respuesta['cantidad_dias_tour'] }} {{__("Dias")}} / {{ $respuesta['cantidad_noches_tour'] }} {{ __("Noches") }}</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
