@@ -144,7 +144,7 @@
                         </div>
                         <div id="map-container-{{ $hotel['Id_Hotel'] }}" style="height: 300px; width: 100%;" class="mt-3 mb-3"></div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__("Close")}}</button>
                         </div>
                     </div>
                 </div>
