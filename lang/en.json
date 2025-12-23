@@ -316,7 +316,8 @@
     "Monto_total":"Total Amount",
     "Total":"Total",
     "Noches":"Nights",
-    "Enviar_carrito":"Add to Cart"
+    "Enviar_carrito":"Add to Cart",
+    "Retornar": "Go back"
 
     
 }

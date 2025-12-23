@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container py-4">
-    <h1 class="mb-4 text-center fw-bold text-primary">Respuestas del Tour</h1>
+    <h1 class="mb-4 text-center fw-bold text-primary">{{__("Tours")}}</h1>
 
     @if(isset($respuestas['error']))
         <div class="alert alert-danger text-center">
             {{$respuestas['error']}}
         </div>
         <div class="text-center">
-            <a href="{{ url('/tours') }}" class="btn btn-primary btn-lg mt-2">Volver a Tours</a>
+            <a href="{{ url('/tours') }}" class="btn btn-primary btn-lg mt-2">{{ __("Retornar") }}</a>
         </div>
     @else
     <div class="card shadow-lg border-0 rounded-4 overflow-hidden">

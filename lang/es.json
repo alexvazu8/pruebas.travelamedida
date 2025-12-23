@@ -316,6 +316,7 @@
     "Monto_total":"Monto Total",
     "Total":"Total",
     "Noches":"Noches",
-    "Enviar_carrito":"Enviar al Carrito"
+    "Enviar_carrito":"Enviar al Carrito",
+    "Retornar": "volver"
 
 }
