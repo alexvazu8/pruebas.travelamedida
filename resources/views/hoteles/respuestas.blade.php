@@ -132,7 +132,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Información Completa - {{ $hotel['Nombre_Hotel'] }}</h5>
+                            <h5 class="modal-title">{{__("Informacion_completa")}} - {{ $hotel['Nombre_Hotel'] }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="hotel-info-{{ $hotel['Id_Hotel'] }}">
@@ -250,9 +250,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             <h5>${hotel.Nombre_Hotel} ${'⭐'.repeat(hotel.estrellas.estrellas)}</h5>
                             <p>${hotel.ciudad.Nombre_Ciudad}, ${hotel.pais.Nombre_Pais}</p>
                             <p><strong>{{ __("Direccion") }}:</strong> ${hotel.Direccion_Hotel}</p>
-                            <p><strong>Descripción:</strong> ${hotel.Descripcion_Hotel}</p>
+                            <p><strong>{{__("Descripcion")}}:</strong> ${hotel.Descripcion_Hotel}</p>
 
-                            <h5 class="mt-4">Fotos del Hotel</h5>
+                            <h5 class="mt-4">{{__("Fotos_Hotel")}}</h5>
                             <div class="gallery">
                                 <img src="${hotel.Foto_Principal_Hotel}" 
                                      alt="Foto principal de ${hotel.Nombre_Hotel}" 

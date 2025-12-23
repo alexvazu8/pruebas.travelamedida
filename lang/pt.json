@@ -300,6 +300,9 @@
     "Máximo :max caracteres. Solo letras, números y espacios.": "Máximo de :max caracteres. Apenas letras, números e espaços.",
     "Vehiculo":"Veículo:",
     "Detalle_servicio": "Detalhe do Serviço",
-    "Direccion":"Endereço"
+    "Direccion":"Endereço",
+    "Descripcion":"Descrição",
+    "Fotos_Hotel":"Fotos do Hotel",
+    "Informacion_completa":"Informação Completa"
     
 }
