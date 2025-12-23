@@ -303,7 +303,9 @@
     "Direccion":"Address",
     "Descripcion":"Description",
     "Fotos_Hotel":"Hotel Photos",
-    "Informacion_completa":"Complete Information"
+    "Informacion_completa":"Complete Information",
+    "Facilidades_servicios":"Amenities and Services",
+    "No_Facilidades_servicios":"No registered services"
 
     
 }

@@ -303,6 +303,8 @@
     "Direccion":"Dirección",
     "Descripcion":"Descripción",
     "Fotos_Hotel":"Fotos del Hotel",
-    "Informacion_completa":"Información Completa"
+    "Informacion_completa":"Información Completa",
+    "Facilidades_servicios":"Facilidades y Servicios",
+    "No_Facilidades_servicios":"No hay servicios registrados"
 
 }

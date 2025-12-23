@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         modalContent += `
                             </div>
 
-                            <h5 class="mt-4">Facilidades y Servicios</h5>
+                            <h5 class="mt-4">{{__("Facilidades_servicios")}}</h5>
                             <ul class="list-group mb-3">
                         `;
 
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </li>
                             `).join('');
                         } else {
-                            modalContent += `<li class="list-group-item">No hay servicios registrados</li>`;
+                            modalContent += `<li class="list-group-item">{{ __("No_Facilidades_servicios") }}</li>`;
                         }
 
                         modalContent += `
