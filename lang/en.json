@@ -254,6 +254,7 @@
     "Cancelaciones_menos_de":"Cancellations made less than",
     "Noches_anticipacion_penalidad_de":"nights in advance will incur a penalty of",
     "Cancelaciones_mas_de":"Cancellations made more than",
+    "Noches_sin_penalidad":"nights in advance will not incur a penalty, but a 5% fee will be applied for the payment method.",
     "Confirmacion_final":"Final Confirmation:",
     "Confirmacion_final_texto1":"By clicking 'Confirm', you agree that this service",
     "No_cancelable_no_rembolsable":"is non-cancelable and non-refundable",

@@ -254,6 +254,7 @@
     "Cancelaciones_menos_de":"Cancelamentos realizados com menos de",
     "Noches_anticipacion_penalidad_de":"noites de antecedência terão uma penalidade de",
     "Cancelaciones_mas_de":"Cancelamentos realizados com mais de",
+    "Noches_sin_penalidad":"noites de antecedência não terão penalidade, mas será aplicada uma taxa de 5% pelo método de pagamento.",
     "Confirmacion_final":"Confirmação Final:",
     "Confirmacion_final_texto1":"Ao clicar em 'Confirmar', concorda que este serviço",
     "No_cancelable_no_rembolsable":"não é cancelável nem reembolsável",
