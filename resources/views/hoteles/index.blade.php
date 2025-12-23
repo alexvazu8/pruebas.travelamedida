@@ -42,7 +42,7 @@
                 <div id="habitaciones-container" class="position-absolute mt-1" style="z-index:1000; background:#fff; border-radius:0.75rem; padding:1rem; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
                     <!-- Header con botón cerrar -->
                     <div class="habitaciones-header d-flex justify-content-between align-items-center mb-2">
-                        <h6 class="mb-0 text-dark">Configuración de Habitaciones</h6>
+                        <h6 class="mb-0 text-dark">{{ __("Configurarion_habitaciones") }}</h6>
                         <button type="button" id="cerrar-habitaciones" class="btn btn-sm btn-secondary">
                             <i class="fas fa-times"></i>
                         </button>
@@ -50,17 +50,17 @@
                     <div id="habitaciones-content">
                         <!-- Habitación 1 siempre visible -->
                         <div class="habitacion-compacta" id="habitacion_1">
-                            <div class="habitacion-header">Habitación 1</div>
+                            <div class="habitacion-header">{{ __("Habitacion") }} 1</div>
                             <div class="row habitacion-campos">
                                 <!-- Cantidad de Adultos -->
                                 <div class="form-group col-6">
-                                    <label for="Cantidad_adultos_1">Adultos</label>
+                                    <label for="Cantidad_adultos_1">{{ __("Cantidad_adultos") }}</label>
                                     <input type="number" class="form-control" id="Cantidad_adultos_1" name="habitaciones[1][Cantidad_adultos]" min="1" max="4" value="1" required>
                                 </div>
 
                                 <!-- Cantidad de Menores -->
                                 <div class="form-group col-6">
-                                    <label for="Cantidad_menores_1">Menores</label>
+                                    <label for="Cantidad_menores_1">{{ __("Cantidad_menores") }}</label>
                                     <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_1" name="habitaciones[1][Cantidad_menores]" min="0" max="4" value="0" required>
                                 </div>
                             </div>
@@ -256,17 +256,17 @@
         habitacionDiv.classList.add('habitacion-compacta');
         habitacionDiv.id = `habitacion_${habitacionId}`;
         habitacionDiv.innerHTML = `
-            <div class="habitacion-header">Habitación ${habitacionId}</div>
+            <div class="habitacion-header">{{ __("Habitacion") }} ${habitacionId}</div>
             <div class="row habitacion-campos">
                 <!-- Cantidad de Adultos -->
                 <div class="form-group col-6">
-                    <label for="Cantidad_adultos_${habitacionId}">Adultos</label>
+                    <label for="Cantidad_adultos_${habitacionId}">{{ __("Cantidad_adultos") }}</label>
                     <input type="number" class="form-control" id="Cantidad_adultos_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_adultos]" min="1" max="4" value="1" required>
                 </div>
 
                 <!-- Cantidad de Menores -->
                 <div class="form-group col-6">
-                    <label for="Cantidad_menores_${habitacionId}">Menores</label>
+                    <label for="Cantidad_menores_${habitacionId}">{{ __("Cantidad_menores") }}</label>
                     <input type="number" class="form-control cantidad-menores" id="Cantidad_menores_${habitacionId}" name="habitaciones[${habitacionId}][Cantidad_menores]" min="0" max="4" value="0" required>
                 </div>
             </div>
