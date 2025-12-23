@@ -85,7 +85,7 @@
 
                     const label = document.createElement('label');
                     label.setAttribute('for', `Edad_menor_${i}`);
-                    label.textContent = `Menor ${i}`;
+                    label.textContent = `{{ __("Menor") }} ${i}`;
                     label.classList.add('form-label', 'small');
 
                     const input = document.createElement('input');
@@ -93,7 +93,7 @@
                     input.id = `Edad_menor_${i}`;
                     input.name = `Edad_menores[${i}]`;
                     input.classList.add('form-control');
-                    input.placeholder = `Edad`;
+                    input.placeholder = `{{ __("Edad_menor") }}`;
                     input.min = 1;
                     input.max = 17;
                     input.required = true;
