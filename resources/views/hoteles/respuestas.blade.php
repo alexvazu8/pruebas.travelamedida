@@ -51,7 +51,7 @@
 
                             {{-- Información del Hotel --}}
                             <div class="col-md-8">
-                                <p><strong>{{ __("Fecha_desde") }}:</strong> {{ $hotel['Fecha_desde'] }} <strong>{{ __("Fecha_hasta") }}:</strong> {{ $hotel['Fecha_hasta'] }}</p>
+                                <p><strong>{{ __("Fecha_desde") }}</strong> {{ $hotel['Fecha_desde'] }} <strong>{{ __("Fecha_hasta") }}</strong> {{ $hotel['Fecha_hasta'] }}</p>
 
                                 {{-- Lista de Habitaciones --}}
                                 @if(isset($hotel['habitaciones']) && count($hotel['habitaciones']) > 0)
@@ -65,8 +65,8 @@
                                                         data-bs-target="#collapseHabitacion{{ $hotel['Id_Hotel'] }}_{{ $index }}" 
                                                         aria-expanded="false" 
                                                         aria-controls="collapseHabitacion{{ $hotel['Id_Hotel'] }}_{{ $index }}">
-                                                    <span class="fw-bold">Monto Total: $<span id="totalMonto{{ $hotel['Id_Hotel'] }}_{{ $index }}">{{ number_format($grupoHabitaciones[0]['Total'], 2) }}</span></span>
-                                                    / Habitaciones: {{ $grupoHabitaciones[0]['Cantidad_habitaciones'] }} 
+                                                    <span class="fw-bold">{{__("Monto_total")}}: $<span id="totalMonto{{ $hotel['Id_Hotel'] }}_{{ $index }}">{{ number_format($grupoHabitaciones[0]['Total'], 2) }}</span></span>
+                                                    / {{ __("Habitaciones") }}: {{ $grupoHabitaciones[0]['Cantidad_habitaciones'] }} 
                                                     / Noches: {{ $grupoHabitaciones[0]['Cantidad_Noches'] }}
                                                     / {{ $grupoHabitaciones[0]['Cantidad_Adultos'] }} adultos, {{ $grupoHabitaciones[0]['Cantidad_Menores'] }} menores
                                                     / Detalle...
@@ -106,7 +106,7 @@
                                         <div class="card-footer text-end bg-light">
                                             <div class="d-flex justify-content-between align-items-start">
                                                 <div class="text-start">
-                                                    <h5 class="mb-1"><strong>Total:</strong> $<span class="total-acumulado" id="totalAcumulado-{{ $hotel['Id_Hotel'] }}">0.00</span></h5>
+                                                    <h5 class="mb-1"><strong>{{ __("Monto_total") }}:</strong> $<span class="total-acumulado" id="totalAcumulado-{{ $hotel['Id_Hotel'] }}">0.00</span></h5>
                                                     <div class="penalidades-info" id="penalidades-{{ $hotel['Id_Hotel'] }}">
                                                         {{-- Penalidades aparecerán aquí --}}
                                                     </div>

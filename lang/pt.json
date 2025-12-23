@@ -274,6 +274,7 @@
     "Numero_habitaciones":"Número de quartos:",
     "Configurarion_habitaciones":"Configuração de quartos:",
     "Habitacion":"Quarto",
+    "Habitaciones":"Quartos",
     "Cantidad_adultos":"Adultos:",
     "Cantidad_menores":"Menores:",
     "Select_ciudad":"Onde você gostaria de ir?",
@@ -305,6 +306,8 @@
     "Fotos_Hotel":"Fotos do Hotel",
     "Informacion_completa":"Informação Completa",
     "Facilidades_servicios":"Facilidades e Serviços",
-    "No_Facilidades_servicios":"Não há serviços registrados"
+    "No_Facilidades_servicios":"Não há serviços registrados",
+    "Monto_total":"Valor Total",
+    "Noches":"Noites"
     
 }

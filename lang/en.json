@@ -274,6 +274,7 @@
     "Numero_habitaciones":"Number of Rooms:",
     "Configurarion_habitaciones":"Rooms configuration:",
     "Habitacion":"Room",
+    "Habitaciones":"Rooms",
     "Cantidad_adultos":"Adults:",
     "Cantidad_menores":"Minors:",
     "Select_ciudad":"Where would you like to go?",
@@ -305,7 +306,9 @@
     "Fotos_Hotel":"Hotel Photos",
     "Informacion_completa":"Complete Information",
     "Facilidades_servicios":"Amenities and Services",
-    "No_Facilidades_servicios":"No registered services"
+    "No_Facilidades_servicios":"No registered services",
+    "Monto_total":"Total Amount",
+    "Noches":"Nights"
 
     
 }
