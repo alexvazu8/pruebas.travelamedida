@@ -58,7 +58,7 @@
                                         <div class="detail-item">
                                             <span class="detail-label fw-bold text-secondary">{{__("Participantes")}}:</span>
                                             <span class="detail-value">
-                                                {{ $respuesta['Cantidad_adultos'] }} Adultos / {{ $respuesta['Cantidad_menores'] }} Menores
+                                                {{ $respuesta['Cantidad_adultos'] }} {{__("Cantidad_adultos")}} / {{ $respuesta['Cantidad_menores'] }} {{__("Cantidad_menores")}}
                                             </span>
                                         </div>
                                     </div>
@@ -84,13 +84,13 @@
                                 @if(isset($respuesta['Edad_menores']) && is_array($respuesta['Edad_menores']))
                                     <input type="hidden" name="Edad_menores" value="{{ json_encode($respuesta['Edad_menores']) }}">
                                 @endif
-                                <button type="submit" class="btn btn-success btn-lg w-100 py-2 fw-bold">Reservar Ahora</button>
+                                <button type="submit" class="btn btn-success btn-lg w-100 py-2 fw-bold">{{__("Enviar_carrito")}}</button>
                             </form>
                             
                             <a href="#" data-bs-toggle="modal" 
                                data-bs-target="#tourModal{{ $respuesta['Id_Tour'] }}" 
                                class="btn btn-outline-primary btn-sm w-100">
-                                Ver Detalles
+                                {{__("Details")}}
                             </a>
                         </div>
                     </div>
