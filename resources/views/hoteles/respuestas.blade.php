@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="text-center mb-4 text-primary">Hoteles Disponibles</h1>
+    <h1 class="text-center mb-4 text-primary">{{ __("Titulo_disponibilidad_hoteles") }}</h1>
 
     {{-- Verificar si hay errores --}}
     @if(isset($respuestas['error']))
         <div class="alert alert-danger">
             <strong>Error:</strong> {{ $respuestas['error'] }}
-            <a href="{{ url('/hoteles') }}" class="btn btn-primary btn-lg mx-2">Hoteles</a>
+            <a href="{{ url('/hoteles') }}" class="btn btn-primary btn-lg mx-2">{{__("Hoteles")}}</a>
         </div>
     @elseif(count($respuestas['data']) > 0)
         {{-- Lista de Hoteles --}}
