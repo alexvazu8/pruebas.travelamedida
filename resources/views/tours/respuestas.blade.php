@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="detail-item">
-                                            <span class="detail-label fw-bold text-secondary">Fechas:</span>
+                                            <span class="detail-label fw-bold text-secondary">{{__("Fecha_disponibilidad")}}:</span>
                                             <span class="detail-value">
                                                 {{__("Ingreso")}}: {{ $respuesta['Fecha_disponible'] }}<br>
                                                 {{__("Salida")}}: {{ $respuesta['Fecha_out'] }}
