@@ -99,7 +99,7 @@
             @empty
             <div class="text-center text-muted py-5">
                 <i class="fas fa-search fa-3x mb-3"></i>
-                <p class="fs-5">No hay resultados para mostrar.</p>
+                <p class="fs-5">{{__("No_hay_respuesta")}}</p>
             </div>
             @endforelse
         </div>
@@ -113,7 +113,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title fw-semibold" id="tourModalLabel">Información del Tour</h5>
+                <h5 class="modal-title fw-semibold" id="tourModalLabel">{{ __("Informacion_completa") }} {{ __("Tours") }}</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4" id="tour-info-{{ $respuesta['Id_Tour'] }}">
@@ -158,25 +158,25 @@ document.addEventListener('DOMContentLoaded', function () {
                                             <div class="col-sm-6">
                                                 <div class="d-flex align-items-center">
                                                     <i class="fas fa-calendar-alt text-primary me-2"></i>
-                                                    <span><strong>Duración:</strong> ${tour.cantidad_dias_tour} días / ${tour.cantidad_noches_tour} noches</span>
+                                                    <span><strong>{{__("Duracion")}}:</strong> ${tour.cantidad_dias_tour} {{__("Dias")}} / ${tour.cantidad_noches_tour} {{__("Noches")}}</span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="d-flex align-items-center">
                                                     <i class="fas fa-clock text-primary me-2"></i>
-                                                    <span><strong>Horario:</strong> ${tour.Horario_inicio} - ${tour.Hora_fin}</span>
+                                                    <span><strong>{{__("Horario")}}:</strong> ${tour.Horario_inicio} - ${tour.Hora_fin}</span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="d-flex align-items-center">
                                                     <i class="fas fa-hotel text-primary me-2"></i>
-                                                    <span><strong>Recojo del Hotel:</strong> ${tour.Recojo_hotel ? 'Sí' : 'No'}</span>
+                                                    <span><strong>{{__("Recojo_hotel")}}:</strong> ${tour.Recojo_hotel ? 'Sí' : 'No'}</span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="d-flex align-items-center">
                                                     <i class="fas fa-map-pin text-primary me-2"></i>
-                                                    <span><strong>Punto de Encuentro:</strong> ${tour.Punto_encuentro}</span>
+                                                    <span><strong>{{__("Punto_encuentro")}}:</strong> ${tour.Punto_encuentro}</span>
                                                 </div>
                                             </div>
                                         </div>

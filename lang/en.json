@@ -320,7 +320,10 @@
     "Enviar_carrito":"Add to Cart",
     "Retornar": "Go back",
     "Participantes":"Participants",
-    "Duracion":"Duration"
+    "Duracion":"Duration",
+    "Horario":"Schedule",
+    "Recojo_hotel":"Hotel pickup",
+    "Punto_encuentro":"Meeting point"
 
     
 }

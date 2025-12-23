@@ -320,6 +320,9 @@
     "Enviar_carrito":"Enviar al Carrito",
     "Retornar": "volver",
     "Participantes":"Participantes",
-    "Duracion":"Duración"
+    "Duracion":"Duración",
+    "Horario":"Horario",
+    "Recojo_hotel":"Recojo del hotel",
+    "Punto_encuentro":"Punto de encuentro"
 
 }
