@@ -35,7 +35,7 @@
                                 <div class="row g-3">
                                     <div class="col-sm-6">
                                         <div class="detail-item">
-                                            <span class="detail-label fw-bold text-secondary">Duración:</span>
+                                            <span class="detail-label fw-bold text-secondary">{{__("Duracion")}}:</span>
                                             <span class="detail-value">{{ $respuesta['cantidad_dias_tour'] }} {{__("Dias")}} / {{ $respuesta['cantidad_noches_tour'] }} {{ __("Noches") }}</span>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="detail-item">
-                                            <span class="detail-label fw-bold text-secondary">{{__("Fecha_disponibilidad")}}:</span>
+                                            <span class="detail-label fw-bold text-secondary">{{__("Fecha_disponibilidad")}}</span>
                                             <span class="detail-value">
                                                 {{__("Ingreso")}}: {{ $respuesta['Fecha_disponible'] }}<br>
                                                 {{__("Salida")}}: {{ $respuesta['Fecha_out'] }}
