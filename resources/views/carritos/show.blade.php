@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="text-xl font-bold mb-4">Detalles del Carrito</h1>
+    <h1 class="text-xl font-bold mb-4">{{__("Carrito")}}</h1>
 
     {{-- Mostrar mensaje de éxito o error --}}
     @if(isset($mensaje))
@@ -18,17 +18,17 @@
         @foreach($respuestas as $key => $carrito)
             @if(is_array($carrito)) {{-- Asegurarse de que sea un carrito válido --}}
                 <div class="card mb-4">
-                    <div class="card-header font-bold">Servicio #{{ $carrito['id'] ?? 'N/A' }}</div>
+                    <div class="card-header font-bold">{{__("Servicio")}} #{{ $carrito['id'] ?? 'N/A' }}</div>
                     <div class="card-body">
                         {{-- Información del carrito principal --}}
-                        <p><strong>Tipo de Servicio:</strong> 
+                        <p><strong>{{__("Tipo_servicio")}}:</strong> 
                             @if(isset($carrito['Tipo_servicio']))
                                 @if($carrito['Tipo_servicio'] === 'T')
-                                    Traslado
+                                     {{ __("Traslados") }}
                                 @elseif($carrito['Tipo_servicio'] === 'TOU')
-                                    Tour
+                                     {{ __("Tours") }}
                                 @elseif($carrito['Tipo_servicio'] === 'H')
-                                    Hotel
+                                    Hotel {{ __("Hoteles") }}
                                 @else
                                     {{ $carrito['Tipo_servicio'] }}
                                 @endif
@@ -36,18 +36,16 @@
                                 N/A
                             @endif
                         </p>
-                        <p><strong>Precio Total:</strong> {{ isset($carrito['Precio_Total']) ? number_format($carrito['Precio_Total'], 2) : 'N/A' }}</p>
-                        <p><strong>Fecha de Creación:</strong> {{ isset($carrito['created_at']) ? \Carbon\Carbon::parse($carrito['created_at'])->translatedFormat('d F Y') : 'N/A' }}</p>
-                        <p><strong>Fecha de Actualización:</strong> {{ isset($carrito['updated_at']) ? \Carbon\Carbon::parse($carrito['updated_at'])->translatedFormat('d F Y') : 'N/A' }}</p>
+                        <p><strong>{{ __("Monto_total") }}:</strong> {{ isset($carrito['Precio_Total']) ? number_format($carrito['Precio_Total'], 2) : 'N/A' }}</p>
+                        <p><strong>{{__("Fecha_creacion")}}:</strong> {{ isset($carrito['created_at']) ? \Carbon\Carbon::parse($carrito['created_at'])->translatedFormat('d F Y') : 'N/A' }}</p>
+                        <p><strong>{{__("Fecha_actualizacion")}}:</strong> {{ isset($carrito['updated_at']) ? \Carbon\Carbon::parse($carrito['updated_at'])->translatedFormat('d F Y') : 'N/A' }}</p>
                         {{-- Campo opcional: Email del encargado --}}
-                        @if(isset($carrito['Email_encargado_reserva']))
-                            <p><strong>Email del Encargado de Reserva:</strong> {{ $carrito['Email_encargado_reserva'] }}</p>
-                        @endif
+                        
                     </div>
 
                     {{-- Mostrar detalle del carrito --}}
                     <div class="card mt-3">
-                        <div class="card-header font-bold">Detalle del Servicio</div>
+                        <div class="card-header font-bold">{{__("Detalle_servicio")}}</div>
                         <div class="card-body">
                             @if(isset($carrito['detalle']) && is_array($carrito['detalle']))
                                 @if($carrito['Tipo_servicio'] === 'H')
@@ -56,17 +54,17 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Fecha de Entrada</th>
-                                                <th>Fecha de Salida</th>
-                                                <th>Tipo de Habitación</th>
-                                                <th>Régimen</th>
-                                                <th>Cant. Adultos</th>
-                                                <th>Cant. Menores</th>
-                                                <th>Cant. Noches</th>
-                                                <th>Precio Promedio por Noche</th>
-                                                <th>Precio Total</th>
-                                                <th>Cant. Habitaciones</th>
-                                                <th>Penalidad</th>
+                                                <th>{{__("Fecha_desde")}}</th>
+                                                <th>{{__("Fecha_hasta")}}</th>
+                                                <th>{{__("Tipo_habitacion")}}</th>
+                                                <th>{{__("Regimen")}}</th>
+                                                <th>{{__("Cantidad_adultos")}}</th>
+                                                <th>{{__("Cantidad_menores")}}</th>
+                                                <th>{{__("Noches")}}</th>
+                                                <th>{{__("Precio_promedio_por_noche")}}</th>
+                                                <th>{{__("Monto_total")}}</th>
+                                                <th>{{__("Habitaciones")}}</th>
+                                                <th>{{ __("Penalidad") }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -112,15 +110,15 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Fecha del Servicio</th>
-                                                <th>Hora del Servicio</th>
-                                                <th>Cant. Adultos</th>
-                                                <th>Cant. Menores</th>
-                                                <th>Precio Adulto</th>
-                                                <th>Precio Menor</th>
-                                                <th>Precio Total</th>
-                                                <th>Marca/Modelo</th>
-                                                <th>Maletas Máximo</th>
+                                                <th>{{__("Fecha_servicio")}}</th>
+                                                <th>{{__("Hora_servicio")}}</th>
+                                                <th>{{__("Cantidad_adultos")}}</th>
+                                                <th>{{__("Cantidad_menores")}}</th>
+                                                <th>{{__("Price_adulto")}}</th>
+                                                <th>{{__("Price_menor")}}</th>
+                                                <th>{{__("Price_total")}}</th>
+                                                <th>{{__("Marca_modelo")}}</th>
+                                                <th>{{__("Maximo_maletas")}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -140,9 +138,9 @@
                                                 @if(isset($detalle['servicio_traslado']))
                                                     <tr>
                                                         <td colspan="9">
-                                                            <strong>Servicio:</strong> {{ $detalle['servicio_traslado']['Nombre_Servicio'] ?? 'N/A' }} <br>
-                                                            <strong>Detalle:</strong> {{ $detalle['servicio_traslado']['Detalle_servicio'] ?? 'N/A' }} <br>
-                                                            <strong>Tipo:</strong> {{ $detalle['servicio_traslado']['Tipo_servicio_transfer'] ?? 'N/A' }}
+                                                            <strong>{{__("Servicio")}}:</strong> {{ $detalle['servicio_traslado']['Nombre_Servicio'] ?? 'N/A' }} <br>
+                                                            <strong>{{__("Details")}}:</strong> {{ $detalle['servicio_traslado']['Detalle_servicio'] ?? 'N/A' }} <br>
+                                                            <strong>{{__("Tipo_servicio")}}:</strong> {{ $detalle['servicio_traslado']['Tipo_servicio_transfer'] ?? 'N/A' }}
                                                         </td>
                                                     </tr>
                                                 @endif
@@ -154,16 +152,16 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Nombre del Tour</th>
-                                                <th>Fecha de Inicio</th>
-                                                <th>Fecha de Fin</th>
-                                                <th>Cant. Adultos</th>
-                                                <th>Cant. Menores</th>
-                                                <th>Precio Adulto</th>
-                                                <th>Precio Menor</th>
-                                                <th>Precio Total</th>
-                                                <th>Duración</th>
-                                                <th>Recojo en Hotel</th>
+                                                <th>{{__("Tours")}}</th>
+                                                <th>{{__("Fecha_desde")}}</th>
+                                                <th>{{__("Fecha_hasta")}}</th>
+                                                <th>{{__("Cantidad_adultos")}}</th>
+                                                <th>{{__("Cantidad_menores")}}</th>
+                                                <th>{{__("Price_adulto")}}</th>
+                                                <th>{{__("Price_menor")}}</th>
+                                                <th>{{__("Price_total")}}</th>
+                                                <th>{{__("Duracion")}}</th>
+                                                <th>{{__("Recojo_hotel")}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -184,9 +182,9 @@
                                                 @if(isset($detalle['tour']))
                                                     <tr>
                                                         <td colspan="10">
-                                                            <strong>País:</strong> {{ $detalle['tour']['pais']['Nombre_Pais'] ?? 'N/A' }} <br>
-                                                            <strong>Ciudad:</strong> {{ $detalle['tour']['ciudad']['Nombre_Ciudad'] ?? 'N/A' }} <br>
-                                                            <strong>Zona:</strong> {{ $detalle['tour']['zona']['Nombre_Zona'] ?? 'N/A' }}
+                                                            <strong>{{__("Pais")}}:</strong> {{ $detalle['tour']['pais']['Nombre_Pais'] ?? 'N/A' }} <br>
+                                                            <strong>{{__("Ciudad")}}:</strong> {{ $detalle['tour']['ciudad']['Nombre_Ciudad'] ?? 'N/A' }} <br>
+                                                            <strong>{{__("Zona")}}:</strong> {{ $detalle['tour']['zona']['Nombre_Zona'] ?? 'N/A' }}
                                                         </td>
                                                     </tr>
                                                 @endif
@@ -195,7 +193,7 @@
                                     </table>
                                 @endif
                             @else
-                                <p>No hay detalles disponibles para este carrito.</p>
+                                <p>{{__("No_hay_respuesta")}}</p>
                             @endif
                         </div>
                     </div>
