@@ -83,7 +83,16 @@
                                href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                aria-label="{{ __('Seleccionar moneda') }}">
                                 <i class="fas fa-money-bill-wave me-2" aria-hidden="true"></i>
-                                {{ strtoupper(session('moneda', 'USD')) }}
+                                @php
+                                    $moneda_actual = session('moneda', 'USD');
+                                    $simbolos = [
+                                        'USD' => '$',
+                                        'BOB' => 'Bs',
+                                        'BRL' => 'R$',
+                                        'PYG' => '₲'
+                                    ];
+                                    echo $simbolos[$moneda_actual] ?? $moneda_actual;
+                                @endphp
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="monedaDropdown">
                                 <li>
@@ -110,22 +119,22 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center py-2" 
-                                       href="/cambiar-moneda/GYE" 
-                                       onclick="event.preventDefault(); document.getElementById('currency-form-GYE').submit();">
-                                        <span class="me-2 fw-bold">₲</span>
-                                        GYE - Guaranis
-                                        <form id="currency-form-GYE" action="/cambiar-moneda/GYE" method="POST" class="d-none">
+                                       href="/cambiar-moneda/BRL" 
+                                       onclick="event.preventDefault(); document.getElementById('currency-form-BRL').submit();">
+                                        <span class="me-2 fw-bold">R$</span>
+                                        BRL - Real Brasileño
+                                        <form id="currency-form-BRL" action="/cambiar-moneda/BRL" method="POST" class="d-none">
                                             @csrf
                                         </form>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center py-2" 
-                                       href="/cambiar-moneda/BRL" 
-                                       onclick="event.preventDefault(); document.getElementById('currency-form-BRL').submit();">
-                                        <span class="me-2 fw-bold">R$</span>
-                                        BRL - Real Brasileño
-                                        <form id="currency-form-BRL" action="/cambiar-moneda/BRL" method="POST" class="d-none">
+                                       href="/cambiar-moneda/PYG" 
+                                       onclick="event.preventDefault(); document.getElementById('currency-form-PYG').submit();">
+                                        <span class="me-2 fw-bold">₲</span>
+                                        PYG - Guaraní Paraguayo
+                                        <form id="currency-form-PYG" action="/cambiar-moneda/PYG" method="POST" class="d-none">
                                             @csrf
                                         </form>
                                     </a>
