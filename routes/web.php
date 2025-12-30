@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Pagos\BancardController;
 use App\Http\Controllers\Pagos\StereumPayController;
 use App\Http\Controllers\CarritosController;
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\HotelesController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ReservaController;
@@ -103,3 +104,6 @@ Route::post('/pagos/cancelar/{pago}', [BancardController::class, 'cancelar'])->n
 //Route::resource('tipos-cambios', TiposCambioController::class)->middleware('auth');
 
 //Route::get('/tipocambio',[BancardController::class, 'tc']);
+
+Route::get('/cambiar-moneda/{moneda}', [CurrencyController::class, 'cambiarMoneda'])
+    ->name('currency.change');

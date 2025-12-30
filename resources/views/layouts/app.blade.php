@@ -77,6 +77,51 @@
 
                     <!-- Right Side Menu -->
                     <ul class="navbar-nav ms-auto align-items-lg-center">
+                        <!-- Currency Selector -->
+                        <li class="nav-item dropdown me-3">
+                            <a id="monedaDropdown" class="nav-link dropdown-toggle d-flex align-items-center text-white" 
+                               href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                               aria-label="{{ __('Seleccionar moneda') }}">
+                                <i class="fas fa-money-bill-wave me-2" aria-hidden="true"></i>
+                                {{ strtoupper(session('moneda', 'USD')) }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="monedaDropdown">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" 
+                                       href="/cambiar-moneda/USD" 
+                                       onclick="event.preventDefault(); document.getElementById('currency-form-USD').submit();">
+                                        <span class="me-2 fw-bold">$</span>
+                                        USD - Dólar Estadounidense
+                                        <form id="currency-form-USD" action="/cambiar-moneda/USD" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" 
+                                       href="/cambiar-moneda/BOB" 
+                                       onclick="event.preventDefault(); document.getElementById('currency-form-BOB').submit();">
+                                        <span class="me-2 fw-bold">Bs</span>
+                                        BOB - Boliviano
+                                        <form id="currency-form-BOB" action="/cambiar-moneda/BOB" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" 
+                                       href="/cambiar-moneda/BRL" 
+                                       onclick="event.preventDefault(); document.getElementById('currency-form-BRL').submit();">
+                                        <span class="me-2 fw-bold">R$</span>
+                                        BRL - Real Brasileño
+                                        <form id="currency-form-BRL" action="/cambiar-moneda/BRL" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <!-- Language Selector -->
                         <li class="nav-item dropdown me-3">
                             <a id="idiomaDropdown" class="nav-link dropdown-toggle d-flex align-items-center text-white" 

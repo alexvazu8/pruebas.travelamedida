@@ -4,6 +4,7 @@ use App\Http\Middleware\CapturePostData;
 use App\Http\Middleware\LocaleMiddleware;
 use App\Http\Middleware\VerificarCabeceraReserva;
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Middleware\ShareCurrency;
 use App\Http\Middleware\VerifyPayment;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -32,6 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
            // StartSession::class,
            VerifyCsrfToken::class,  
            LocaleMiddleware::class,
+           ShareCurrency::class,
         ]);
         // Configuraci��n est��ndar para API
         $middleware->api([
