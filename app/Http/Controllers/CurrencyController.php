@@ -47,7 +47,7 @@ class CurrencyController extends Controller
     /**
      * Obtener tasa de cambio
      */
-    private function obtenerTasa(string $origen, string $destino): float
+    function obtenerTasa(string $origen, string $destino): float
     {
         if ($origen === $destino) {
             return 1.0;
