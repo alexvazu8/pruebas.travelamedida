@@ -38,7 +38,10 @@
                 <button class="navbar-toggler text-neutral" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
+<div style="display: none;">
+    Moneda actual: {{ session('moneda', 'USD') }}<br>
+    Currency controller disponible: {{ isset($currency) ? 'SÍ' : 'NO' }}
+</div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
