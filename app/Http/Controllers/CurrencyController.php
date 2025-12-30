@@ -37,7 +37,7 @@ class CurrencyController extends Controller
      */
     public function formatear(float $montoUSD): string
     {
-        echo $moneda = Session::get('moneda', 'USD');
+        $moneda = Session::get('moneda', 'USD');
         $convertido = $this->convertir($montoUSD);
         $simbolo = $this->simbolos[$moneda] ?? $moneda . ' ';
         

@@ -82,6 +82,13 @@
                                                 <div class="collapse" id="collapseHabitacion{{ $hotel['Id_Hotel'] }}_{{ $index }}">
                                                     <div class="d-flex flex-column">
                                                         @foreach($grupoHabitaciones as $habitacion)
+                                                            @php
+                                                                // Usar el objeto $currency para formatear el monto
+                                                                $montoFormateado = $currency->formatear($habitacion['Total']);
+                                                                // Si necesitas el monto USD para data attributes
+                                                                $montoUSD = $habitacion['Total'];
+                                                            @endphp
+                                                            
                                                             <div class="form-check p-2 mb-1 border rounded bg-light">
                                                                 <input 
                                                                     type="radio" 
@@ -90,7 +97,8 @@
                                                                     class="form-check-input habitacion-radio" 
                                                                     value="{{ json_encode($habitacion) }}" 
                                                                     {{ $loop->first ? 'checked' : '' }}
-                                                                    data-total="{{ $habitacion['Total'] }}" 
+                                                                    data-total="{{ $montoUSD }}" <!-- Mantener USD para cálculos -->
+                                                                    data-total-formateado="{{ $montoFormateado }}" <!-- Agregar formateado -->
                                                                     data-hotel-id="{{ $hotel['Id_Hotel'] }}"
                                                                     data-index="{{ $index }}"
                                                                     required>
@@ -99,7 +107,8 @@
                                                                     {{ $habitacion['Cantidad_habitaciones'] }} {{__("Habitaciones")}}<br>
                                                                     {{ $habitacion['Cantidad_Adultos'] }} {{__("Cantidad_adultos")}}, {{ $habitacion['Cantidad_Menores'] }} {{__("Cantidad_menores")}}<br>
                                                                     {{ $habitacion['Cantidad_Noches'] }} {{__("Noches")}}<br>
-                                                                    <span class="text-success">${{ number_format($habitacion['Total'], 2) }} {{__("Total")}}</span>
+                                                                    <!-- Modificar esta línea: eliminar $ fijo y usar monto formateado -->
+                                                                    <span class="text-success">{{ $montoFormateado }} {{__("Total")}}</span>
                                                                 </label>
                                                             </div>
                                                         @endforeach
