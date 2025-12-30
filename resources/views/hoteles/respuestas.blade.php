@@ -66,9 +66,7 @@
                                                         aria-expanded="false" 
                                                         aria-controls="collapseHabitacion{{ $hotel['Id_Hotel'] }}_{{ $index }}">
                                                     <span class="fw-bold">{{__("Monto_total")}}: 
-                                                        <!-- Elimina el $ fijo aquí -->
                                                         <span id="totalMonto{{ $hotel['Id_Hotel'] }}_{{ $index }}">
-                                                            <!-- Usa el objeto $currency que ya está disponible -->
                                                             {{ $currency->formatear($grupoHabitaciones[0]['Total']) }}
                                                         </span>
                                                     </span>
@@ -82,13 +80,6 @@
                                                 <div class="collapse" id="collapseHabitacion{{ $hotel['Id_Hotel'] }}_{{ $index }}">
                                                     <div class="d-flex flex-column">
                                                         @foreach($grupoHabitaciones as $habitacion)
-                                                            @php
-                                                                // Usar el objeto $currency para formatear el monto
-                                                                $montoFormateado = $currency->formatear($habitacion['Total']);
-                                                                // Si necesitas el monto USD para data attributes
-                                                                $montoUSD = $habitacion['Total'];
-                                                            @endphp
-                                                            
                                                             <div class="form-check p-2 mb-1 border rounded bg-light">
                                                                 <input 
                                                                     type="radio" 
@@ -97,8 +88,8 @@
                                                                     class="form-check-input habitacion-radio" 
                                                                     value="{{ json_encode($habitacion) }}" 
                                                                     {{ $loop->first ? 'checked' : '' }}
-                                                                    data-total="{{ $montoUSD }}" <!-- Mantener USD para cálculos -->
-                                                                    data-total-formateado="{{ $montoFormateado }}" <!-- Agregar formateado -->
+                                                                    data-total="{{ $habitacion['Total'] }}" 
+                                                                    data-total-formateado="{{ $currency->formatear($habitacion['Total']) }}"
                                                                     data-hotel-id="{{ $hotel['Id_Hotel'] }}"
                                                                     data-index="{{ $index }}"
                                                                     required>
@@ -107,8 +98,9 @@
                                                                     {{ $habitacion['Cantidad_habitaciones'] }} {{__("Habitaciones")}}<br>
                                                                     {{ $habitacion['Cantidad_Adultos'] }} {{__("Cantidad_adultos")}}, {{ $habitacion['Cantidad_Menores'] }} {{__("Cantidad_menores")}}<br>
                                                                     {{ $habitacion['Cantidad_Noches'] }} {{__("Noches")}}<br>
-                                                                    <!-- Modificar esta línea: eliminar $ fijo y usar monto formateado -->
-                                                                    <span class="text-success">{{ $montoFormateado }} {{__("Total")}}</span>
+                                                                    <span class="text-success">
+                                                                        {{ $currency->formatear($habitacion['Total']) }} {{__("Total")}}
+                                                                    </span>
                                                                 </label>
                                                             </div>
                                                         @endforeach
@@ -121,7 +113,23 @@
                                         <div class="card-footer text-end bg-light">
                                             <div class="d-flex justify-content-between align-items-start">
                                                 <div class="text-start">
-                                                    <h5 class="mb-1"><strong>{{ __("Monto_total") }}:</strong> $<span class="total-acumulado" id="totalAcumulado-{{ $hotel['Id_Hotel'] }}">0.00</span></h5>
+                                                    @php
+                                                        // Calcular el total del hotel
+                                                        $totalHotel = 0;
+                                                        if(isset($hotel['habitaciones']) && count($hotel['habitaciones']) > 0) {
+                                                            foreach($hotel['habitaciones'] as $grupoHabitaciones) {
+                                                                if(isset($grupoHabitaciones[0]['Total'])) {
+                                                                    $totalHotel += $grupoHabitaciones[0]['Total'];
+                                                                }
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    <h5 class="mb-1">
+                                                        <strong>{{ __("Monto_total") }}:</strong> 
+                                                        <span class="total-acumulado" id="totalAcumulado-{{ $hotel['Id_Hotel'] }}">
+                                                            {{ $currency->formatear($totalHotel) }}
+                                                        </span>
+                                                    </h5>
                                                     <div class="penalidades-info" id="penalidades-{{ $hotel['Id_Hotel'] }}">
                                                         {{-- Penalidades aparecerán aquí --}}
                                                     </div>
@@ -180,17 +188,37 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Obtener símbolo de moneda actual para JavaScript
+    @php
+        $monedaInfo = $currency->getMonedaInfo();
+        $simboloJS = $monedaInfo['simbolo'];
+        $tasaCambio = $currency->obtenerTasa('USD', session('moneda', 'USD'));
+        $monedaCodigo = session('moneda', 'USD');
+    @endphp
+    const monedaActual = '{{ $monedaCodigo }}';
+    const simboloMoneda = '{{ $simboloJS }}';
+    const tasaCambio = parseFloat('{{ $tasaCambio }}');
+    
+    // Función para formatear moneda en JavaScript
+    function formatearMonedaJS(montoUSD) {
+        const montoConvertido = montoUSD * tasaCambio;
+        return simboloMoneda + montoConvertido.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
+    
     // ========== FUNCIONALIDAD PARA LOS TOTALES ==========
     function actualizarTotalPorHotel(hotelId) {
-        let totalAcumulado = 0;
+        let totalAcumuladoUSD = 0;
         let penalidadesHTML = '';
         
+        // Recorrer todas las habitaciones seleccionadas
         document.querySelectorAll(`.habitacion-radio[data-hotel-id="${hotelId}"]:checked`).forEach(radio => {
-            totalAcumulado += parseFloat(radio.getAttribute('data-total'));
+            totalAcumuladoUSD += parseFloat(radio.getAttribute('data-total'));
             
             const index = radio.getAttribute('data-index');
-            document.getElementById(`totalMonto${hotelId}_${index}`).textContent = 
-                parseFloat(radio.getAttribute('data-total')).toFixed(2);
+            // Actualizar el monto en el botón
+            const montoUSD = parseFloat(radio.getAttribute('data-total'));
+            const montoFormateado = formatearMonedaJS(montoUSD);
+            document.getElementById(`totalMonto${hotelId}_${index}`).textContent = montoFormateado;
             
             const habitacionData = JSON.parse(radio.value);
             
@@ -215,7 +243,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        document.getElementById(`totalAcumulado-${hotelId}`).textContent = totalAcumulado.toFixed(2);
+        // Actualizar el total acumulado
+        const totalFormateado = formatearMonedaJS(totalAcumuladoUSD);
+        document.getElementById(`totalAcumulado-${hotelId}`).textContent = totalFormateado;
         document.getElementById(`penalidades-${hotelId}`).innerHTML = penalidadesHTML;
     }
 
@@ -294,12 +324,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         // Agregar servicios si existen
                         if (hotel.hotel_facilidades_y_servicios && hotel.hotel_facilidades_y_servicios.length > 0) {
-                            modalContent += hotel.hotel_facilidades_y_servicios.map(servicio => `
+                            modalContent += hotel.hotel_facilidades_y_servicios.map(servicio => {
+                                // Convertir el costo del servicio a la moneda actual
+                                let costoFormateado = servicio.costo + ' ' + servicio.moneda;
+                                if (servicio.moneda === 'USD' && monedaActual !== 'USD') {
+                                    const costoConvertido = parseFloat(servicio.costo) * tasaCambio;
+                                    costoFormateado = simboloMoneda + costoConvertido.toFixed(2);
+                                }
+                                
+                                return `
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     ${servicio.texto_facilidad}
-                                    <span class="badge bg-primary rounded-pill">${servicio.costo} ${servicio.moneda}</span>
+                                    <span class="badge bg-primary rounded-pill">${costoFormateado}</span>
                                 </li>
-                            `).join('');
+                                `;
+                            }).join('');
                         } else {
                             modalContent += `<li class="list-group-item">{{ __("No_Facilidades_servicios") }}</li>`;
                         }
