@@ -65,7 +65,13 @@
                                                         data-bs-target="#collapseHabitacion{{ $hotel['Id_Hotel'] }}_{{ $index }}" 
                                                         aria-expanded="false" 
                                                         aria-controls="collapseHabitacion{{ $hotel['Id_Hotel'] }}_{{ $index }}">
-                                                    <span class="fw-bold">{{__("Monto_total")}}: $<span id="totalMonto{{ $hotel['Id_Hotel'] }}_{{ $index }}">{{ number_format($grupoHabitaciones[0]['Total'], 2) }}</span></span>
+                                                    <span class="fw-bold">{{__("Monto_total")}}: 
+                                                        <!-- Elimina el $ fijo aquí -->
+                                                        <span id="totalMonto{{ $hotel['Id_Hotel'] }}_{{ $index }}">
+                                                            <!-- Usa el objeto $currency que ya está disponible -->
+                                                            {{ $currency->formatear($grupoHabitaciones[0]['Total']) }}
+                                                        </span>
+                                                    </span>
                                                     / {{ __("Habitaciones") }}: {{ $grupoHabitaciones[0]['Cantidad_habitaciones'] }} 
                                                     / {{__("Noches")}}: {{ $grupoHabitaciones[0]['Cantidad_Noches'] }}
                                                     / {{ $grupoHabitaciones[0]['Cantidad_Adultos'] }} {{__("Cantidad_adultos")}}, {{ $grupoHabitaciones[0]['Cantidad_Menores'] }} {{__("Cantidad_menores")}}

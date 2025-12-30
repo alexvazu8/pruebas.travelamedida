@@ -317,10 +317,6 @@
                                 <i class="fas fa-lock me-1" aria-hidden="true"></i>
                                 {{ __('Sitio Seguro') }}
                             </span>
-                            <div >
-                                Moneda actual: {{ session('moneda', 'USD') }}<br>
-                                Currency controller disponible: {{ isset($currency) ? 'SÍ' : 'NO' }}
-                            </div>
                         </div>
                     </div>
                 </div>
