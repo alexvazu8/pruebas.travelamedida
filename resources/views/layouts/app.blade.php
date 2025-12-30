@@ -110,6 +110,17 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center py-2" 
+                                       href="/cambiar-moneda/GYE" 
+                                       onclick="event.preventDefault(); document.getElementById('currency-form-GYE').submit();">
+                                        <span class="me-2 fw-bold">₲</span>
+                                        GYE - Guaranis
+                                        <form id="currency-form-GYE" action="/cambiar-moneda/GYE" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" 
                                        href="/cambiar-moneda/BRL" 
                                        onclick="event.preventDefault(); document.getElementById('currency-form-BRL').submit();">
                                         <span class="me-2 fw-bold">R$</span>

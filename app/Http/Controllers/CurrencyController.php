@@ -13,6 +13,7 @@ class CurrencyController extends Controller
         'USD' => '$',
         'BOB' => 'Bs',
         'BRL' => 'R$',
+        'PYG' => '₲',
         'USDT' => 'USDT '
     ];
     
@@ -66,7 +67,8 @@ class CurrencyController extends Controller
         $defaultRates = [
             'USD_BOB' => 6.91,
             'USD_BRL' => 5.30,
-            'USD_USDT' => 1.00
+            'USD_PYG' => 6800,
+            'USD_USDT' => 1
         ];
         
         $key = "{$origen}_{$destino}";
@@ -79,7 +81,7 @@ class CurrencyController extends Controller
     public function cambiarMoneda(Request $request, $moneda)
     {
         $moneda = strtoupper($moneda);
-        $monedasPermitidas = ['USD', 'BOB', 'BRL', 'USDT'];
+        $monedasPermitidas = ['USD', 'BOB', 'BRL', 'PYG' ,'USDT'];
         
         if (!in_array($moneda, $monedasPermitidas)) {
             return back()->with('error', 'Moneda no válida');
