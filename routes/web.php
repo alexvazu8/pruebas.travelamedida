@@ -105,5 +105,5 @@ Route::post('/pagos/cancelar/{pago}', [BancardController::class, 'cancelar'])->n
 
 //Route::get('/tipocambio',[BancardController::class, 'tc']);
 
-Route::get('/cambiar-moneda/{moneda}', [CurrencyController::class, 'cambiarMoneda'])
+Route::post('/cambiar-moneda/{moneda}', [CurrencyController::class, 'cambiarMoneda'])
     ->name('currency.change');
