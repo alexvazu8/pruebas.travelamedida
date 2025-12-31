@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Función para formatear moneda en JavaScript
     function formatearMonedaJS(montoUSD) {
         const montoConvertido = montoUSD * tasaCambio;
-        return simboloMoneda + montoConvertido.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        return simboloMoneda + ' ' + montoConvertido.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
     
     // ========== FUNCIONALIDAD PARA LOS TOTALES ==========
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 let costoFormateado = servicio.costo + ' ' + servicio.moneda;
                                 if (servicio.moneda === 'USD' && monedaActual !== 'USD') {
                                     const costoConvertido = parseFloat(servicio.costo) * tasaCambio;
-                                    costoFormateado = simboloMoneda + costoConvertido.toFixed(2);
+                                    costoFormateado = simboloMoneda + ' ' + costoConvertido.toFixed(2);
                                 }
                                 
                                 return `
