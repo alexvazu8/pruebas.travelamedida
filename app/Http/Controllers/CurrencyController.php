@@ -41,7 +41,7 @@ class CurrencyController extends Controller
         $convertido = $this->convertir($montoUSD);
         $simbolo = $this->simbolos[$moneda] ?? $moneda . ' ';
         
-        return $simbolo .'.-'. number_format($convertido, 2, '.', ',');
+        return $simbolo .' '. number_format($convertido, 2, '.', ',');
     }
     
     /**
