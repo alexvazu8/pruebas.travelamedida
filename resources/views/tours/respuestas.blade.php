@@ -178,14 +178,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(data => {
                     if (data.success) {
                         const tour = data.tour;
-                         alert(JSON.stringify(tour, null, 2));
-                         console.log(JSON.stringify(tour, null, 2));
                         
-                        // Convertir precios para mostrar en el modal
-                        const precioAdultoUSD = parseFloat(tour.Precio_adulto || 0);
-                        const precioMenorUSD = parseFloat(tour.Precio_menor || 0);
-                        const precioAdultoFormateado = formatearMonedaJS(precioAdultoUSD);
-                        const precioMenorFormateado = formatearMonedaJS(precioMenorUSD);
+
                         
                         modalBody.innerHTML = `
                             <div class="row">
@@ -220,18 +214,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                                 <div class="d-flex align-items-center">
                                                     <i class="fas fa-map-pin text-primary me-2"></i>
                                                     <span><strong>{{__("Punto_encuentro")}}:</strong> ${tour.Punto_encuentro}</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-money-bill text-primary me-2"></i>
-                                                    <span><strong>{{__("Precio_adulto")}}:</strong> ${precioAdultoFormateado}</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="d-flex align-items-center">
-                                                    <i class="fas fa-money-bill-wave text-primary me-2"></i>
-                                                    <span><strong>{{__("Precio_menor")}}:</strong> ${precioMenorFormateado}</span>
                                                 </div>
                                             </div>
                                         </div>
