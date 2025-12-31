@@ -42,7 +42,10 @@
                                     <div class="col-sm-6">
                                         <div class="detail-item">
                                             <span class="detail-label fw-bold text-secondary">{{__("Monto_total")}}:</span>
-                                            <span class="detail-value text-success fw-bold">{{ number_format($respuesta['Precio_Total'], 2) }} USD</span>
+                                            <span class="detail-value text-success fw-bold tour-total" 
+                                                  data-precio-usd="{{ $respuesta['Precio_Total'] }}">
+                                                {{ $currency->formatear($respuesta['Precio_Total']) }}
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -81,6 +84,7 @@
                                 <input type="hidden" name="Precio_menor" value="{{ $respuesta['Precio_menor'] }}">
                                 <input type="hidden" name="Numero_adultos" value="{{ $respuesta['Cantidad_adultos'] }}">
                                 <input type="hidden" name="Numero_menores" value="{{ $respuesta['Cantidad_menores'] }}">
+                                <input type="hidden" name="Precio_Total" value="{{ $respuesta['Precio_Total'] }}">
                                 @if(isset($respuesta['Edad_menores']) && is_array($respuesta['Edad_menores']))
                                     <input type="hidden" name="Edad_menores" value="{{ json_encode($respuesta['Edad_menores']) }}">
                                 @endif
@@ -126,6 +130,36 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Obtener símbolo de moneda actual para JavaScript
+    @php
+        $monedaInfo = $currency->getMonedaInfo();
+        $simboloJS = $monedaInfo['simbolo'];
+        $tasaCambio = $currency->obtenerTasa('USD', session('moneda', 'USD'));
+        $monedaCodigo = session('moneda', 'USD');
+    @endphp
+    const monedaActual = '{{ $monedaCodigo }}';
+    const simboloMoneda = '{{ $simboloJS }}';
+    const tasaCambio = parseFloat('{{ $tasaCambio }}');
+    
+    // Función para formatear moneda en JavaScript
+    function formatearMonedaJS(montoUSD) {
+        const montoConvertido = montoUSD * tasaCambio;
+        return simboloMoneda + montoConvertido.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
+    
+    // Actualizar todos los montos de tours con la moneda actual
+    function actualizarMontosTours() {
+        document.querySelectorAll('.tour-total').forEach(element => {
+            const precioUSD = parseFloat(element.getAttribute('data-precio-usd'));
+            const precioFormateado = formatearMonedaJS(precioUSD);
+            element.textContent = precioFormateado;
+        });
+    }
+    
+    // Ejecutar al cargar la página
+    actualizarMontosTours();
+    
+    // Evento para modales de información
     document.querySelectorAll('a[data-bs-toggle="modal"]').forEach(function (link) {
         link.addEventListener('click', function () {
             const tourId = this.getAttribute('data-bs-target').replace('#tourModal', '');
@@ -144,6 +178,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(data => {
                     if (data.success) {
                         const tour = data.tour;
+                        
+                        // Convertir precios para mostrar en el modal
+                        const precioAdultoUSD = parseFloat(tour.Precio_adulto || 0);
+                        const precioMenorUSD = parseFloat(tour.Precio_menor || 0);
+                        const precioAdultoFormateado = formatearMonedaJS(precioAdultoUSD);
+                        const precioMenorFormateado = formatearMonedaJS(precioMenorUSD);
+                        
                         modalBody.innerHTML = `
                             <div class="row">
                                 <div class="col-md-8">
@@ -179,6 +220,18 @@ document.addEventListener('DOMContentLoaded', function () {
                                                     <span><strong>{{__("Punto_encuentro")}}:</strong> ${tour.Punto_encuentro}</span>
                                                 </div>
                                             </div>
+                                            <div class="col-sm-6">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-money-bill text-primary me-2"></i>
+                                                    <span><strong>{{__("Precio_adulto")}}:</strong> ${precioAdultoFormateado}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-money-bill-wave text-primary me-2"></i>
+                                                    <span><strong>{{__("Precio_menor")}}:</strong> ${precioMenorFormateado}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     
@@ -208,9 +261,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                     </div>
                                     
                                     <div class="gallery mt-4">
-                                        <img src="${tour.Foto_tours}" alt="Foto principal" class="mb-2">
+                                        <img src="${tour.Foto_tours}" alt="Foto principal" class="mb-2 img-fluid rounded">
                                         ${tour.fotos_tours && tour.fotos_tours.length > 0 
-                                            ? tour.fotos_tours.map(foto => `<img src="${foto.url_foto_tour}" alt="Foto del tour">`).join('') 
+                                            ? tour.fotos_tours.map(foto => `
+                                                <img src="${foto.url_foto_tour}" 
+                                                     alt="Foto del tour" 
+                                                     class="mb-2 img-fluid rounded">`).join('') 
                                             : ''}
                                     </div>
                                 </div>
