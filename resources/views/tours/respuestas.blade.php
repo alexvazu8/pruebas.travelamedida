@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(data => {
                     if (data.success) {
                         const tour = data.tour;
-                        alert(tour)
+                         alert(JSON.stringify(tour, null, 2));
                         
                         // Convertir precios para mostrar en el modal
                         const precioAdultoUSD = parseFloat(tour.Precio_adulto || 0);
