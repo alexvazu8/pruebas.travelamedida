@@ -73,8 +73,9 @@
                             <i class="fas fa-car-side me-2"></i>
                             <strong>{{ $respuesta['Nombre_Servicio'] }}</strong>
                         </div>
-                        <span class="badge bg-light text-primary fs-6">
-                            {{ number_format($respuesta['Precio_Total'], 2) }} USD
+                        <span class="badge bg-light text-primary fs-6 traslado-total" 
+                              data-precio-usd="{{ $respuesta['Precio_Total'] }}">
+                            {{ $currency->formatear($respuesta['Precio_Total']) }}
                         </span>
                     </div>
                     
@@ -162,6 +163,7 @@
                                 <input type="hidden" name="hora_servicio" value="{{ $respuesta['hora_servicio'] }}">
                                 <input type="hidden" name="Numero_adultos" value="{{ $respuesta['Cantidad_adultos'] }}">
                                 <input type="hidden" name="Numero_menores" value="{{ $respuesta['Cantidad_menores'] }}">
+                                <input type="hidden" name="Precio_Total" value="{{ $respuesta['Precio_Total'] }}">
                                 
                                 @if(isset($respuesta['Edad_menores']))
                                     @foreach ($respuesta['Edad_menores'] as $key => $edad)
@@ -283,4 +285,43 @@
         transform: scale(1.05);
     }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtener símbolo de moneda actual para JavaScript
+    @php
+        $monedaInfo = $currency->getMonedaInfo();
+        $simboloJS = $monedaInfo['simbolo'];
+        $tasaCambio = $currency->obtenerTasa('USD', session('moneda', 'USD'));
+        $monedaCodigo = session('moneda', 'USD');
+    @endphp
+    const monedaActual = '{{ $monedaCodigo }}';
+    const simboloMoneda = '{{ $simboloJS }}';
+    const tasaCambio = parseFloat('{{ $tasaCambio }}');
+    
+    // Función para formatear moneda en JavaScript
+    function formatearMonedaJS(montoUSD) {
+        const montoConvertido = montoUSD * tasaCambio;
+        return simboloMoneda + montoConvertido.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
+    
+    // Actualizar todos los montos de traslados con la moneda actual
+    function actualizarMontosTraslados() {
+        document.querySelectorAll('.traslado-total').forEach(element => {
+            const precioUSD = parseFloat(element.getAttribute('data-precio-usd'));
+            const precioFormateado = formatearMonedaJS(precioUSD);
+            element.textContent = precioFormateado;
+        });
+    }
+    
+    // Ejecutar al cargar la página
+    actualizarMontosTraslados();
+    
+    // Si tienes otros elementos que necesiten conversión, puedes agregarlos aquí
+    // Por ejemplo, si hay precios desglosados en el detalle
+    
+    // También puedes agregar una función para actualizar si cambia la moneda
+    // (si implementas un selector de moneda en tiempo real)
+});
+</script>
 @endsection
