@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Función para formatear moneda en JavaScript
     function formatearMonedaJS(montoUSD) {
         const montoConvertido = montoUSD * tasaCambio;
-        return simboloMoneda + montoConvertido.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        return simboloMoneda +' '+ montoConvertido.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
     
     // Actualizar todos los montos de traslados con la moneda actual
