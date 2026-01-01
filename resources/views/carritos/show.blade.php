@@ -702,9 +702,7 @@
                     })
                 });
 
-                // PRIMERO obtener el texto para ver qué está devolviendo
-                const responseText = await response.text();
-                console.log("Respuesta del servidor (texto):", responseText);
+                
 
             
                 const data = await response.json();
