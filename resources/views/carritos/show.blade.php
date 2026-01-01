@@ -260,10 +260,12 @@
         <!-- Muesta el contador de en cuanto exprira el carrito-->
         <div class="countdown-container">
             <div class="countdown-text" id="countdown-text"></div>
-            <div class="progress-bar">
-                <div id="countdown-progress" class="progress"></div>
+            <div class="progress" style="height: 10px; margin-top: 10px;">
+                <div id="countdown-progress" class="progress-bar bg-success" role="progressbar" 
+                    style="width: 100%; transition: width 1s linear;"></div>
             </div>
         </div>
+
         
         {{-- Mostrar el precio total del carrito si está disponible --}}
         @if(isset($respuestas['Precio_total_carrito']))
@@ -275,30 +277,31 @@
             <script>
                 
                 // Timestamp de expiración (pasado desde Laravel)
+                
                 const expTimestamp = {{ $exp }};
-                
-                
                 const startTime = Math.floor(Date.now() / 1000); // Timestamp inicial
                 const totalDuration = expTimestamp - startTime;
 
                 function updateCountdown() {
                     const now = Math.floor(Date.now() / 1000); // Timestamp actual en segundos
                     const remainingTime = expTimestamp - now;
-                    const elapsedTime = now - startTime;
-                    const progressPercentage = (elapsedTime / totalDuration) * 100;
-
+                    
+                    // Calcular porcentaje del tiempo RESTANTE (esto es lo que debe disminuir)
+                    const remainingPercentage = Math.max(0, (remainingTime / totalDuration) * 100);
+                    
                     // Seleccionar elementos
                     const progressBar = document.getElementById('countdown-progress');
                     const countdownText = document.getElementById('countdown-text');
-
+                    
                     if (remainingTime <= 0) {
                         countdownText.innerHTML = "¡Tiempo agotado!";
-                        progressBar.style.width = '100%';
-                        progressBar.className = 'progress critical';
+                        progressBar.style.width = '0%';
+                        progressBar.className = 'progress-bar bg-danger';
+                        
                         // Recargar la página
                         setTimeout(() => {
                             location.reload();
-                        }, 1000); // Espera 1 segundo antes de recargar
+                        }, 1000);
                         
                         return;
                     }
@@ -311,16 +314,16 @@
                     // Actualizar texto
                     countdownText.innerHTML = `Tiempo restante: ${hours}h ${minutes}m ${seconds}s`;
 
-                    // Actualizar barra de progreso
-                    progressBar.style.width = `${100 - progressPercentage}%`;
+                    // Actualizar barra de progreso - el ancho es el porcentaje de tiempo RESTANTE
+                    progressBar.style.width = `${remainingPercentage}%`;
                     
                     // Cambiar colores según el tiempo restante
-                    if (remainingTime < totalDuration * 0.3) { // Menos del 30% del tiempo
-                        progressBar.className = 'progress critical';
-                    } else if (remainingTime < totalDuration * 0.6) { // Menos del 60% del tiempo
-                        progressBar.className = 'progress warning';
+                    if (remainingPercentage < 30) { // Menos del 30% del tiempo restante
+                        progressBar.className = 'progress-bar bg-danger';
+                    } else if (remainingPercentage < 60) { // Menos del 60% del tiempo restante
+                        progressBar.className = 'progress-bar bg-warning';
                     } else {
-                        progressBar.className = 'progress';
+                        progressBar.className = 'progress-bar bg-success';
                     }
 
                     // Actualizar cada segundo
