@@ -84,9 +84,9 @@ Route::post('/pagos/status/{transactionId}', [StereumPayController::class, 'chec
 
 
 // Iniciar pagos Bancard
- Route::post('/pagos/iniciar', [BancardController::class, 'iniciarPago'])->name('pagos.iniciar')->middleware('auth')
+ Route::post('/pagos/iniciar', [BancardController::class, 'iniciarPago'])->name('pagos.iniciar')
     ->withoutMiddleware([
-        ValidateCsrfToken::class, // 👈 Desactiva CSRF para esta ruta
+        ValidateCsrfToken::class, 
     ]);
 
 // Callback de Bancard (POST) - 3D Secure
