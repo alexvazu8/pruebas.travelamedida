@@ -687,7 +687,7 @@
 
             try {
                 await loadBancardSDK();
-                console.log("Iniciando pago...");
+                //alert("hola");
                 const response = await fetch("{{ route('pagos.iniciar') }}", {
                     method: 'POST',
                     headers: {
@@ -701,9 +701,6 @@
                         force_3ds: true 
                     })
                 });
-
-                
-
             
                 const data = await response.json();
                 //alert(data.process_id);
