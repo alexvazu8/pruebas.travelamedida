@@ -36,7 +36,13 @@
                                 N/A
                             @endif
                         </p>
-                        <p><strong>{{ __("Monto_total") }}:</strong> {{ isset($carrito['Precio_Total']) ? number_format($carrito['Precio_Total'], 2) : 'N/A' }}</p>
+                        <p><strong>{{ __("Monto_total") }}:</strong> 
+                            @if(isset($carrito['Precio_Total']))
+                                {{ $currency->formatear($carrito['Precio_Total']) }}
+                            @else
+                                N/A
+                            @endif
+                        </p>
                         <p><strong>{{__("Fecha_creacion")}}:</strong> {{ isset($carrito['created_at']) ? \Carbon\Carbon::parse($carrito['created_at'])->translatedFormat('d F Y') : 'N/A' }}</p>
                         <p><strong>{{__("Fecha_actualizacion")}}:</strong> {{ isset($carrito['updated_at']) ? \Carbon\Carbon::parse($carrito['updated_at'])->translatedFormat('d F Y') : 'N/A' }}</p>
                         {{-- Campo opcional: Email del encargado --}}
@@ -77,8 +83,20 @@
                                                     <td>{{ $detalle['Cantidad_Adultos'] ?? 'N/A' }}</td>
                                                     <td>{{ $detalle['Cantidad_Menores'] ?? 'N/A' }}</td>
                                                     <td>{{ $detalle['Cantidad_Noches'] ?? 'N/A' }}</td>
-                                                    <td>{{ isset($detalle['Precio_promedio_por_noche']) ? number_format($detalle['Precio_promedio_por_noche'], 2) : 'N/A' }}</td>
-                                                    <td>{{ isset($detalle['Precio_total_habitacion']) ? number_format($detalle['Precio_total_habitacion'], 2) : 'N/A' }}</td>
+                                                    <td>
+                                                        @if(isset($detalle['Precio_promedio_por_noche']))
+                                                            {{ $currency->formatear($detalle['Precio_promedio_por_noche']) }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if(isset($detalle['Precio_total_habitacion']))
+                                                            {{ $currency->formatear($detalle['Precio_total_habitacion']) }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $detalle['Cantidad_habitaciones'] ?? 'N/A' }}</td>
                                                     <td>
                                                         @if(isset($detalle['politica']['penalidads']) && count($detalle['politica']['penalidads']) > 0)
@@ -128,9 +146,27 @@
                                                     <td>{{ $detalle['hora_servicio'] ?? 'N/A' }}</td>
                                                     <td>{{ $detalle['Cantidad_Adultos'] ?? 'N/A' }}</td>
                                                     <td>{{ $detalle['Cantidad_Menores'] ?? 'N/A' }}</td>
-                                                    <td>{{ isset($detalle['Precio_Adulto']) ? number_format($detalle['Precio_Adulto'], 2) : 'N/A' }}</td>
-                                                    <td>{{ isset($detalle['Precio_Menor']) ? number_format($detalle['Precio_Menor'], 2) : 'N/A' }}</td>
-                                                    <td>{{ isset($detalle['Precio_Total']) ? number_format($detalle['Precio_Total'], 2) : 'N/A' }}</td>
+                                                    <td>
+                                                        @if(isset($detalle['Precio_Adulto']))
+                                                            {{ $currency->formatear($detalle['Precio_Adulto']) }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if(isset($detalle['Precio_Menor']))
+                                                            {{ $currency->formatear($detalle['Precio_Menor']) }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if(isset($detalle['Precio_Total']))
+                                                            {{ $currency->formatear($detalle['Precio_Total']) }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
                                                     <td>{{ isset($detalle['empresa_traslado_tipo_movilidade']['Marca_modelo']) ? $detalle['empresa_traslado_tipo_movilidade']['Marca_modelo'] : 'N/A' }}</td>
                                                     <td>{{ isset($detalle['empresa_traslado_tipo_movilidade']['Maletas_maximo']) ? $detalle['empresa_traslado_tipo_movilidade']['Maletas_maximo'] : 'N/A' }}</td>
                                                 </tr>
@@ -172,9 +208,27 @@
                                                     <td>{{ isset($detalle['Fecha_Out']) ? \Carbon\Carbon::parse($detalle['Fecha_Out'])->translatedFormat('d F Y') : 'N/A' }}</td>
                                                     <td>{{ $detalle['Cantidad_Adultos'] ?? 'N/A' }}</td>
                                                     <td>{{ $detalle['Cantidad_Menores'] ?? 'N/A' }}</td>
-                                                    <td>{{ isset($detalle['Precio_Adulto']) ? number_format($detalle['Precio_Adulto'], 2) : 'N/A' }}</td>
-                                                    <td>{{ isset($detalle['Precio_Menor']) ? number_format($detalle['Precio_Menor'], 2) : 'N/A' }}</td>
-                                                    <td>{{ isset($detalle['Precio_Total']) ? number_format($detalle['Precio_Total'], 2) : 'N/A' }}</td>
+                                                    <td>
+                                                        @if(isset($detalle['Precio_Adulto']))
+                                                            {{ $currency->formatear($detalle['Precio_Adulto']) }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if(isset($detalle['Precio_Menor']))
+                                                            {{ $currency->formatear($detalle['Precio_Menor']) }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if(isset($detalle['Precio_Total']))
+                                                            {{ $currency->formatear($detalle['Precio_Total']) }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $detalle['tour']['cantidad_dias_tour'] ?? 'N/A' }} días / {{ $detalle['tour']['cantidad_noches_tour'] ?? 'N/A' }} noches</td>
                                                     <td>{{ $detalle['tour']['Recojo_hotel'] == 1 ? 'Sí' : 'No' }}</td>
                                                 </tr>
@@ -277,7 +331,8 @@
                 updateCountdown();
             </script>
             <div class="alert alert-info">
-                <strong>Precio Total del Carrito:</strong> {{ number_format($respuestas['Precio_total_carrito'], 2) }} USD
+                <strong>Precio Total del Carrito:</strong> 
+                {{ $currency->formatear($respuestas['Precio_total_carrito']) }}
             </div>
             {{-- Botón para eliminar el carrito --}}
             <div class="container">
@@ -315,12 +370,21 @@
                             <textarea name="Comentarios" id="Comentarios" class="form-control rounded-pill px-4 py-2" rows="3" pattern="[A-Za-zñÑ0-9\s\.,]+" oninput="this.value = this.value.replace(/[^A-Za-zñÑ0-9\s.,]/g, '')">{{ old('Comentarios') }}</textarea>
                         </div>
                         
+                        @php
+                            // Calcular el monto en guaraníes para mostrar
+                            $tasaCambioGuaranies = $currency->obtenerTasa('USD', 'PYG');
+                            $montoGuaranies = $respuestas['Precio_total_carrito'] * $tasaCambioGuaranies;
+                        @endphp
+                        
                         <button type="button" id="btnMostrarQR" class=" btn-crypto text-white px-4">
-                            <i class="bi bi-qr-code me-2"></i> USDT {{ number_format($respuestas['Precio_total_carrito'], 2) }} (Cripto)
+                            <i class="bi bi-qr-code me-2"></i> 
+                            USDT {{ $currency->formatear($respuestas['Precio_total_carrito']) }} (Cripto)
                         </button>
 
                         <button type="button" id="btnMostrarTarjeta" class=" btn-card text-white px-4">
-                            <i class="bi bi-credit-card me-2"></i> Tarjeta {{ number_format($respuestas['Precio_total_carrito'], 2) }} (USD) -> {{ number_format(number_format($respuestas['Precio_total_carrito'], 2)*$tipoCambioGuaranies,0,'.','') }} (Gs.)
+                            <i class="bi bi-credit-card me-2"></i> 
+                            Tarjeta {{ $currency->formatear($respuestas['Precio_total_carrito']) }} (USD) 
+                            → {{ number_format($montoGuaranies, 0, '.', ',') }} (Gs.)
                         </button>
                         
                     </div>
