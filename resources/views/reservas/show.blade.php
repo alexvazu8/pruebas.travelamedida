@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="text-center text-primary mb-4">Detalles de la Reserva</h1>
+    <h1 class="text-center text-primary mb-4">{{__("Detalle_reservas")}}</h1>
 
     {{-- Mostrar mensaje de éxito o error --}}
     @if(isset($mensaje))
@@ -20,15 +20,15 @@
         @foreach($respuestas as $reserva)
             <div class="card mb-4 shadow-sm border-primary">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="card-title">Información General de la Reserva</h5>
+                    <h5 class="card-title">{{__("Informacion_general_reservas")}}</h5>
                 </div>
                 <div class="card-body">
-                    <p><strong>Localizador:</strong> {{ $reserva['Localizador'] }}</p>
-                    <p><strong>Importe Reserva:</strong> ${{ number_format($reserva['Importe_Reserva'], 2) }}</p>
-                    <p><strong>Nombre Titular Reserva:</strong> {{ $reserva['Nombre_Cliente'] }} {{ $reserva['Apellido_Cliente'] }}</p>
-                    <p><strong>Telefono Contacto:</strong> {{ $reserva['Telefono_Cliente'] }}</p>
-                    <p><strong>Email Contacto:</strong> {{ $reserva['Email_contacto_reserva'] }}</p>
-                    <p><strong>Comentarios:</strong> {{ $reserva['Comentarios'] ?? 'N/A' }}</p>
+                    <p><strong>{{__("Localizador")}}:</strong> {{ $reserva['Localizador'] }}</p>
+                    <p><strong>{{__("Importe_reserva")}}:</strong> ${{ number_format($reserva['Importe_Reserva'], 2) }}</p>
+                    <p><strong>{{__("Nombre_titular_reserva")}}:</strong> {{ $reserva['Nombre_Cliente'] }} {{ $reserva['Apellido_Cliente'] }}</p>
+                    <p><strong>{{__("Telefono_contacto")}}:</strong> {{ $reserva['Telefono_Cliente'] }}</p>
+                    <p><strong>{{__("Email_contacto")}}:</strong> {{ $reserva['Email_contacto_reserva'] }}</p>
+                    <p><strong>{{__("Comentarios")}}:</strong> {{ $reserva['Comentarios'] ?? 'N/A' }}</p>
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
             @if(!empty($reserva['detalle_reservas']))
                 <div class="card mb-4 shadow-sm border-info">
                     <div class="card-header bg-info text-white">
-                        <h5 class="card-title">Detalles de la Reserva</h5>
+                        <h5 class="card-title">{{__("Detalle_reservas")}}</h5>
                     </div>
                     <div class="card-body">
                         @foreach($reserva['detalle_reservas'] as $detalle)
@@ -50,13 +50,13 @@
                                     <h5 class="text-center text-white font-weight-bold mb-0 p-3"
                                         style="background-color: {{ $colorFondo }}; border-radius: 8px 8px 0 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); margin-bottom: 0;">
                                         
-                                        Detalles del Servicio <strong>ID:</strong> {{ $detalle['id'] }}
+                                        {{__("Detalle_servicio")}} <strong>ID:</strong> {{ $detalle['id'] }}
 
                                         @if($detalle['estado'] === 'Cancelado')
-                                            <span class="text-white font-weight-bold mb-0 p-3">Cancelado</span>
+                                            <span class="text-white font-weight-bold mb-0 p-3">{{__("Cancelado")}}</span>
                                         @else
                                             <a href="{{ route('reservas.voucher', ['id' => $detalle['id']]) }}" class="text-white font-weight-bold mb-0 p-3">
-                                                Ver Voucher
+                                                {{__("Ver_voucher")}}
                                             </a>
                                         @endif
                                     </h5>
@@ -65,25 +65,25 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p><strong>ID:</strong> {{ $detalle['id'] }}</p>
-                                            <p><strong>Tipo Servicio:</strong> 
+                                            <p><strong>{{__("Tipo_servicio")}}:</strong> 
                                                 @switch($detalle['Tipo_servicio'])
                                                     @case('T')
-                                                        Traslado
+                                                        {{ __("Traslados") }}
                                                         @break
                                                     @case('H')
-                                                        Hotel
+                                                        {{ __("Hoteles") }}
                                                         @break
                                                     @case('TOU')
-                                                        Tour
+                                                        {{ __("Tours") }}
                                                         @break
                                                     @default
                                                         Desconocido
                                                 @endswitch
                                             </p>
-                                            <p><strong>Email Encargado:</strong> {{ $detalle['Email_encargado_reserva'] ?? 'N/A' }}</p>
+                                            <p><strong>{{__("Email_encargado")}}:</strong> {{ $detalle['Email_encargado_reserva'] ?? 'N/A' }}</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p><strong>Precio Servicio:</strong> ${{ number_format($detalle['Precio_Servicio'], 2) }}</p>
+                                            <p><strong>{{__("Price_servicio")}}:</strong> ${{ number_format($detalle['Precio_Servicio'], 2) }}</p>
                                         </div>
                                     </div>
                                     {{-- Detalles del Hotel --}}
