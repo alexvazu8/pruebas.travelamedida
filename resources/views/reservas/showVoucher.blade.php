@@ -3,11 +3,11 @@
 @section('content')
 
 <div  class="container mt-5">
-    <h1 class="mb-4 text-center">Detalle Completo del Servicio</h1>
+    <h1 class="mb-4 text-center">{{ __("Detalle_servicio") }}</h1>
      <!-- Botón de Imprimir -->
      <div class="text-end mb-3">
-     <a href="{{ route('reservas.showReserva', $data['reserva']['Localizador']) }}" class="btn btn-primary">Retornar a la reserva</a>
-     <button class="btn btn-dark" onclick="imprimirVoucher()">Imprimir Voucher</button>
+     <a href="{{ route('reservas.showReserva', $data['reserva']['Localizador']) }}" class="btn btn-primary">{{ __("Retornar_reserva") }}</a>
+     <button class="btn btn-dark" onclick="imprimirVoucher()">{{__("Imprimir_voucher")}}</button>
     </div>
     
     <div id="voucherContent" class="card shadow mb-4">

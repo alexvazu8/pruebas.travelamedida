@@ -327,6 +327,7 @@
     "Email_encargado":"E-mail del encargado",
     "Email_reservas":"E-mail de reservas",
     "Ver_voucher":"Ver Voucher",
+    "Imprimir_voucher":"Imprimir Voucher",
     "Empresa":"Empresa",
     "Legal":"Legal",
     "Nosotros":"Nosotros",
@@ -349,6 +350,7 @@
     "Dias":"Días",
     "Enviar_carrito":"Enviar al Carrito",
     "Retornar": "volver",
+    "Retornar_reserva": "Retornar a la reserva",
     "Participantes":"Participantes",
     "Duracion":"Duración",
     "Horario":"Horario",
@@ -362,7 +364,8 @@
     "Regimen":"Régimen",
     "Marca_modelo":"Marca/Modelo",
     "Maximo_maletas":"Maletas Máximo",
-    "Pais":"País"
+    "Pais":"País",
+    "Informacion_principal":"Información Principal"
 
 
 }

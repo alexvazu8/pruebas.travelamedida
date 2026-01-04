@@ -327,6 +327,7 @@
     "Email_encargado":"E-mail do responsável",
     "Email_reservas":"E-mail de reservas",
     "Ver_voucher":"Visualizar Voucher",
+    "Imprimir_voucher":"Imprimir Voucher",
     "Empresa":"Empresa",
     "Legal":"Avisos legais",
     "Nosotros":"Quem somos",
@@ -349,6 +350,7 @@
     "Dias":"Dias",
     "Enviar_carrito":"Adicionar ao Carrinho",
     "Retornar": "Voltar",
+    "Retornar_reserva": "Voltar à reserva",
     "Participantes":"Participantes",
     "Duracion":"Duração",
     "Horario":"Horário",
@@ -362,6 +364,7 @@
     "Regimen":"Tipo de Pensão",
     "Marca_modelo":"Marca/Modelo",
     "Maximo_maletas":"Maletas Máximo",
-    "Pais":"País"
+    "Pais":"País",
+    "Informacion_principal":"Informação Principal"
     
 }

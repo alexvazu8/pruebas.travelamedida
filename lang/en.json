@@ -327,6 +327,7 @@
     "Email_encargado":"Person in charge's email",
     "Email_reservas":"Reservation E-mail",
     "Ver_voucher":"View Voucher",
+    "Imprimir_voucher":"Print Voucher",
     "Empresa":"Company",
     "Legal":"Legal",
     "Nosotros":"About us",
@@ -349,6 +350,7 @@
     "Dias":"Days",
     "Enviar_carrito":"Add to Cart",
     "Retornar": "Go back",
+    "Retornar_reserva": "Back to reservation",
     "Participantes":"Participants",
     "Duracion":"Duration",
     "Horario":"Schedule",
@@ -362,7 +364,8 @@
     "Regimen":"Meal Plan",
     "Marca_modelo":"Brand/Model",
     "Maximo_maletas":"Maletas Máximo",
-    "Pais":"Country"
+    "Pais":"Country",
+    "Informacion_principal":"Main Information"
 
     
 }
