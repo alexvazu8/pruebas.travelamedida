@@ -90,13 +90,13 @@
                                     @if(isset($detalle['detalle_hotel']))
                                     <div class="card mt-4 shadow-sm border-secondary">
                                         <div class="card-header bg-secondary text-white">
-                                            <h6 class="card-title">Detalles Habitaciones</h6>
+                                            <h6 class="card-title">{{__("Detalle_habitaciones")}}</h6>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <!-- Primera columna -->
                                                 <div class="col-md-6">
-                                                    <p><strong>Nombre del Hotel:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Nombre_Hotel'] }}
+                                                    <p><strong>{{__("Nombre_hotel")}}:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Nombre_Hotel'] }}
                                                         @php
                                                             $estrellas = $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['estrellas']['estrellas'] ?? 0;
                                                             $tipo_categoria = $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['estrellas']['tipo_categoria'] ?? '';
@@ -118,11 +118,11 @@
                                                             @endfor
                                                         @endif
                                                     </p>
-                                                    <p><strong>Dirección:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Direccion_Hotel'] }}</p>
-                                                    <p><strong>País:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['pais']['Nombre_Pais'] }}</p>
-                                                    <p><strong>Ciudad:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['ciudad']['Nombre_Ciudad'] }}</p>
-                                                    <p><strong>Zona:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['zona']['Nombre_Zona'] }}</p>
-                                                    <p><strong>Teléfono:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Telefono_reservas_hotel'] }}</p>
+                                                    <p><strong>{{__("Direccion")}}:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Direccion_Hotel'] }}</p>
+                                                    <p><strong>{{ __("Pais") }}:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['pais']['Nombre_Pais'] }}</p>
+                                                    <p><strong>{{ __("Ciudad_hotel") }}:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['ciudad']['Nombre_Ciudad'] }}</p>
+                                                    <p><strong>{{__("Zona")}}:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['zona']['Nombre_Zona'] }}</p>
+                                                    <p><strong>{{__("Telefono")}}:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['Telefono_reservas_hotel'] }}</p>
 
                                                 </div>
                                                 <!-- Modal -->
@@ -130,7 +130,7 @@
                                                     <div class="modal-dialog modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="mapaModalLabel">Ubicación del Hotel</h5>
+                                                                <h5 class="modal-title" id="mapaModalLabel">{{__("Location")}}</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                                                             </div>
                                                             <div class="modal-body">
@@ -141,14 +141,14 @@
                                                 </div>
                                                 <!-- Segunda columna -->
                                                 <div class="col-md-6">
-                                                    <p><strong>Email Reservas:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['email_reservas_hotel'] }}</p>
-                                                    <p><strong>Tipo de Habitación:</strong> {{ $detalle['detalle_hotel']['Nombre_Habitacion'] }}</p>
-                                                    <p><strong>Régimen:</strong> {{ $detalle['detalle_hotel']['Nombre_Regimen'] }}</p>
-                                                    <p><strong>Precio promedio por Noche:</strong> ${{ number_format($detalle['detalle_hotel']['Precio_promedio_por_noche'], 2) }}</p>
-                                                    <p><strong>Cantidad de Noches:</strong> {{ $detalle['detalle_hotel']['Cantidad_Noches'] }}</p>
-                                                    <p><strong>Precio Total:</strong> ${{ number_format($detalle['detalle_hotel']['Precio_Total'], 2) }}</p>
-                                                    <p><strong>Fecha Check-in:</strong> {{ date('d/m/Y', strtotime($detalle['detalle_hotel']['Fecha_In'])) }}</p>
-                                                    <p><strong>Fecha Check-out:</strong> {{ date('d/m/Y', strtotime($detalle['detalle_hotel']['Fecha_Out'])) }}</p>
+                                                    <p><strong>{{ __("Email_reservas") }}:</strong> {{ $detalle['detalle_hotel']['tipo_habitacion_hotel']['hotel']['email_reservas_hotel'] }}</p>
+                                                    <p><strong>{{ __("Tipo_habitacion") }}</strong> {{ $detalle['detalle_hotel']['Nombre_Habitacion'] }}</p>
+                                                    <p><strong>{{__("Regimen")}}:</strong> {{ $detalle['detalle_hotel']['Nombre_Regimen'] }}</p>
+                                                    <p><strong>{{__("Precio_promedio_por_noche")}}:</strong> ${{ number_format($detalle['detalle_hotel']['Precio_promedio_por_noche'], 2) }}</p>
+                                                    <p><strong>{{__("Noches")}}:</strong> {{ $detalle['detalle_hotel']['Cantidad_Noches'] }}</p>
+                                                    <p><strong>{{__("Price_total")}}:</strong> ${{ number_format($detalle['detalle_hotel']['Precio_Total'], 2) }}</p>
+                                                    <p><strong>{{__("Fecha_desde")}}:</strong> {{ date('d/m/Y', strtotime($detalle['detalle_hotel']['Fecha_In'])) }}</p>
+                                                    <p><strong>{{__("Fecha_hasta")}}:</strong> {{ date('d/m/Y', strtotime($detalle['detalle_hotel']['Fecha_Out'])) }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,25 +160,25 @@
                                     @if(!empty($detalle['detalle_traslado']))
                                         <div class="card mt-4 shadow-sm border-secondary">
                                             <div class="card-header bg-secondary text-white">
-                                                <h6 class="card-title">Detalles del Traslado</h6>
+                                                <h6 class="card-title">{{__("Detalle_traslado")}}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <p><strong>Cantidad Adultos:</strong> {{ $detalle['detalle_traslado']['Cantidad_Adultos'] }}</p>
-                                                        <p><strong>Cantidad Menores:</strong> {{ $detalle['detalle_traslado']['Cantidad_Menores'] }}</p>
-                                                        <p><strong>Fecha Servicio:</strong> {{ $detalle['detalle_traslado']['fecha_servicio'] }}</p>
+                                                        <p><strong>{{__("Cantidad_adultos")}}:</strong> {{ $detalle['detalle_traslado']['Cantidad_Adultos'] }}</p>
+                                                        <p><strong>{{__("Cantidad_menores")}}:</strong> {{ $detalle['detalle_traslado']['Cantidad_Menores'] }}</p>
+                                                        <p><strong>{{__("Fecha_servicio")}}:</strong> {{ $detalle['detalle_traslado']['fecha_servicio'] }}</p>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <p><strong>Hora Servicio:</strong> {{ $detalle['detalle_traslado']['hora_servicio'] }}</p>
-                                                        <p><strong>Precio Adulto:</strong> ${{ number_format($detalle['detalle_traslado']['Precio_Adulto'], 2) }}</p>
-                                                        <p><strong>Precio Menor:</strong> ${{ number_format($detalle['detalle_traslado']['Precio_Menor'], 2) }}</p>
+                                                        <p><strong>{{__("Hora_servicio")}}:</strong> {{ $detalle['detalle_traslado']['hora_servicio'] }}</p>
+                                                        <p><strong>{{__("Price_adulto")}}:</strong> ${{ number_format($detalle['detalle_traslado']['Precio_Adulto'], 2) }}</p>
+                                                        <p><strong>{{__("Price_menor")}}:</strong> ${{ number_format($detalle['detalle_traslado']['Precio_Menor'], 2) }}</p>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <p><strong>Precio Total:</strong> ${{ number_format($detalle['detalle_traslado']['Precio_Total'], 2) }}</p>
+                                                        <p><strong>{{__("Price_total")}}:</strong> ${{ number_format($detalle['detalle_traslado']['Precio_Total'], 2) }}</p>
                                                         {{-- Nuevos campos agregados --}}
-                                                        <p><strong>Marca y Modelo:</strong> {{ $detalle['detalle_traslado']['empresa_traslado_tipo_movilidade']['Marca_modelo'] ?? 'N/A' }}</p>
-                                                        <p><strong>Maletas Máximo:</strong> {{ $detalle['detalle_traslado']['empresa_traslado_tipo_movilidade']['Maletas_maximo'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Marca_modelo")}}:</strong> {{ $detalle['detalle_traslado']['empresa_traslado_tipo_movilidade']['Marca_modelo'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Maximo_maletas")}}:</strong> {{ $detalle['detalle_traslado']['empresa_traslado_tipo_movilidade']['Maletas_maximo'] ?? 'N/A' }}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,7 +188,7 @@
                                     @if(!empty($detalle['detalle_tour']))
                                         <div class="card mt-4 shadow-sm border-secondary">
                                             <div class="card-header bg-secondary text-white">
-                                                <h6 class="card-title">Detalles del Tour</h6>
+                                                <h6 class="card-title">{{__("Detalle_tour")}}</h6>
                                             </div>
                                             <div class="card-body">
                                                 @php
@@ -196,23 +196,23 @@
                                                 @endphp
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <p><strong>Nombre Tour:</strong> {{ $tour['tour']['Nombre_tour'] ?? 'N/A' }}</p>
-                                                        <p><strong>Horario Inicio:</strong> {{ $tour['tour']['Horario_inicio'] ?? 'N/A' }}</p>
-                                                        <p><strong>Horario Fin:</strong> {{ $tour['tour']['Hora_fin'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Tours")}}:</strong> {{ $tour['tour']['Nombre_tour'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Horario_inicio")}}:</strong> {{ $tour['tour']['Horario_inicio'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Horario_fin")}}:</strong> {{ $tour['tour']['Hora_fin'] ?? 'N/A' }}</p>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <p><strong>Cantidad de Días:</strong> {{ $tour['tour']['cantidad_dias_tour'] ?? 'N/A' }}</p>
-                                                        <p><strong>Cantidad de Noches:</strong> {{ $tour['tour']['cantidad_noches_tour'] ?? 'N/A' }}</p>
-                                                        <p><strong>Punto de Encuentro:</strong> {{ $tour['tour']['Punto_encuentro'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Dias")}}:</strong> {{ $tour['tour']['cantidad_dias_tour'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Noches")}}:</strong> {{ $tour['tour']['cantidad_noches_tour'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Punto_encuentro")}}:</strong> {{ $tour['tour']['Punto_encuentro'] ?? 'N/A' }}</p>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <p><strong>Recogida en Hotel:</strong> {{ $tour['tour']['Recojo_hotel'] ? 'Sí' : 'No' }}</p>
-                                                        <p><strong>País:</strong> {{ $tour['tour']['pais']['Nombre_Pais'] ?? 'N/A' }}</p>
-                                                        <p><strong>Apto para discapacitados:</strong> {{ $tour['tour']['Para_discapacitados'] ? 'Sí' : 'No' }}</p>
-                                                        <p><strong>Entregan agua:</strong> {{ $tour['tour']['Entregan_agua'] ? 'Sí' : 'No' }}</p>
+                                                        <p><strong>{{__("Recojo_hotel")}}:</strong> {{ $tour['tour']['Recojo_hotel'] ? 'Sí' : 'No' }}</p>
+                                                        <p><strong>{{__("Pais")}}:</strong> {{ $tour['tour']['pais']['Nombre_Pais'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Accesible_discapacitados")}}:</strong> {{ $tour['tour']['Para_discapacitados'] ? 'Sí' : 'No' }}</p>
+                                                        <p><strong>{{__("Entrega_agua")}}:</strong> {{ $tour['tour']['Entregan_agua'] ? 'Sí' : 'No' }}</p>
                                                         <div class="card-body">
                                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detalleTourModal">
                                                                 Ver Detalle del Tour
@@ -221,9 +221,9 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <p><img width="100" src="{{ asset($tour['tour']['Foto_tours']) }}" alt="Foto del Tour" class="img-fluid rounded"></p>
-                                                        <p><strong>Ciudad:</strong> {{ $tour['tour']['ciudad']['Nombre_Ciudad'] ?? 'N/A' }}</p>
-                                                        <p><strong>Zona:</strong> {{ $tour['tour']['zona']['Nombre_Zona'] ?? 'N/A' }}</p>
-                                                        <p><strong>Con Baño:</strong> {{ $tour['tour']['Con_bano'] ? 'Sí' : 'No' }}</p>
+                                                        <p><strong>{{__("Ciudad")}}:</strong> {{ $tour['tour']['ciudad']['Nombre_Ciudad'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Zona")}}:</strong> {{ $tour['tour']['zona']['Nombre_Zona'] ?? 'N/A' }}</p>
+                                                        <p><strong>{{__("Incluye_bano")}}:</strong> {{ $tour['tour']['Con_bano'] ? 'Sí' : 'No' }}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -234,7 +234,7 @@
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="detalleTourModalLabel">Detalles del Tour</h5>
+                                                        <h5 class="modal-title" id="detalleTourModalLabel">{{__("Detalle_tour")}}</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
@@ -243,37 +243,37 @@
                                                         @endphp
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <p><strong>Nombre Tour:</strong> {{ $tour['tour']['Nombre_tour'] ?? 'N/A' }}</p>
-                                                                <p><strong>Horario Inicio:</strong> {{ $tour['tour']['Horario_inicio'] ?? 'N/A' }}</p>
-                                                                <p><strong>Horario Fin:</strong> {{ $tour['tour']['Hora_fin'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Tour")}}:</strong> {{ $tour['tour']['Nombre_tour'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Horario_inicio")}}:</strong> {{ $tour['tour']['Horario_inicio'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Horario_fin")}}:</strong> {{ $tour['tour']['Hora_fin'] ?? 'N/A' }}</p>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <p><strong>Cantidad de Días:</strong> {{ $tour['tour']['cantidad_dias_tour'] ?? 'N/A' }}</p>
-                                                                <p><strong>Cantidad de Noches:</strong> {{ $tour['tour']['cantidad_noches_tour'] ?? 'N/A' }}</p>
-                                                                <p><strong>Punto de Encuentro:</strong> {{ $tour['tour']['Punto_encuentro'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Dias")}}:</strong> {{ $tour['tour']['cantidad_dias_tour'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Noches")}}:</strong> {{ $tour['tour']['cantidad_noches_tour'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Punto_encuentro")}}:</strong> {{ $tour['tour']['Punto_encuentro'] ?? 'N/A' }}</p>
                                                             </div>
                                                         </div>
 
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <p><strong>Recogida en Hotel:</strong> {{ $tour['tour']['Recojo_hotel'] ? 'Sí' : 'No' }}</p>
-                                                                <p><strong>País:</strong> {{ $tour['pais']['Nombre'] ?? 'N/A' }}</p>
-                                                                <p><strong>Apto para discapacitados:</strong> {{ $tour['tour']['Para_discapacitados'] ? 'Sí' : 'No' }}</p>
-                                                                <p><strong>Entregan agua:</strong> {{ $tour['tour']['Entregan_agua'] ? 'Sí' : 'No' }}</p>
+                                                                <p><strong>{{__("Recojo_hotel")}}:</strong> {{ $tour['tour']['Recojo_hotel'] ? 'Sí' : 'No' }}</p>
+                                                                <p><strong>{{__("Pais")}}:</strong> {{ $tour['pais']['Nombre'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Accesible_discapacitados")}}:</strong> {{ $tour['tour']['Para_discapacitados'] ? 'Sí' : 'No' }}</p>
+                                                                <p><strong>{{__("Entrega_agua")}}:</strong> {{ $tour['tour']['Entregan_agua'] ? 'Sí' : 'No' }}</p>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <p><img width="100" src="{{ asset($tour['tour']['Foto_tours']) }}" alt="Foto del Tour" class="img-fluid rounded"></p>
-                                                                <p><strong>Ciudad:</strong> {{ $tour['ciudad']['Nombre'] ?? 'N/A' }}</p>
-                                                                <p><strong>Zona:</strong> {{ $tour['zona']['Nombre'] ?? 'N/A' }}</p>
-                                                                <p><strong>Con Baño:</strong> {{ $tour['tour']['Con_bano'] ? 'Sí' : 'No' }}</p>
+                                                                <p><strong>{{__("Ciudad")}}:</strong> {{ $tour['ciudad']['Nombre'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Zona")}}:</strong> {{ $tour['zona']['Nombre'] ?? 'N/A' }}</p>
+                                                                <p><strong>{{__("Incluye_bano")}}:</strong> {{ $tour['tour']['Con_bano'] ? 'Sí' : 'No' }}</p>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                        <strong>Detalle:</strong> @php echo $tour['tour']['Detalle_tour']; @endphp
+                                                        <strong>{{__("Details")}}:</strong> @php echo $tour['tour']['Detalle_tour']; @endphp
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__("Close")}}</button>
                                                     </div>
                                                 </div>
                                             </div>
