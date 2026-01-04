@@ -316,8 +316,10 @@
     "Detalle_reservas":"Reservation Details",
     "Detalle_traslado":"Transfer Details",
     "Detalle_tour":"Tour/Attraction Details",
+    "Detalle_hotel":"Accommodation Details",
     "Detalle_habitaciones":"Room Details",
     "Informacion_general_reservas":"General Reservation Information",
+    "Informacion_reservas":"Reservation Information",
     "Localizador":"Localizador",
     "Importe_reserva":"Booking Amount",
     "Nombre_titular_reserva":"Reservation Holder's Name",
@@ -326,6 +328,7 @@
     "Email_contacto":"Contact E-mail",
     "Email_encargado":"Person in charge's email",
     "Email_reservas":"Reservation E-mail",
+    "Email_comercial":"Business email",
     "Ver_voucher":"View Voucher",
     "Imprimir_voucher":"Print Voucher",
     "Empresa":"Company",
@@ -366,7 +369,9 @@
     "Maximo_maletas":"Maletas Máximo",
     "Pais":"Country",
     "Informacion_principal":"Main Information",
-    "Datos_cliente":"Client Information"
+    "Informacion_hotel":"Accommodation Information",
+    "Datos_cliente":"Client Information",
+    "Celular":"Cell phone"
 
     
 }

@@ -316,8 +316,10 @@
     "Detalle_reservas":"Detalles de la Reserva",
     "Detalle_traslado":"Detalles del traslado",
     "Detalle_tour":"Detalles de la Atracción y/o Tour",
+    "Detalle_hotel":"Detalles de Alojamiento",
     "Detalle_habitaciones":"Detalles Habitaciones",
     "Informacion_general_reservas":"Información General de la Reserva",
+    "Informacion_reservas":"Información de la Reserva",
     "Localizador":"Localizador",
     "Importe_reserva":"Importe Reserva",
     "Nombre_titular_reserva":"Nombre Titular Reserva",
@@ -326,6 +328,7 @@
     "Email_contacto":"E-mail de contacto",
     "Email_encargado":"E-mail del encargado",
     "Email_reservas":"E-mail de reservas",
+    "Email_comercial":"E-mail comercial",
     "Ver_voucher":"Ver Voucher",
     "Imprimir_voucher":"Imprimir Voucher",
     "Empresa":"Empresa",
@@ -366,7 +369,9 @@
     "Maximo_maletas":"Maletas Máximo",
     "Pais":"País",
     "Informacion_principal":"Información Principal",
-    "Datos_cliente":"Datos del Cliente"
+    "Informacion_hotel":"Información del Alojamiento",
+    "Datos_cliente":"Datos del Cliente",
+    "Celular":"Celular"
 
 
 }
