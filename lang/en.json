@@ -365,7 +365,8 @@
     "Marca_modelo":"Brand/Model",
     "Maximo_maletas":"Maletas Máximo",
     "Pais":"Country",
-    "Informacion_principal":"Main Information"
+    "Informacion_principal":"Main Information",
+    "Datos_cliente":"Client Information"
 
     
 }

@@ -365,7 +365,8 @@
     "Marca_modelo":"Marca/Modelo",
     "Maximo_maletas":"Maletas Máximo",
     "Pais":"País",
-    "Informacion_principal":"Información Principal"
+    "Informacion_principal":"Información Principal",
+    "Datos_cliente":"Datos del Cliente"
 
 
 }

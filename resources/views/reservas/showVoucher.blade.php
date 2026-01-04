@@ -14,27 +14,27 @@
         <!-- Tarjeta de Información Principal -->
         <div  class="card shadow mb-4">
             <div class="card-header bg-primary text-white">
-                <h2 class="h5 mb-0">Información Principal</h2>
+                <h2 class="h5 mb-0">{{__("Informacion_principal")}}</h2>
             </div>
 
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>ID Detalle Servicio:</strong> {{ $data['id'] }}</p>
-                        <p><strong>Precio Servicio:</strong> ${{ number_format($data['Precio_Servicio'], 2) }}</p>
-                        <p><strong>Tipo Servicio:</strong> 
+                        <p><strong>ID {{ __("Detalle_servicio") }}:</strong> {{ $data['id'] }}</p>
+                        <p><strong>{{ __("Price_servicio") }}:</strong> ${{ number_format($data['Precio_Servicio'], 2) }}</p>
+                        <p><strong>{{ __("Tipo_servicio") }}:</strong> 
                             @switch($data['Tipo_servicio'])
-                                @case('H') Hotel @break
-                                @case('T') Traslado @break
-                                @case('TOU') Tour @break
+                                @case('H') {{ __("Hoteles") }} @break
+                                @case('T') {{ __("Traslados") }} @break
+                                @case('TOU') {{ __("Tours") }} @break
                                 @default Otro
                             @endswitch
                         </p>
                     </div>
                     <div class="col-md-6">
-                        <p><strong>Email Encargado:</strong> {{ $data['Email_encargado_reserva'] }}</p>
-                        <p><strong>Fecha Creación:</strong> {{ \Carbon\Carbon::parse($data['created_at'])->format('d/m/Y H:i') }}</p>
-                        <p><strong>Última Actualización:</strong> {{ \Carbon\Carbon::parse($data['updated_at'])->format('d/m/Y H:i') }}</p>
+                        <p><strong>{{ __("Email_encargado") }}:</strong> {{ $data['Email_encargado_reserva'] }}</p>
+                        <p><strong>{{ __("Fecha_creacion") }}:</strong> {{ \Carbon\Carbon::parse($data['created_at'])->format('d/m/Y H:i') }}</p>
+                        <p><strong>{{ __("Fecha_actualizacion") }}:</strong> {{ \Carbon\Carbon::parse($data['updated_at'])->format('d/m/Y H:i') }}</p>
                     </div>
                 </div>
             </div>
@@ -43,17 +43,17 @@
         <!-- Tarjeta de Datos del Cliente (común a todos los tipos) -->
         <div class="card shadow mb-4">
             <div class="card-header bg-success text-white">
-                <h2 class="h5 mb-0">Datos del Cliente</h2>
+                <h2 class="h5 mb-0">{{ __("Datos_cliente") }}</h2>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>Localizador:</strong> {{ $data['reserva']['Localizador'] }}</p>
-                        <p><strong>Nombre:</strong> {{ $data['reserva']['Nombre_Cliente'] }} {{ $data['reserva']['Apellido_Cliente'] }}</p>
-                        <p><strong>Teléfono:</strong> {{ $data['reserva']['Telefono_Cliente'] }}</p>
+                        <p><strong>{{__("Localizador")}}:</strong> {{ $data['reserva']['Localizador'] }}</p>
+                        <p><strong>{{__("Name")}}:</strong> {{ $data['reserva']['Nombre_Cliente'] }} {{ $data['reserva']['Apellido_Cliente'] }}</p>
+                        <p><strong>{{__("Telefono")}}:</strong> {{ $data['reserva']['Telefono_Cliente'] }}</p>
                     </div>
                     <div class="col-md-6">
-                        <p><strong>Email:</strong> {{ $data['reserva']['Email_contacto_reserva'] }}</p>
+                        <p><strong>{{__("Email Address")}}:</strong> {{ $data['reserva']['Email_contacto_reserva'] }}</p>
                         <p><strong>Importe Reserva:</strong> ${{ number_format($data['reserva']['Importe_Reserva'], 2) }}</p>
                         @if($data['Tipo_servicio'] == 'TOU')
                             <p><strong>Comentarios:</strong> {{ $data['reserva']['Comentarios'] ?? 'Ninguno' }}</p>
