@@ -54,7 +54,8 @@
                         <td>
                             {{__("Cancelaciones_menos_de")}} {{ $penalidad['desde_noches_antes'] }} {{ __("Noches_anticipacion_penalidad_de") }} {{ $penalidad['porcentaje_penalidad_por_noche'] }}.
                             </br>{{ __("Cancelaciones_mas_de") }} {{ $penalidad['desde_noches_antes'] }} 
-                            {{ __("Noches_sin_penalidad") }} {{ __("Politica_flexible") }}   
+                            {{ __("Noches_sin_penalidad") }} 
+                              
                         </td>
                     </tr>
                     @endforeach
