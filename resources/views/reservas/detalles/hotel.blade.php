@@ -48,19 +48,14 @@
         <h4 class="mt-4">{{__("Penalidad")}}</h4>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        <th>{{__("Penalidad")}}</th>
-                        <th>Desde (noches antes)</th>
-                        <th>Hasta (noches antes)</th>
-                    </tr>
-                </thead>
                 <tbody>
                     @foreach($data['detalle_hotel']['politica']['penalidads'] as $penalidad)
                     <tr>
-                        <td>{{ $penalidad['porcentaje_penalidad_por_noche'] }}</td>
-                        <td>{{ $penalidad['desde_noches_antes'] }}</td>
-                        <td>{{ $penalidad['hasta_noches_antes'] }}</td>
+                        <td>
+                            {{__("Cancelaciones_menos_de")}} {{ $penalidad['desde_noches_antes'] }} {{ __("Noches_anticipacion_penalidad_de") }} {{ $penalidad['porcentaje_penalidad_por_noche'] }}.
+                            </br>{{ __("Cancelaciones_mas_de") }} {{ $penalidad['desde_noches_antes'] }} 
+                            {{ __("Noches_sin_penalidad") }} {{ __("Politica_flexible") }}   
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
