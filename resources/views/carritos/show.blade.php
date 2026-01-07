@@ -381,12 +381,12 @@
                         
                         <button type="button" id="btnMostrarQR" class=" btn-crypto text-white px-4">
                             <i class="bi bi-qr-code me-2"></i> 
-                            USDT {{ $currency->formatear($respuestas['Precio_total_carrito']) }} (Cripto)
+                             {{ $currency->formatear($respuestas['Precio_total_carrito']) }} (Cripto)
                         </button>
 
                         <button type="button" id="btnMostrarTarjeta" class=" btn-card text-white px-4">
                             <i class="bi bi-credit-card me-2"></i> 
-                            Tarjeta {{ $currency->formatear($respuestas['Precio_total_carrito']) }} (USD) 
+                            Tarjeta {{ $currency->formatear($respuestas['Precio_total_carrito']) }}  
                             → {{ number_format($montoGuaranies, 0, '.', ',') }} (Gs.)
                         </button>
                         
