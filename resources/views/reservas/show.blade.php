@@ -58,7 +58,7 @@
                                             <a href="{{ route('reservas.voucher', ['id' => $detalle['id']]) }}" class="text-white font-weight-bold mb-0 p-3">
                                                 {{__("Ver_voucher")}}
                                             </a>
-                                            <form action="{{ route('reservas.cancelar-servicio', ['id' => $reserva->id, 'loc' => $localizacion]) }}" 
+                                            <form action="{{ route('reservas.cancelar-servicio', ['id' => $detalle['id'], 'loc' => $reserva['Localizador']]) }}" 
                                                 method="POST">
                                                 @csrf
                                                 <button type="submit" 
