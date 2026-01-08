@@ -202,6 +202,7 @@ class ReservasController extends Controller
         $jsonResponse= response()->json($response->json());
         //print_r(response()->json($jsonResponse));
         $data = json_decode($jsonResponse->getContent(), true);
+        dd($data);
         return $this->showReserva($loc);
         //return view('reservas.showVoucher')->with('data', $data);
     }
