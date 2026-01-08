@@ -31,7 +31,7 @@ class Reserva extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['guid','Localizador', 'Importe_Reserva', 'Nombre_Cliente','Apellido_Cliente','Telefono_Cliente','Email_contacto_reserva', 'Comentarios', 'Usuario_id'];
+    protected $fillable = ['guid','Localizador', 'Importe_Reserva', 'Nombre_Cliente','Apellido_Cliente','Telefono_Cliente','Email_contacto_reserva', 'estado_reserva' , 'Comentarios', 'Usuario_id'];
 
 
     /**

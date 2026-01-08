@@ -202,7 +202,42 @@ class ReservasController extends Controller
         $jsonResponse= response()->json($response->json());
         //print_r(response()->json($jsonResponse));
         $data = json_decode($jsonResponse->getContent(), true);
-        dd($data);
+        //dd($data);
+        if($data['precio_penalidad']==0)
+        {  //Cancelacion permitida sin penalidad
+           //Cambiar estado a P: Proceso devolución y colocar un mensaje que se cobrara solo el 5% del precio pagado del servicio cancelado.
+            $reserva = Reserva::where('Localizador', $loc)->first();
+            if ($reserva) {
+                // Actualizar estado de la reserva
+                $reserva->update([
+                    'estado_reserva' => 'P',
+                    'updated_at' => now(),
+                    'Comentarios' => $reserva->Comentarios.'Penalidad:0.00 debe devolver menos 5%, Cancelado desde sistema - a la espera de la devolución - Servicio ID: ' . $id
+                    
+                ]);
+                
+               
+                $reserva->save();
+            }
+
+        }
+        else
+        { // la penalidad no es 0, se puede cancelar pero hay otro tipo de penalidad.
+            $reserva = Reserva::where('Localizador', $loc)->first();
+            if ($reserva) {
+                // Actualizar estado de la reserva
+                $reserva->update([
+                    'estado_reserva' => 'P',
+                    'updated_at' => now(),
+                    'Comentarios' => $reserva->Comentarios.'Penalidad:'.$data['precio_penalidad'].' Cancelado desde sistema, debe revisar cuanto es la devolución - a la espera de la devolución - Servicio ID: ' . $id
+                    
+                ]);
+                
+               
+                $reserva->save();
+            }
+
+        }    
         return $this->showReserva($loc);
         //return view('reservas.showVoucher')->with('data', $data);
     }
