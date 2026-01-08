@@ -187,7 +187,7 @@ class ReservasController extends Controller
      $apiController = new ApiController();
        //dd($id);
      $response = $apiController->cancelarServicio($id);
-      dd($response);
+      //dd($response);
      if(!$response->successful()) {
         //dd($request);
         // Procesar los datos obtenidos de la API
