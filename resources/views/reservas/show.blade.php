@@ -67,8 +67,7 @@
                                                     <div class="d-flex align-items-center justify-content-center">
                                                         <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
                                                         <div class="text-start">
-                                                            <div class="fw-bold fs-5">CANCELAR SERVICIO</div>
-                                                            <small class="opacity-75">Haz clic para cancelar este servicio, entrara a proceso de devolución.</small>
+                                                             <i class="fas fa-times me-1"></i> Cancelar Servicio
                                                         </div>
                                                     </div>
                                                 </button>
