@@ -63,7 +63,7 @@
                                                 @csrf
                                                 <button type="submit" 
                                                         class="btn btn-danger w-100 py-3"
-                                                        onclick="return confirm('¿ESTÁS SEGURO?\n\nID: {{ $detalle->id }}\n\nEsta acción no se puede deshacer.')">
+                                                        onclick="return confirm('¿ESTÁS SEGURO?\n\nID: {{ $detalle["id"] }}\n\nEsta acción no se puede deshacer.')">
                                                     <div class="d-flex align-items-center justify-content-center">
                                                         <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
                                                         <div class="text-start">
