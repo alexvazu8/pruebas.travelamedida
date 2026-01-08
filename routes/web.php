@@ -107,3 +107,6 @@ Route::post('/pagos/cancelar/{pago}', [BancardController::class, 'cancelar'])->n
 
 Route::post('/cambiar-moneda/{moneda}', [CurrencyController::class, 'cambiarMoneda'])
     ->name('currency.change');
+
+Route::post('/reservas/cancelar-servicio/{id}/{loc}', [ReservasController::class, 'cancelarServicio'])
+    ->name('reservas.cancelar-servicio'); // Nombre más descriptivo

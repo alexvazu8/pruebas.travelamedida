@@ -58,6 +58,21 @@
                                             <a href="{{ route('reservas.voucher', ['id' => $detalle['id']]) }}" class="text-white font-weight-bold mb-0 p-3">
                                                 {{__("Ver_voucher")}}
                                             </a>
+                                            <form action="{{ route('reservas.cancelar-servicio', ['id' => $reserva->id, 'loc' => $localizacion]) }}" 
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit" 
+                                                        class="btn btn-danger w-100 py-3"
+                                                        onclick="return confirm('¿ESTÁS SEGURO?\n\nID: {{ $detalle->id }}\n\nEsta acción no se puede deshacer.')">
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+                                                        <div class="text-start">
+                                                            <div class="fw-bold fs-5">CANCELAR SERVICIO</div>
+                                                            <small class="opacity-75">Haz clic para cancelar este servicio, entrara a proceso de devolución.</small>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </form>
                                         @endif
                                     </h5>
 

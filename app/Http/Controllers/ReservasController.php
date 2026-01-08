@@ -181,5 +181,32 @@ class ReservasController extends Controller
 
    }
 
+   public function cancelarServicio($id,$loc)
+   {
+     //usar ApiController
+     $apiController = new ApiController();
+       
+     $response = $apiController->cancelarServicio($id);
+
+     if(!$response->successful()) {
+        //dd($request);
+        // Procesar los datos obtenidos de la API
+        //aqui no fue satisfactorio, hay errores:
+        $jsonResponse= response()->json($response->json());
+        $data = json_decode($jsonResponse->getContent(), true);
+
+        //veremos si enviamos a otra pagina o a la misma con el error.
+         return view('reservas.error', ['respuestas' => $data,'mensaje'=>'Error o no se puede cancelar.!!!']);
+    } 
+    else {
+        $jsonResponse= response()->json($response->json());
+        //print_r(response()->json($jsonResponse));
+        $data = json_decode($jsonResponse->getContent(), true);
+        return $this->showReserva($loc);
+        //return view('reservas.showVoucher')->with('data', $data);
+    }
+
+   }   
+
    
 }

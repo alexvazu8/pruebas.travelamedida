@@ -320,5 +320,27 @@ class ApiController extends Controller
         return $response;        
     }
 
+    public function cancelarServicio($id)
+    {
+        // Obtén el token (lo recuperará del caché si está disponible)
+        $token = $this->getToken();
+     
+        // Recuperar la URL base de la API desde el archivo .env
+        $apiUrl = env('API_VM_URL') . '/cancelarDetalleReserva/' . $id;  // Ajusta el endpoint si es necesario
+       
+       
+        // Realiza la solicitud GET con el token 
+        
+        
+        $response = Http::withToken($token)
+                        ->withHeaders([
+                            'Content-Type' => 'application/json'
+                        ])
+                        ->get($apiUrl);
+        //print_r($response);  
+
+        return $response;        
+    }
+
 
 }
