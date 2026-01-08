@@ -336,7 +336,7 @@ class ApiController extends Controller
                         ->withHeaders([
                             'Content-Type' => 'application/json'
                         ])
-                        ->get($apiUrl);
+                        ->delete($apiUrl);
         //print_r($response);  
 
         return $response;        
