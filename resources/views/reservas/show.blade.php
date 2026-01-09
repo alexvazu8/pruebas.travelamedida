@@ -12,7 +12,7 @@
     @endif
 
     @php
-    print_r($respuestas);
+    //print_r($respuestas);
     @endphp
 
     {{-- Verificar si hay respuestas --}}
