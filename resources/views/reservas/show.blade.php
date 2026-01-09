@@ -83,12 +83,11 @@
                                                         <div class="small">
                                                             @foreach($detalle['detalle_hotel']['politica']['penalidads'] as $penalidad)
                                                                 <div class="mb-2">
-                                                                    <strong>{{__("Desde")}} {{ $penalidad['desde_noches_antes'] }} 
-                                                                    {{__("hasta")}} {{ $penalidad['hasta_noches_antes'] }} 
-                                                                    {{__("noches antes")}}:</strong>
-                                                                    <span class="text-danger">
-                                                                        {{ $penalidad['porcentaje_penalidad_por_noche'] }}
-                                                                    </span>
+                                                                    <strong>
+                                                                        {{__("Cancelaciones_menos_de")}} {{ $penalidad['desde_noches_antes'] }} {{ __("Noches_anticipacion_penalidad_de") }} {{ $penalidad['porcentaje_penalidad_por_noche'] }}.
+                                                                        {{ __("Cancelaciones_mas_de") }} {{ $penalidad['desde_noches_antes'] }} {{ __("Noches_sin_penalidad") }}
+                                                                    </strong>
+
                                                                 </div>
                                                             @endforeach
                                                         </div>
