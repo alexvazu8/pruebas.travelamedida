@@ -62,15 +62,42 @@
                                                 method="POST">
                                                 @csrf
                                                 <button type="submit" 
-                                                         class="btn btn-sm btn-danger"
+                                                        class="btn btn-sm btn-danger"
                                                         onclick="return confirm('¿ESTÁS SEGURO?\n\nEsta acción no se puede deshacer.')">
                                                     <div class="d-flex align-items-center justify-content-center">
                                                         <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
                                                         <div class="text-start">
-                                                             <i class="fas fa-times me-1"></i> Cancelar Servicio
+                                                            <i class="fas fa-times me-1"></i> Cancelar Servicio
                                                         </div>
                                                     </div>
                                                 </button>
+                                                
+                                                {{-- Mostrar Penalidades --}}
+                                                @if(isset($detalle['detalle_hotel']['politica']['penalidads']) && 
+                                                    count($detalle['detalle_hotel']['politica']['penalidads']) > 0)
+                                                    <div class="mt-3 p-3 border border-warning rounded bg-light">
+                                                        <h6 class="text-warning">
+                                                            <i class="fas fa-exclamation-circle me-2"></i>
+                                                            {{__("Penalidades por cancelación")}}
+                                                        </h6>
+                                                        <div class="small">
+                                                            @foreach($detalle['detalle_hotel']['politica']['penalidads'] as $penalidad)
+                                                                <div class="mb-2">
+                                                                    <strong>{{__("Desde")}} {{ $penalidad['desde_noches_antes'] }} 
+                                                                    {{__("hasta")}} {{ $penalidad['hasta_noches_antes'] }} 
+                                                                    {{__("noches antes")}}:</strong>
+                                                                    <span class="text-danger">
+                                                                        {{ $penalidad['porcentaje_penalidad_por_noche'] }}
+                                                                    </span>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="mt-2 text-muted small">
+                                                            <i class="fas fa-info-circle me-1"></i>
+                                                            {{__("Las penalidades se aplican sobre el total de noches reservadas.")}}
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </form>
                                         @endif
                                     </h5>
