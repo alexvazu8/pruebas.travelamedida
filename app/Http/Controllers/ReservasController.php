@@ -212,7 +212,7 @@ class ReservasController extends Controller
                 $reserva->update([
                     'estado_reserva' => 'P',
                     'updated_at' => now(),
-                    'Comentarios' => $reserva->Comentarios.' Servicio ID: ' . $id.' Penalidad:0.00 $ debe devolver menos 5%, Cancelado desde sistema. A la espera de la devolución.'
+                    'Comentarios' => $reserva->Comentarios.' Servicio ID: ' . $id.' Penalidad: 0.00 $ debe devolver menos 5%, Cancelado desde sistema. A la espera de la devolución.'
                     
                 ]);
                 
@@ -229,7 +229,7 @@ class ReservasController extends Controller
                 $reserva->update([
                     'estado_reserva' => 'P',
                     'updated_at' => now(),
-                    'Comentarios' => $reserva->Comentarios.' Servicio ID: ' . $id.' Penalidad:'.$data['precio_penalidad'].' Cancelado desde sistema, debe revisar cuanto es la devolución. A la espera de la devolución.'
+                    'Comentarios' => $reserva->Comentarios.' Servicio ID: ' . $id.' Penalidad: '.$data['precio_penalidad'].' Cancelado desde sistema, debe revisar cuanto es la devolución. A la espera de la devolución.'
                     
                 ]);
                 
