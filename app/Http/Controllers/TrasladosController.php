@@ -10,6 +10,7 @@ use App\Models\Zona;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TrasladosController extends Controller
 {
@@ -43,7 +44,8 @@ class TrasladosController extends Controller
                                          ->get()
                                          ->pluck('zonaDestino')
                                          ->unique('Id_Zona');  // Obtener las zonas destino completas
-    dd($zonas_destino);
+        //dd($zonas_destino);
+        Log::info('Zonas destino:', ['zonas' => $zonas_destino]);
          // Retornar las zonas de destino en formato JSON
         return response()->json(['zonas' => $zonas_destino]);
     }
