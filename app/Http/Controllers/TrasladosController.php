@@ -42,8 +42,8 @@ class TrasladosController extends Controller
                                          ->with('zonaDestino')  // Usar la relación definida en el modelo
                                          ->get()
                                          ->pluck('zonaDestino')
-                                         ->unique('id_zona');  // Obtener las zonas destino completas
-    
+                                         ->unique('Id_Zona');  // Obtener las zonas destino completas
+    dd($zonas_destino);
          // Retornar las zonas de destino en formato JSON
         return response()->json(['zonas' => $zonas_destino]);
     }
