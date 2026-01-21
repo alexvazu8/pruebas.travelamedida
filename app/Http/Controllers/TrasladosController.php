@@ -26,7 +26,7 @@ class TrasladosController extends Controller
         ->with('zonaOrigen')
         ->get()
         ->pluck('zonaOrigen')
-        ->unique('id_zona');
+        ->unique('Id_Zona');
 
         
         // Retornar las zonas en formato JSON
