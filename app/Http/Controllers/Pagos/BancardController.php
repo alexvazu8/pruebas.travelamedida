@@ -378,7 +378,7 @@ public function cancelar($pago_id)
         // Actualizar estado del pago localmente
         $pago->update([
             'estado' => 'cancelado',
-            'fecha_cancelacion' => now()
+            'updated_at' => now()
         ]);
 
         Log::info('Pago cancelado exitosamente', [
