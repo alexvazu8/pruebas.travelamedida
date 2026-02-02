@@ -389,48 +389,18 @@ class BancardController extends Controller
     // Nuevo método para verificar estado del pago
     public function verificarEstado($pago_id)
     {
-        try {
-            $userId = Auth::id(); 
-            $tokenVM = Cache::get('api_access_token_'.$userId);
-            $pago = Pago::where('token', $tokenVM)
-                ->where('id',$pago_id)
-                ->first();
-            
-            if (!$pago) {
-                return response()->json([
-                    'status' => 'error',
-                    'autorizacion' => null
-                ]);
-            }
-            
-            $respuestaConfirmacion = $this->SingleConfirmation($pago_id);
-            
-            // Solo cambiar estado si NO está pagado
-            if (isset($respuestaConfirmacion['pagado']) && !$respuestaConfirmacion['pagado']) {
-                $pago->estado = 'pendiente';
-                $pago->save();
-            }
-            
-            return response()->json([
-                'status' => $pago->estado,
-                'autorizacion' => $pago->autorizacion
-            ]);
-            
-        } catch (\Exception $e) {
-            // En caso de error, retornar el estado actual sin cambiarlo
-            if (isset($pago) && $pago) {
-                return response()->json([
-                    'status' => $pago->estado,
-                    'autorizacion' => $pago->autorizacion
-                ]);
-            }
-            
-            // Si no hay pago, retornar error
-            return response()->json([
-                'status' => 'error',
-                'autorizacion' => null
-            ]);
-        }
+        $userId = Auth::id(); 
+        $tokenVM = Cache::get('api_access_token_'.$userId);
+        $pago = Pago::where('token', $tokenVM)
+            ->where('id',$pago_id)
+            ->first(); // Devuelve un solo modelo o `null`
+        
+        $respuestaConfirmacion=$this->SingleConfirmation($pago_id);    
+        
+        return response()->json([
+            'status' => $pago->estado,
+            'autorizacion' => $pago->autorizacion
+        ]);
     }
 
     public function cancelar($pago_id)
