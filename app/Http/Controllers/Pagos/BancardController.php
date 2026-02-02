@@ -296,13 +296,13 @@ public function cancelar($pago_id)
         }
 
         // Verificar autorización
-       /* if ($pago->usuario_id !== Auth::id()) {
+        if ($pago->usuario_id !== Auth::id()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'No autorizado para cancelar este pago',
                 'code' => 403
             ], 403);
-        }*/
+        }
 
         // Verificar si el pago ya está cancelado
         if ($pago->estado === 'cancelado') {
