@@ -228,6 +228,144 @@ class BancardController extends Controller
    
     }
 
+
+    public function SingleConfirmation($pago_id)
+    {
+        try {
+            $privateKey = env('BANCARD_PRIVATE_KEY');
+            $publicKey = env('BANCARD_PUBLIC_KEY');
+            $apiUrl = env('BANCARD_BASE_URL');
+            
+            // 1. Validar el token (seguridad crítica)
+            $validToken = md5($privateKey . $pago_id . 'get_confirmation');
+
+            $payload = [
+                'public_key' => $publicKey,
+                'operation' => [
+                    'token' => $validToken,
+                    'shop_process_id' => $pago_id
+                ]
+            ];
+
+            // Realizar petición a Bancard
+            $response = Http::timeout(30)->post($apiUrl . "/vpos/api/0.3/single_buy/confirmations", $payload);
+            
+            // Verificar si la petición HTTP fue exitosa
+            if (!$response->successful()) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Error en la comunicación con Bancard',
+                    'http_status' => $response->status(),
+                    'response_body' => $response->body()
+                ], 500);
+            }
+
+            $responseData = $response->json();
+            
+            // Verificar estructura básica de respuesta
+            if (!isset($responseData['status'])) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Respuesta inválida de Bancard',
+                    'response' => $responseData
+                ], 500);
+            }
+
+            // Procesar respuesta según estado de Bancard
+            if ($responseData['status'] === 'success') {
+                // Verificar que exista la confirmación
+                if (!isset($responseData['confirmation'])) {
+                    return response()->json([
+                        'success' => false,
+                        'error' => 'Falta información de confirmación en la respuesta',
+                        'response' => $responseData
+                    ], 500);
+                }
+
+                $confirmation = $responseData['confirmation'];
+                
+                // ✅ VERIFICACIÓN PRINCIPAL: response_code = "00" indica PAGADO
+                $pagado = isset($confirmation['response_code']) && $confirmation['response_code'] === '00';
+                
+                // También puedes verificar otros códigos de respuesta si es necesario
+                $responseCode = $confirmation['response_code'] ?? 'DESCONOCIDO';
+                $responseDescription = $confirmation['response_description'] ?? 'Sin descripción';
+                
+                // Determinar el estado general de la transacción
+                $estado = 'pendiente';
+                if ($pagado) {
+                    $estado = 'aprobado';
+                } elseif ($responseCode === '05' || $responseCode === '51') {
+                    $estado = 'rechazado';
+                } elseif ($responseCode === '99') {
+                    $estado = 'pendiente';
+                }
+                
+                return response()->json([
+                    'success' => true,
+                    'pagado' => $pagado,
+                    'estado' => $estado,
+                    'codigo_respuesta' => $responseCode,
+                    'descripcion' => $responseDescription,
+                    'mensaje' => $pagado ? 'Pago confirmado exitosamente' : 'Pago no confirmado',
+                    'transaccion' => [
+                        'id' => $confirmation['shop_process_id'] ?? null,
+                        'autorizacion' => $confirmation['authorization_number'] ?? null,
+                        'numero_ticket' => $confirmation['ticket_number'] ?? null,
+                        'monto' => $confirmation['amount'] ?? null,
+                        'moneda' => $confirmation['currency'] ?? null,
+                        'respuesta_simple' => $confirmation['response'] ?? null,
+                        'detalles_respuesta' => $confirmation['response_details'] ?? null,
+                        'detalles_extendidos' => $confirmation['extended_response_description'] ?? null,
+                        'informacion_seguridad' => $confirmation['security_information'] ?? null
+                    ]
+                ]);
+            } else {
+                // Bancard retornó un error en su estructura
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Error en la operación de Bancard',
+                    'estado_bancard' => $responseData['status'],
+                    'mensaje' => $responseData['messages'][0]['key'] ?? $responseData['messages'][0]['description'] ?? 'Error desconocido',
+                    'response' => $responseData
+                ], 400);
+            }
+
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            // Error de conexión (timeout, etc.)
+            return response()->json([
+                'success' => false,
+                'error' => 'Error de conexión con Bancard',
+                'mensaje' => 'No se pudo conectar con el servicio de pagos',
+                'detalle' => $e->getMessage()
+            ], 503);
+            
+        } catch (\Illuminate\Http\Client\RequestException $e) {
+            // Error en la petición HTTP
+            return response()->json([
+                'success' => false,
+                'error' => 'Error en la petición a Bancard',
+                'mensaje' => 'Error al procesar la confirmación de pago',
+                'detalle' => $e->getMessage()
+            ], 500);
+            
+        } catch (\Exception $e) {
+            // Cualquier otro error
+            Log::error('Error en SingleConfirmation:', [
+                'pago_id' => $pago_id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'error' => 'Error interno del servidor',
+                'mensaje' => 'Ocurrió un error inesperado',
+                'detalle' => env('APP_DEBUG') ? $e->getMessage() : 'Contacte al administrador'
+            ], 500);
+        }
+    }
+
     // Método auxiliar para determinar el estado
     private function determinarEstado($response, $responseCode)
     {
@@ -251,184 +389,216 @@ class BancardController extends Controller
     // Nuevo método para verificar estado del pago
     public function verificarEstado($pago_id)
     {
-        $userId = Auth::id(); 
-        $tokenVM = Cache::get('api_access_token_'.$userId);
-        $pago = Pago::where('token', $tokenVM)
-            ->where('id',$pago_id)
-            ->first(); // Devuelve un solo modelo o `null`
-        
-        return response()->json([
-            'status' => $pago->estado,
-            'autorizacion' => $pago->autorizacion
-        ]);
+        try {
+            $userId = Auth::id(); 
+            $tokenVM = Cache::get('api_access_token_'.$userId);
+            $pago = Pago::where('token', $tokenVM)
+                ->where('id',$pago_id)
+                ->first();
+            
+            if (!$pago) {
+                return response()->json([
+                    'status' => 'error',
+                    'autorizacion' => null
+                ]);
+            }
+            
+            $respuestaConfirmacion = $this->SingleConfirmation($pago_id);
+            
+            // Solo cambiar estado si NO está pagado
+            if (isset($respuestaConfirmacion['pagado']) && !$respuestaConfirmacion['pagado']) {
+                $pago->estado = 'pendiente';
+                $pago->save();
+            }
+            
+            return response()->json([
+                'status' => $pago->estado,
+                'autorizacion' => $pago->autorizacion
+            ]);
+            
+        } catch (\Exception $e) {
+            // En caso de error, retornar el estado actual sin cambiarlo
+            if (isset($pago) && $pago) {
+                return response()->json([
+                    'status' => $pago->estado,
+                    'autorizacion' => $pago->autorizacion
+                ]);
+            }
+            
+            // Si no hay pago, retornar error
+            return response()->json([
+                'status' => 'error',
+                'autorizacion' => null
+            ]);
+        }
     }
 
-public function cancelar($pago_id)
-{
-    try {
-        $privateKey = env('BANCARD_PRIVATE_KEY');
-        $publicKey = env('BANCARD_PUBLIC_KEY');
-        $apiUrl = env('BANCARD_BASE_URL');
+    public function cancelar($pago_id)
+    {
+        try {
+            $privateKey = env('BANCARD_PRIVATE_KEY');
+            $publicKey = env('BANCARD_PUBLIC_KEY');
+            $apiUrl = env('BANCARD_BASE_URL');
 
-        // Validar variables de entorno
-        if (!$privateKey || !$publicKey || !$apiUrl) {
-            throw new \Exception('Configuración de Bancard incompleta');
-        }
+            // Validar variables de entorno
+            if (!$privateKey || !$publicKey || !$apiUrl) {
+                throw new \Exception('Configuración de Bancard incompleta');
+            }
 
-        // Validar que el ID sea numérico
-        if (!is_numeric($pago_id)) {
+            // Validar que el ID sea numérico
+            if (!is_numeric($pago_id)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'ID de pago inválido',
+                    'code' => 400
+                ], 400);
+            }
+
+            // Buscar el pago por ID
+            $pago = Pago::find($pago_id);
+            
+            if (!$pago) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Pago no encontrado',
+                    'code' => 404
+                ], 404);
+            }
+
+            // Verificar autorización
+            if ($pago->usuario_id !== Auth::id()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'No autorizado para cancelar este pago',
+                    'code' => 403
+                ], 403);
+            }
+
+            // Verificar si el pago ya está cancelado
+            if ($pago->estado === 'cancelado') {
+                return response()->json([
+                    'status' => 'warning',
+                    'message' => 'El pago ya se encuentra cancelado',
+                    'data' => [
+                        'pago_id' => $pago->id,
+                        'estado' => $pago->estado
+                    ]
+                ], 200);
+            }
+
+            // Generar token para rollback
+            $validToken = md5($privateKey . $pago->id . "rollback" . "0.00");
+
+            $payload = [
+                'public_key' => $publicKey,
+                'operation' => [
+                    'token' => $validToken,
+                    'shop_process_id' => $pago->id
+                ]
+            ];
+
+            Log::info('Iniciando rollback en Bancard', [
+                'pago_id' => $pago->id,
+                'usuario_id' => Auth::id()
+            ]);
+
+            Log::debug('Payload para Bancard Rollback', $payload);
+
+            // Realizar petición a Bancard
+            $response = Http::timeout(30)->post($apiUrl . "/vpos/api/0.3/single_buy/rollback", $payload);
+            $responseData = $response->json();
+
+            Log::debug('Respuesta de Bancard rollback', [
+                'status_code' => $response->status(),
+                'response' => $responseData
+            ]);
+
+            // Verificar respuesta de Bancard
+            if (!$response->successful()) {
+                Log::error('Error en respuesta de Bancard', [
+                    'status' => $response->status(),
+                    'response' => $responseData,
+                    'pago_id' => $pago->id
+                ]);
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Error en la comunicación con el procesador de pagos',
+                    'code' => $response->status(),
+                    'details' => $responseData['messages'] ?? $responseData
+                ], 502);
+            }
+
+            // Verificar respuesta específica de Bancard
+            if (isset($responseData['status']) && $responseData['status'] !== 'success') {
+                Log::warning('Respuesta de Bancard indica error', [
+                    'pago_id' => $pago->id,
+                    'bancard_status' => $responseData['status'],
+                    'messages' => $responseData['messages'] ?? []
+                ]);
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'El procesador de pagos rechazó la cancelación',
+                    'code' => 400,
+                    'details' => $responseData['messages'] ?? $responseData
+                ], 400);
+            }
+
+            // Actualizar estado del pago localmente
+            $pago->update([
+                'estado' => 'cancelado',
+                'updated_at' => now()
+            ]);
+
+            Log::info('Pago cancelado exitosamente', [
+                'pago_id' => $pago->id,
+                'usuario_id' => Auth::id()
+            ]);
+
+            // Respuesta de éxito
             return response()->json([
-                'status' => 'error',
-                'message' => 'ID de pago inválido',
-                'code' => 400
-            ], 400);
-        }
-
-        // Buscar el pago por ID
-        $pago = Pago::find($pago_id);
-        
-        if (!$pago) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Pago no encontrado',
-                'code' => 404
-            ], 404);
-        }
-
-        // Verificar autorización
-        if ($pago->usuario_id !== Auth::id()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No autorizado para cancelar este pago',
-                'code' => 403
-            ], 403);
-        }
-
-        // Verificar si el pago ya está cancelado
-        if ($pago->estado === 'cancelado') {
-            return response()->json([
-                'status' => 'warning',
-                'message' => 'El pago ya se encuentra cancelado',
+                'status' => 'success',
+                'message' => 'Pago cancelado exitosamente',
                 'data' => [
                     'pago_id' => $pago->id,
-                    'estado' => $pago->estado
+                    'estado' => $pago->estado,
+                    'fecha_cancelacion' => $pago->fecha_cancelacion,
+                    'monto' => $pago->monto,
+                    'metodo_pago' => $pago->metodo_pago,
+                    'respuesta_bancard' => $responseData
                 ]
-            ], 200);
-        }
+            ]);
 
-        // Generar token para rollback
-        $validToken = md5($privateKey . $pago->id . "rollback" . "0.00");
-
-        $payload = [
-            'public_key' => $publicKey,
-            'operation' => [
-                'token' => $validToken,
-                'shop_process_id' => $pago->id
-            ]
-        ];
-
-        Log::info('Iniciando rollback en Bancard', [
-            'pago_id' => $pago->id,
-            'usuario_id' => Auth::id()
-        ]);
-
-        Log::debug('Payload para Bancard Rollback', $payload);
-
-        // Realizar petición a Bancard
-        $response = Http::timeout(30)->post($apiUrl . "/vpos/api/0.3/single_buy/rollback", $payload);
-        $responseData = $response->json();
-
-        Log::debug('Respuesta de Bancard rollback', [
-            'status_code' => $response->status(),
-            'response' => $responseData
-        ]);
-
-        // Verificar respuesta de Bancard
-        if (!$response->successful()) {
-            Log::error('Error en respuesta de Bancard', [
-                'status' => $response->status(),
-                'response' => $responseData,
-                'pago_id' => $pago->id
+        } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            Log::error('Error de conexión con Bancard', [
+                'error' => $e->getMessage(),
+                'pago_id' => $pago_id
             ]);
 
             return response()->json([
                 'status' => 'error',
-                'message' => 'Error en la comunicación con el procesador de pagos',
-                'code' => $response->status(),
-                'details' => $responseData['messages'] ?? $responseData
-            ], 502);
-        }
+                'message' => 'Error de conexión con el procesador de pagos',
+                'code' => 503,
+                'details' => config('app.debug') ? $e->getMessage() : null
+            ], 503);
 
-        // Verificar respuesta específica de Bancard
-        if (isset($responseData['status']) && $responseData['status'] !== 'success') {
-            Log::warning('Respuesta de Bancard indica error', [
-                'pago_id' => $pago->id,
-                'bancard_status' => $responseData['status'],
-                'messages' => $responseData['messages'] ?? []
+        } catch (\Exception $e) {
+            Log::error('Error inesperado al cancelar pago', [
+                'error' => $e->getMessage(),
+                'pago_id' => $pago_id,
+                'user_id' => Auth::id(),
+                'trace' => $e->getTraceAsString()
             ]);
 
             return response()->json([
                 'status' => 'error',
-                'message' => 'El procesador de pagos rechazó la cancelación',
-                'code' => 400,
-                'details' => $responseData['messages'] ?? $responseData
-            ], 400);
+                'message' => 'Error interno del servidor',
+                'code' => 500,
+                'details' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
         }
-
-        // Actualizar estado del pago localmente
-        $pago->update([
-            'estado' => 'cancelado',
-            'updated_at' => now()
-        ]);
-
-        Log::info('Pago cancelado exitosamente', [
-            'pago_id' => $pago->id,
-            'usuario_id' => Auth::id()
-        ]);
-
-        // Respuesta de éxito
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Pago cancelado exitosamente',
-            'data' => [
-                'pago_id' => $pago->id,
-                'estado' => $pago->estado,
-                'fecha_cancelacion' => $pago->fecha_cancelacion,
-                'monto' => $pago->monto,
-                'metodo_pago' => $pago->metodo_pago,
-                'respuesta_bancard' => $responseData
-            ]
-        ]);
-
-    } catch (\Illuminate\Http\Client\ConnectionException $e) {
-        Log::error('Error de conexión con Bancard', [
-            'error' => $e->getMessage(),
-            'pago_id' => $pago_id
-        ]);
-
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Error de conexión con el procesador de pagos',
-            'code' => 503,
-            'details' => config('app.debug') ? $e->getMessage() : null
-        ], 503);
-
-    } catch (\Exception $e) {
-        Log::error('Error inesperado al cancelar pago', [
-            'error' => $e->getMessage(),
-            'pago_id' => $pago_id,
-            'user_id' => Auth::id(),
-            'trace' => $e->getTraceAsString()
-        ]);
-
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Error interno del servidor',
-            'code' => 500,
-            'details' => config('app.debug') ? $e->getMessage() : null
-        ], 500);
     }
-}
 
 
 }
