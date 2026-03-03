@@ -20,6 +20,15 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <!-- Select2 CSS -->
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QDDZM9GWSJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-QDDZM9GWSJ');
+    </script>
     @yield('styles')
 
      @vite(['resources/sass/app.scss']) {{-- Bootstrap y estilos --}}
