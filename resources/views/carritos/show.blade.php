@@ -375,7 +375,7 @@
                         
                         @php
                             // Calcular el monto en guaraníes para mostrar
-                           echo $tasaCambioGuaranies = $currency->obtenerTasa('USD', 'PYG');
+                           $tasaCambioGuaranies = $currency->obtenerTasa('USD', 'PYG');
                            
                             $montoGuaranies = $respuestas['Precio_total_carrito'] * $tipoCambioGuaranies;
                         @endphp
