@@ -55,7 +55,7 @@ class CurrencyController extends Controller
         
         $tasa = TiposCambio::where('moneda_origen', $origen)
             ->where('moneda_destino', $destino)
-            ->whereDate('fecha_validez', '>=', now())
+            ->whereDate('fecha_validez', '<=', now())
             ->orderBy('fecha_validez', 'desc')
             ->first();
         
