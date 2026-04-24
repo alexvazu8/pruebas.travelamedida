@@ -9,6 +9,7 @@ use App\Http\Controllers\HotelesController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\ReservasController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TiposCambioController;
 use App\Http\Controllers\ToursController;
 use Illuminate\Support\Facades\Route;
@@ -111,3 +112,6 @@ Route::post('/cambiar-moneda/{moneda}', [CurrencyController::class, 'cambiarMone
 
 Route::post('/reservas/cancelar-servicio/{id}/{loc}', [ReservasController::class, 'cancelarServicio'])
     ->name('reservas.cancelar-servicio'); // Nombre más descriptivo
+
+
+Route::resource('roles', RoleController::class)->middleware(['auth', 'rol:administrador']);
