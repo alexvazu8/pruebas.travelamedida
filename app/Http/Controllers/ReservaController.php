@@ -26,6 +26,18 @@ class ReservaController extends Controller
     }
 
     /**
+     * Mostrar lista de reservas para el administrador.
+     */
+    public function indexAdmin(Request $request): View
+    {
+        $reservas = Reserva::orderBy('created_at', 'desc')
+        ->paginate();
+
+        return view('reserva.index', compact('reservas'))
+            ->with('i', ($request->input('page', 1) - 1) * $reservas->perPage());
+    }    
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create(): View

@@ -115,3 +115,4 @@ Route::post('/reservas/cancelar-servicio/{id}/{loc}', [ReservasController::class
 
 
 Route::resource('roles', RoleController::class)->middleware(['auth', 'rol:administrador']);
+Route::get('reservas-admin', [ReservaController::class, 'indexAdmin'])->middleware(['auth', 'rol:administrador'])->name('reservas.indexAdmin');
