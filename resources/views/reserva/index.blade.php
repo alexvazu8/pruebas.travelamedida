@@ -58,7 +58,7 @@
 										<td >{{ $reserva->user->name }}</td>
 
                                             <td>         @php echo auth()->user()->role; @endphp                                         
-                                                @if(auth()->user()->role === 'administrador')
+                                                @if(auth()->user()->role->nombre === 'administrador')
                                                     {{-- Botón para administrador --}}
                                                     <a class="btn btn-sm btn-primary" href="{{ route('reservas.showReservaAdmin', $reserva->Localizador) }}">
                                                         <i class="fa fa-fw fa-eye"></i> {{ __('Show Admin') }}
