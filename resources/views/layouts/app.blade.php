@@ -76,10 +76,19 @@
                         </li>
                         @auth
                         <li class="nav-item">
+                            @if(auth()->user()->role->nombre === 'administrador')
+                                {{-- Botón para administrador --}}
+                                <a class="nav-link text-white d-flex align-items-center" href="{{ route('reservas.indexAdmin') }}">
+                                    <i class="fas fa-calendar-check me-2"></i>
+                                    {{ __('Reservas Admin') }}
+                                </a>
+                            @else
+
                             <a class="nav-link text-white d-flex align-items-center" href="{{ url('/reservas') }}">
                                 <i class="fas fa-calendar-check me-2"></i>
                                 {{ __('Reservas') }}
                             </a>
+                            @endif
                         </li>
                         @endauth
                     </ul>
