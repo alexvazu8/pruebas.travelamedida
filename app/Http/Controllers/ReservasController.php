@@ -154,6 +154,72 @@ class ReservasController extends Controller
        } 
    }
 
+   public function showReservaAdmin($loc)
+   {   //colocar el modelo Reserva
+       
+       //usar ApiController
+       $apiController = new ApiController();
+       
+       $response = $apiController->showReservaPorLoc($loc);
+       
+       if (!$response->successful()) {
+           //dd($request);
+           // Procesar los datos obtenidos de la API
+           //aqui no fue satisfactorio, hay errores:
+           $jsonResponse= response()->json($response->json());
+           $data = json_decode($jsonResponse->getContent(), true);
+
+           //dd($data);
+            return view('reservas.error', ['respuestas' => $data,'mensaje'=>'Error o Reserva no existe o Usuario no tiene permiso.!!!']);
+       } else {
+           $jsonResponse= response()->json($response->json());
+           //print_r(response()->json($jsonResponse));
+           $data = json_decode($jsonResponse->getContent(), true);
+           // print_r($data);
+            // ok aqui puedo guardar en mi propia BD con el id de usuario que compro, de esta forma
+            //puede ver su reserva.
+            //reservar con Reserva
+            $datosLimpios = collect($data[0])->only([
+                'Localizador', 'Importe_Reserva', 'Nombre_Cliente', 'Email_contacto_reserva', 'Comentarios', 'Usuario_id'
+            ])->toArray();
+
+            // Procesar la relación detalle_reservas
+            $datosLimpios['detalleReservas'] = collect($data[0]['detalle_reservas'] ?? [])->map(function ($detalle) {
+                return collect($detalle)->only([
+                    'id', 'Precio_Servicio', 'Reserva_Id_reserva', 'Usuario_id', 'Tipo_servicio', 'Costo_servicio', 'Email_encargado_reserva'
+                ])->merge([
+                    'detalleHotel' => !empty($detalle['detalle_hotel']) ? collect($detalle['detalle_hotel'])->except(['created_at', 'updated_at']) : null,
+                    'detalleTour' => !empty($detalle['detalle_tour']) ? collect($detalle['detalle_tour'])->except(['created_at', 'updated_at']) : null,
+                    'detalleTraslado' => !empty($detalle['detalle_traslado']) ? collect($detalle['detalle_traslado'])->only([
+                        'id', 'Cantidad_Adultos', 'Cantidad_Menores', 'detalle_reserva_id', 'Empresa_traslados_tipo_movilidades_id', 
+                        'fecha_servicio', 'hora_servicio', 'Precio_Adulto', 'Precio_Menor', 'Precio_Total'
+                    ]) : null,
+                ])->toArray();
+            })->toArray();
+
+            // Respuesta limpia
+            //print_r($datosLimpios);
+            // Asigna el usuario autenticado
+            $datosLimpios['Usuario_id'] = Auth::id(); 
+            //dd($datosLimpios);
+            $reserva=Reserva::where('Localizador',$datosLimpios['Localizador'])
+                     ->first();
+            
+            if(isset($reserva['Localizador']))
+            {
+                 //debe ir a una ruta para ejecutar, luego una vista
+               // dd($datosLimpios);
+              return view('reservas.show', ['respuestas' => $data,'local_respuestas'=> $reserva,'mensaje'=>'Exito!!!']);
+            } 
+            else
+            { //error no existe ese localizador.
+                return view('reservas.error', ['respuestas' => $data,'mensaje'=>'Localizador no tiene permiso.!!!']);
+               
+            }    
+           
+       
+       } 
+   }   
    public function voucher($id)
    {
      //usar ApiController

@@ -58,7 +58,17 @@
 										<td >{{ $reserva->user->name }}</td>
 
                                             <td>                                                
-                                                <a class="btn btn-sm btn-primary " href="{{ route('reservas.showReserva', $reserva->Localizador) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                @if(auth()->user()->rol === 'administrador')
+                                                    {{-- Botón para administrador --}}
+                                                    <a class="btn btn-sm btn-primary" href="{{ route('reservas.showReservaAdmin', $reserva->Localizador) }}">
+                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Show Admin') }}
+                                                    </a>
+                                                @else
+                                                    {{-- Botón para cliente --}}
+                                                    <a class="btn btn-sm btn-primary" href="{{ route('reservas.showReserva', $reserva->Localizador) }}">
+                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Show') }}
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
