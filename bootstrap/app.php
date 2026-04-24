@@ -5,6 +5,7 @@ use App\Http\Middleware\LocaleMiddleware;
 use App\Http\Middleware\VerificarCabeceraReserva;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\ShareCurrency;
+use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\VerifyPayment;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -25,7 +26,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'guardaPost' => CapturePostData::class,
             'verifyPayment' => VerifyPayment::class,
-            'cabecera.reserva' => VerificarCabeceraReserva::class
+            'cabecera.reserva' => VerificarCabeceraReserva::class,
+            'rol' => RoleMiddleware::class,
         ]);
          // Agregar LocaleMiddleware al grupo 'web'
          $middleware->web( [ 
