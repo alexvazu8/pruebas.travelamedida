@@ -370,7 +370,7 @@
                         </div>
                          <div class="row mb-4">
                             <label for="Comentarios" class="col-md-6">RUC (Opcional)</label>
-                            <input name="ruc" value="{{ old('ruc') }}"  id="ruc" class="form-control rounded-pill px-4" pattern="^\d{8,19}(-\d)?$" oninput="this.value = this.value.replace(/[^0-9-]/g, '').replace(/(.*)-/g, '$1')" minlength="8" maxlength="20">
+                            <input name="ruc" value="{{ old('ruc') }}"  id="ruc" class="form-control rounded-pill px-4" pattern="^\d{8,19}(-\d)?$" oninput="this.value = this.value.replace(/[^0-9-]/g, '').replace(/-+/g, '-').replace(/^-/,'')" minlength="8" maxlength="20">
                         </div>
                         <div class="row mb-4">
                             <label for="nombre_ruc" class="col-md-6">Nombre RUC (Opcional)</label>
