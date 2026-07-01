@@ -368,6 +368,14 @@
                             <label for="Email_contacto_reserva">Email de Contacto</label>
                             <input type="email" name="Email_contacto_reserva" value="{{ old('Email_contacto_reserva') }}" id="Email_contacto_reserva" class="form-control rounded-pill px-4" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Ejemplo: usuario@dominio.com"  required>
                         </div>
+                         <div class="row mb-4">
+                            <label for="Comentarios" class="col-md-6">RUC (Opcional)</label>
+                            <input name="ruc" value="{{ old('ruc') }}"  id="nombre_ruc" class="form-control rounded-pill px-4" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                        </div>
+                        <div class="row mb-4">
+                            <label for="nombre_ruc" class="col-md-6">Nombre RUC (Opcional)</label>
+                            <input name="nombre_ruc" value="{{ old('nombre_ruc') }}"  id="nombre_ruc" class="form-control rounded-pill px-4" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                        </div>
                         <div class="row mb-4">
                             <label for="Comentarios" class="col-md-6">Comentarios (Opcional)</label>
                             <textarea name="Comentarios" id="Comentarios" class="form-control rounded-pill px-4 py-2" rows="3" pattern="[A-Za-zñÑ0-9\s\.,]+" oninput="this.value = this.value.replace(/[^A-Za-zñÑ0-9\s.,]/g, '')">{{ old('Comentarios') }}</textarea>
