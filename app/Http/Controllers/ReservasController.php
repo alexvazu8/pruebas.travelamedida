@@ -69,13 +69,35 @@ class ReservasController extends Controller
             //puede ver su reserva.
             //reservar con Reserva
             $datosLimpios = collect($data[0])->only([
-                'Localizador', 'Importe_Reserva', 'Nombre_Cliente','Apellido_Cliente', 'Email_contacto_reserva', 'Comentarios', 'Usuario_id'
+                'Localizador',
+                'Importe_Reserva',
+                'Nombre_Cliente',
+                'Apellido_Cliente',
+                'Email_contacto_reserva',
+                'Comentarios',
+                'Usuario_id'
             ])->toArray();
+
+            // Concatenar los nuevos datos al campo Comentarios
+            $comentarios = $datosLimpios['Comentarios'] ?? '';
+
+            if ($request->filled('ruc')) {
+                $comentarios .= "\nRUC: " . $request->ruc;
+            }
+
+            if ($request->filled('nombre_ruc')) {
+                $comentarios .= "\nNombre Factura: " . $request->nombre_ruc;
+            }
+
+            $datosLimpios['Comentarios'] = trim($comentarios);
+
             // Asigna el usuario autenticado
-            $datosLimpios['Usuario_id'] = Auth::id(); 
-            //  Genera un GUID único de 36 chars
+            $datosLimpios['Usuario_id'] = Auth::id();
+
+            // Genera un GUID único
             $datosLimpios['guid'] = $this->generateUniqueGuid();
-            $reserva=Reserva::create($datosLimpios);
+
+            $reserva = Reserva::create($datosLimpios);
             //dd($reserva);
             //debe ir a una ruta para ejecutar, luego una vista
             $loc=$reserva['Localizador'];
