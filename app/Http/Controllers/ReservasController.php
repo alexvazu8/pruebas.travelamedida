@@ -35,6 +35,7 @@ class ReservasController extends Controller
 
    public function confirmar(Request $request)
    {   //Solo debe ingresar si esta hecho el pago.
+       dd($request);
         $userId = Auth::id();
        //usar ApiController
        $apiController = new ApiController();
