@@ -370,11 +370,11 @@
                         </div>
                          <div class="row mb-4">
                             <label for="Comentarios" class="col-md-6">RUC (Opcional)</label>
-                            <input name="ruc" value="{{ old('ruc') }}"  id="ruc" class="form-control rounded-pill px-4" pattern="^\d{8,19}(-\d)?$" oninput="this.value = this.value.replace(/[^0-9-]/g, '').replace(/-+/g, '-').replace(/^-/,'')" minlength="8" maxlength="20">
+                            <input name="ruc" value="{{ old('ruc') }}"  id="ruc" class="form-control rounded-pill px-4" class="form-control rounded-pill px-4" pattern="^[0-9-]{1,15}$" oninput="this.value = this.value.replace(/[^0-9-]/g, '').slice(0,15)" maxlength="15" minlength="6"   placeholder="Ej.: 12345678-9">
                         </div>
                         <div class="row mb-4">
                             <label for="nombre_ruc" class="col-md-6">Nombre RUC (Opcional)</label>
-                            <input name="nombre_ruc" value="{{ old('nombre_ruc') }}"  id="nombre_ruc" class="form-control rounded-pill px-4" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                            <input name="nombre_ruc" value="{{ old('nombre_ruc') }}"  id="nombre_ruc" class="form-control rounded-pill px-4" pattern="^[A-Za-z0-9 ]{1,50}$" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g, '').slice(0,50)" maxlength="50"  placeholder="Nombre o Razón Social">
                         </div>
                         <div class="row mb-4">
                             <label for="Comentarios" class="col-md-6">Comentarios (Opcional)</label>
