@@ -6,6 +6,7 @@ use App\Models\Reserva;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Uuid;
 
 class ReservasController extends Controller
@@ -35,7 +36,7 @@ class ReservasController extends Controller
 
    public function confirmar(Request $request)
    {   //Solo debe ingresar si esta hecho el pago.
-       dd($request);
+       Log::info('Datos del Request confirmar:', $request->all());
         $userId = Auth::id();
        //usar ApiController
        $apiController = new ApiController();
