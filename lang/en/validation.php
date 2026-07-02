@@ -152,6 +152,14 @@ return [
     'uppercase'              => 'The :attribute field must be uppercase.',
     'url'                    => 'The :attribute field must be a valid URL.',
     'uuid'                   => 'The :attribute field must be a valid UUID.',
+    'custom' => [
+        'password' => [
+            'regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+        ],
+        'name' => [
+            'regex' => 'The name can only contain letters, numbers, spaces, apostrophes, and hyphens.',
+        ],
+    ],
     'attributes'             => [
         'address'                  => 'address',
         'affiliate_url'            => 'affiliate URL',

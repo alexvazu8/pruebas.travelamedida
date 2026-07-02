@@ -152,6 +152,14 @@ return [
     'uppercase'              => 'O campo :attribute deve ser em maiúsculas.',
     'url'                    => 'O formato do URL indicado para o campo :attribute é inválido.',
     'uuid'                   => ':Attribute tem de ser um UUID válido.',
+    'custom' => [
+        'password' => [
+            'regex' => 'A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.',
+        ],
+        'name' => [
+            'regex' => 'O nome só pode conter letras, números, espaços, apóstrofos e hífens.',
+        ],
+    ],
     'attributes'             => [
         'address'                  => 'morada',
         'affiliate_url'            => 'URL de afiliado',
