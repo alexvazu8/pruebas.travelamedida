@@ -899,6 +899,9 @@
         localStorage.setItem('Telefono_titular_reserva', telefono);
         localStorage.setItem('Email_contacto_reserva', email);
         localStorage.setItem('Comentarios', comentarios);
+        // NUEVOS CAMPOS
+        localStorage.setItem('ruc', document.getElementById('ruc').value);
+        localStorage.setItem('nombre_ruc', document.getElementById('nombre_ruc').value);
     };
     function copiarAlPortapapeles(inputId, buttonElement) {
         const input = document.getElementById(inputId);
@@ -931,7 +934,9 @@
             'Apellido_titular_reserva',
             'Telefono_titular_reserva',
             'Email_contacto_reserva',
-            'Comentarios'
+            'Comentarios',
+            'ruc',
+            'nombre_ruc'
         ];
 
         campos.forEach(campo => {
