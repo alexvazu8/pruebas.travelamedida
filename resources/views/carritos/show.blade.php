@@ -362,11 +362,11 @@
                         </div>
                         <div class="row md-6">
                             <label for="Telefono_titular_reserva">Telefono del Titular de la Reserva</label>
-                            <input type="text" name="Telefono_titular_reserva"  value="{{ old('Telefono_titular_reserva') }}" id="Telefono_titular_reserva" class="form-control rounded-pill px-4" pattern="^[+\d\s]+$" oninput="this.value = this.value.replace(/[^+\d\s]/g, '')" minlength="8" maxlength="20" placeholder="Ej: +59 12345678" required>
+                            <input type="text" name="Telefono_titular_reserva"  value="{{ old('Telefono_titular_reserva') }}" id="Telefono_titular_reserva" class="form-control rounded-pill px-4" pattern="^[+\d\s]+$" oninput="this.value = this.value.replace(/[^+\d\s]/g, '')" minlength="8" maxlength="20" placeholder="Ej.: +59 12345678" required>
                         </div>
                         <div class="row mb-3">
                             <label for="Email_contacto_reserva">Email de Contacto</label>
-                            <input type="email" name="Email_contacto_reserva" value="{{ old('Email_contacto_reserva') }}" id="Email_contacto_reserva" class="form-control rounded-pill px-4" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Ejemplo: usuario@dominio.com" placeholder="Ejemplo: usuario@dominio.com" required>
+                            <input type="email" name="Email_contacto_reserva" value="{{ old('Email_contacto_reserva') }}" id="Email_contacto_reserva" class="form-control rounded-pill px-4" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Ejemplo: usuario@dominio.com" placeholder="Ej.: usuario@dominio.com" required>
                         </div>
                          <div class="row mb-4">
                             <label for="Comentarios" class="col-md-6">RUC (Opcional)</label>
