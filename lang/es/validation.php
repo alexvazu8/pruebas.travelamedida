@@ -152,6 +152,15 @@ return [
     'uppercase'              => 'El campo :attribute debe estar en mayúscula.',
     'url'                    => 'El campo :attribute debe ser una URL válida.',
     'uuid'                   => 'El campo :attribute debe ser un UUID válido.',
+    'custom' => [
+        'password' => [
+            'regex' => 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
+        ],
+
+        'name' => [
+            'regex' => 'El nombre solo puede contener letras, números, espacios, apóstrofes y guiones.',
+        ],
+    ],
     'attributes'             => [
         'address'                  => 'dirección',
         'affiliate_url'            => 'URL de afiliado',
